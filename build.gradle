@@ -1,0 +1,26 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+version '0.1.0'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+    baseName = 'GraWSmierc'
+    mainClassName = "Application"
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'Application'
+        )
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
