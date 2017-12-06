@@ -6,6 +6,6 @@ public class SimpleTest {
 
     @Test
     public void SimpleTest() {
-        assertEquals(3, 3);
+        assertEquals(3, 4);
     }
 }
