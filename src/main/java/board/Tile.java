@@ -17,7 +17,7 @@ public class Tile {
         return false;
     }
 
-    private void broadcastPassword(int password){
+    void broadcastPassword(int password){
         //TODO
     }
 

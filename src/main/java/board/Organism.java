@@ -12,11 +12,11 @@ public class Organism {
         return nation;
     }
 
-    private int getPassword() {
+    int getPassword() {
         return password;
     }
 
-    private void setPassword(int password) {
+    void setPassword(int password) {
         this.password = password;
     }
 }
