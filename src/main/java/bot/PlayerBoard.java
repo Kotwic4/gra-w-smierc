@@ -16,7 +16,7 @@ public class PlayerBoard implements IPlayerBoard {
         Collection<? extends ITile> tiles = board.getTiles();
         for(ITile tile : tiles){
             GuiTile guiTile = new GuiTile(tile,player);
-            guiBoard.put(tile.getCords(),guiTile);
+            guiBoard.put(tile.getCoords(),guiTile);
         }
     }
 
@@ -26,7 +26,7 @@ public class PlayerBoard implements IPlayerBoard {
     }
 
     @Override
-    public Collection<? extends IGuiTile> getGuiTiles(Point cords) {
+    public Collection<? extends IGuiTile> getGuiTiles() {
         return guiBoard.values();
     }
 }
