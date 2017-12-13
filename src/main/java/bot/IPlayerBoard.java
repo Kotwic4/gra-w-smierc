@@ -1,9 +1,9 @@
 package bot;
 
 import java.awt.*;
-import java.util.Collection;
+import java.util.Map;
 
 public interface IPlayerBoard {
     IGuiTile getGuiTile(Point cords);
-    Collection<? extends IGuiTile> getGuiTiles();
+    Map<Point,? extends IGuiTile> getGuiTiles();
 }

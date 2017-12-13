@@ -4,6 +4,8 @@ import board.IBoard;
 import gui.IPlayerGui;
 
 import java.awt.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Bot extends Player {
 
@@ -21,5 +23,11 @@ public abstract class Bot extends Player {
     void endTurn(IPlayerGui gui) {
         super.endTurn(gui);
         gui.endNoGuiTurn(this);
+    }
+
+    List<IGuiTile> getAccessibleTiles(){
+        return getPlayerBoard().getGuiTiles().values().stream()
+                .filter(IGuiTile::isAccessible)
+                .collect(Collectors.toList());
     }
 }

@@ -11,5 +11,4 @@ public interface ITile {
     boolean canInhabit(IPlayer player);
     boolean isStronghold();
     int getCost();
-    Point getCoords();
 }

@@ -19,18 +19,13 @@ public class RandomBot extends Bot{
     @Override
     public void makeTurn(IPlayerGui gui) {
         startTurn(gui);
-        List<IGuiTile> tiles;
-        do {
-            tiles = getPlayerBoard().getGuiTiles().stream().filter(IGuiTile::isAccessible).collect(Collectors.toList());
-            if(tiles.isEmpty()){
-                break;
-            }
-            else{
-                int index = randomGenerator.nextInt(tiles.size());
-                IGuiTile tile = tiles.get(index);
-                tile.inhabit();
-            }
-        }while(true);
+        List<IGuiTile> tiles = getAccessibleTiles();
+        while(!tiles.isEmpty()){
+            int index = randomGenerator.nextInt(tiles.size());
+            IGuiTile tile = tiles.get(index);
+            tile.inhabit();
+            tiles = getAccessibleTiles();
+        }
         endTurn(gui);
     }
 }

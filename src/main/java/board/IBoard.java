@@ -1,9 +1,9 @@
 package board;
 
 import java.awt.*;
-import java.util.Collection;
+import java.util.Map;
 
 public interface IBoard {
     ITile getTile(Point coordinates);
-    Collection<? extends ITile> getTiles();
+    Map<Point, ITile> getTiles();
 }

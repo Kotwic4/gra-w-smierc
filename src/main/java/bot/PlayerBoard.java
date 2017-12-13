@@ -1,11 +1,10 @@
 package bot;
 
 import board.IBoard;
-import board.ITile;
 
 import java.awt.*;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerBoard implements IPlayerBoard {
 
@@ -13,11 +12,10 @@ public class PlayerBoard implements IPlayerBoard {
 
     public PlayerBoard(IBoard board, Player player) {
         guiBoard = new HashMap<>();
-        Collection<? extends ITile> tiles = board.getTiles();
-        for(ITile tile : tiles){
-            GuiTile guiTile = new GuiTile(tile,player);
-            guiBoard.put(tile.getCoords(),guiTile);
-        }
+        board.getTiles().forEach((key, value) -> {
+            GuiTile guiTile = new GuiTile(value, player);
+            guiBoard.put(key, guiTile);
+        });
     }
 
     @Override
@@ -26,7 +24,9 @@ public class PlayerBoard implements IPlayerBoard {
     }
 
     @Override
-    public Collection<? extends IGuiTile> getGuiTiles() {
-        return guiBoard.values();
+    public Map<Point,? extends IGuiTile> getGuiTiles() {
+        return guiBoard;
     }
+
+
 }
