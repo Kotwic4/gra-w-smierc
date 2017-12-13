@@ -24,3 +24,9 @@ hs_err_pid*
 # IDE
 .idea
 *.iml
+
+#Gradle
+build
+out
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
