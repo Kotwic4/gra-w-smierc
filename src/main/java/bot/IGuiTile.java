@@ -5,8 +5,8 @@ import board.ITile;
 import java.util.Optional;
 
 public interface IGuiTile {
-    boolean isAccesible();
+    boolean isAccessible();
     boolean isVisible();
     void inhabit();
-    Optional<ITile> getTile();
+    Optional<? extends ITile> getTile();
 }

@@ -12,5 +12,4 @@ public interface ITile {
     boolean isStronghold();
     int getCost();
     Point getCoords();
-
 }
