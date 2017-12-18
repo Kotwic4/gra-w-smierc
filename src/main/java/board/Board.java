@@ -1,15 +1,18 @@
 package board;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 public class Board {
     private Tile[][] tiles;
     private List<Tile> strongholdList;
     private final int width;
     private final int height;
+    private final Random random;
+    private int lastAppeal;
 
     public Board(int width, int height){
+        random = new Random();
         this.width = width;
         this.height = height;
         tiles = new Tile[width][height];
@@ -39,14 +42,27 @@ public class Board {
     public void markAsStronghold(Coordinates coords){
         Tile tile = tiles[coords.getX()][coords.getY()];
         tile.setStronghold();
-        strongholdList.append(tile);
+        strongholdList.add(tile);
     }
 
     public void markAndDelete(){
+      int appeal = lastAppeal;
+      while (appeal == lastAppeal){
+        appeal = random.nextInt(10000);
+      }
+      lastAppeal = appeal;
+
+      for (Tile stronghold: strongholdList){
+        if(stronghold.isInhabitated()){
+          stronghold.getInhabitant().setAppeal(appeal);
+          stronghold.broadcastAppeal(appeal);
+        }
+      }
+
       for (int i=0; i<width; i++){
         for (int j=0; j<height; j++){
-          if(!tiles[i][j].getInhabitant())){
-            
+          if(tiles[i][j].isInhabitated() && tiles[i][j].getInhabitant().getAppeal() != appeal){
+            tiles[i][j].setInhabitant(null);
           }
         }
       }

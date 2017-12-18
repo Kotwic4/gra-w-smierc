@@ -1,13 +1,14 @@
 package board;
 
 import java.util.List;
+import java.util.LinkedList;
 
 public class Tile {
     private Organism inhabitant;
     private int cost;
     private Coordinates coords;
     private List<Tile> neighbours;
-    private boolean isStronghold;
+    private boolean stronghold;
 
     public Tile(Coordinates coords) {
       this.coords = coords;
@@ -15,7 +16,6 @@ public class Tile {
     }
 
     public boolean isInhabitated(){
-        //TODO
         if(this.inhabitant!=null){
             return true;
         }
@@ -23,7 +23,13 @@ public class Tile {
     }
 
     void broadcastAppeal(int appeal){
-        //TODO
+        for(Tile neighbour: neighbours){
+          if(neighbour.isInhabitated()){
+            if (neighbour.getInhabitant().getAppeal() == appeal) continue;
+            neighbour.getInhabitant().setAppeal(appeal);
+            neighbour.broadcastAppeal(appeal);
+          }
+        }
     }
 
     public Organism getInhabitant() {
@@ -47,10 +53,14 @@ public class Tile {
     }
 
     public void addNeighbour(Tile tile){
-      neighbours.append(tile);
+      neighbours.add(tile);
     }
 
     public void setStronghold(){
-      isStronghold = true;
+      stronghold = true;
+    }
+
+    public boolean getStronghold(){
+      return stronghold;
     }
 }
