@@ -8,7 +8,7 @@ public class Main {
         GameBuilder a = new GameBuilder(10);
         a.createBoard();
         Game game = a.getGameInstance();
-        GameSerializer.save(game, "testboard.txt");
+        GameSerializer.gsonSave(game, "testboard.txt");
         GameSerializer.load("testboard.txt");
     }
 }

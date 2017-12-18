@@ -1,5 +1,8 @@
 package GameManager;
 
+import board.Board;
+import board.BoardImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +14,7 @@ class GameBuilder {
 
     GameBuilder(int boardSize) {
         players = new ArrayList<Player>();
-        board = new Board(boardSize);
+        board = new BoardImpl(boardSize, boardSize);
         boardBuilder = new FlatBoardBuider();
     }
 
@@ -21,7 +24,6 @@ class GameBuilder {
 
     public void createBoard() {
         boardBuilder.fillBoard(board);
-        ;
     }
 
     public void createBoard(IBoardBuilder boardBuilder) {

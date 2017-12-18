@@ -1,5 +1,8 @@
 package GameManager;
 
+import board.Board;
+import board.BoardImpl;
+import board.Tile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class GameSerializer {
-    public static void save(Game game, String path) {
+    public static void gsonSave(Game game, String path) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonedGame = gson.toJson(game);
         try (PrintWriter fileWriter = new PrintWriter(path)) {
@@ -34,10 +37,14 @@ class GameSerializer {
             System.out.println(dummyGame);
             for (int i = 0; i < dummyGame.players.length; i++)
                 players.add(new Player(dummyGame.players[i].color, dummyGame.players[i].id));
-            board = new Board(dummyGame.board.size);
-            for (int i = 0; i < dummyGame.board.board.length; i++)
-                for (int j = 0; j < dummyGame.board.board[i].length; j++)
-                    board.setTile(new Tile(dummyGame.board.board[i][j].cost, dummyGame.board.board[i][j].isBase), i, j);
+            board = new BoardImpl(dummyGame.board.width,dummyGame.board.height);
+            for (int i = 0; i < dummyGame.board.tiles.length; i++)
+                for (int j = 0; j < dummyGame.board.tiles[i].length; j++){
+                    Tile tile = board.getTile(i,j);
+                    tile.setCost(dummyGame.board.tiles[i][j].cost);
+                    if(dummyGame.board.tiles[i][j].isBase)
+                        board.markAsStronghold(i,j);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -66,8 +73,9 @@ class GameSerializer {
                 DummyOrganism organism;
             }
 
-            DummyTile[][] board;
-            int size;
+            DummyTile[][] tiles;
+            int width;
+            int height;
         }
 
         DummyBoard board;
