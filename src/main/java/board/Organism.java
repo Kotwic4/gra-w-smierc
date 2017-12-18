@@ -18,5 +18,5 @@ public class Organism {
 
     void setPassword(int password) {
         this.password = password;
-    }
+    }  
 }
