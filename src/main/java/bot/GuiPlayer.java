@@ -4,7 +4,7 @@ import board.Board;
 import gui.PlayerController;
 import javafx.scene.paint.Color;
 
-public class GuiPlayer extends PlayerImpl {
+public class GuiPlayer extends Player {
 
     private PlayerController gui;
 

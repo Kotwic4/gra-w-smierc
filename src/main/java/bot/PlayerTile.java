@@ -5,48 +5,42 @@ import javafx.scene.paint.Color;
 
 import java.util.Optional;
 
-public class GuiTileImpl implements GuiTile {
+public class PlayerTile {
 
     private Tile tile;
     private boolean visible;
-    private PlayerImpl playerImpl;
+    private Player player;
 
-    GuiTileImpl(Tile tile, PlayerImpl playerImpl) {
+    PlayerTile(Tile tile, Player player) {
         this.tile = tile;
-        this.playerImpl = playerImpl;
+        this.player = player;
         visible = false;
     }
 
-    @Override
     public boolean isAccessible() {
-        return visible && tile.canInhabit(playerImpl) && tile.getCost() <= playerImpl.getRemainingPoints();
+        return visible && tile.canInhabit(player) && tile.getCost() <= player.getRemainingPoints();
     }
 
-    @Override
     public boolean isVisible() {
         //todo
         return true;
     }
 
-    @Override
     public void inhabit() {
         if(isAccessible()){
-            playerImpl.subPoints(tile.getCost());
-            tile.inhabit(playerImpl);
+            player.subPoints(tile.getCost());
+            tile.inhabit(player);
         }
     }
 
-    @Override
     public Optional<Color> getColor() {
         return visible ? tile.getInhabitant().map(Player::getColor) : Optional.empty();
     }
 
-    @Override
     public Optional<Boolean> isStronghold() {
         return visible ? Optional.of(tile.isStronghold()) : Optional.empty();
     }
 
-    @Override
     public Optional<Integer> getCost() {
         return visible ? Optional.of(tile.getCost()) : Optional.empty();
     }

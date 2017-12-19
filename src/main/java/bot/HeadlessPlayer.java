@@ -4,7 +4,7 @@ import board.Board;
 import gui.TurnCommunicator;
 import javafx.scene.paint.Color;
 
-public abstract class HeadlessPlayer extends PlayerImpl{
+public abstract class HeadlessPlayer extends Player {
 
     private TurnCommunicator turnCommunicator;
 

@@ -4,7 +4,7 @@ import board.Board;
 import gui.TurnCommunicator;
 import javafx.scene.paint.Color;
 
-public class SimpleBot extends Bot {
+public class SimpleBot extends HeadlessPlayer {
 
     public SimpleBot(Color color, String name, int id, Board board, TurnCommunicator turnCommunicator) {
         super(color, name, id, board, turnCommunicator);
@@ -12,6 +12,6 @@ public class SimpleBot extends Bot {
 
     @Override
     protected void doTurn() {
-        //todo
+        //todo Implement SimpleBot behaviour
     }
 }

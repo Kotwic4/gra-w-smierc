@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import java.util.List;
 import java.util.Random;
 
-public class RandomBot extends Bot {
+public class RandomBot extends HeadlessPlayer {
 
     private Random randomGenerator;
 
@@ -23,10 +23,10 @@ public class RandomBot extends Bot {
 
     @Override
     protected void doTurn() {
-        List<GuiTile> accessibleTiles = getPlayerBoard().getAccessibleTiles();
+        List<PlayerTile> accessibleTiles = getPlayerBoard().getAccessibleTiles();
         while (!accessibleTiles.isEmpty()) {
             int index = randomGenerator.nextInt(accessibleTiles.size());
-            GuiTile tile = accessibleTiles.get(index);
+            PlayerTile tile = accessibleTiles.get(index);
             tile.inhabit();
             accessibleTiles = getPlayerBoard().getAccessibleTiles();
         }
