@@ -1,7 +1,7 @@
 package bot;
 
 import board.Board;
-import gui.BotGui;
+import gui.TurnCommunicator;
 import javafx.scene.paint.Color;
 
 import java.util.List;
@@ -11,13 +11,14 @@ public class RandomBot extends Bot {
 
     private Random randomGenerator;
 
-    RandomBot(Color color, String name, int id, Board board, BotGui botGui, Random randomGenerator) {
-        super(color, name, id, board, botGui);
+    RandomBot(Color color, String name, int id, Board board, TurnCommunicator turnCommunicator,
+                      Random randomGenerator) {
+        super(color, name, id, board, turnCommunicator);
         this.randomGenerator = randomGenerator;
     }
 
-    public RandomBot(Color color, String name, int id, Board board, BotGui botGui) {
-        this(color, name, id, board, botGui, new Random());
+    public RandomBot(Color color, String name, int id, Board board, TurnCommunicator turnCommunicator) {
+        this(color, name, id, board, turnCommunicator, new Random());
     }
 
     @Override

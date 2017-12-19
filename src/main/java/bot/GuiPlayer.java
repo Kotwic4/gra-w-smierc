@@ -1,14 +1,14 @@
 package bot;
 
 import board.Board;
-import gui.PlayerGui;
+import gui.PlayerController;
 import javafx.scene.paint.Color;
 
 public class GuiPlayer extends PlayerImpl {
 
-    private PlayerGui gui;
+    private PlayerController gui;
 
-    public GuiPlayer(Color color, String name, int id, Board board, PlayerGui gui) {
+    public GuiPlayer(Color color, String name, int id, Board board, PlayerController gui) {
         super(color, name, id, board);
         this.gui = gui;
     }

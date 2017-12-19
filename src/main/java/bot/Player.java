@@ -1,7 +1,6 @@
 package bot;
 
 import board.Coordinates;
-import gui.PlayerGui;
 import javafx.scene.paint.Color;
 
 public interface Player {
