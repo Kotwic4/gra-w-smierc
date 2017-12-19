@@ -16,14 +16,20 @@ public abstract class Player {
     private static final int POINTS_PER_STRONGHOLDS = 1;
     private PlayerBoard playerBoard;
 
-    Player(Color color, String name, int id, Board board) {
+
+    Player(Color color, String name, int id, PlayerBoard playerBoard){
         this.color = color;
         this.name = name;
         this.id = id;
-        this.playerBoard = new PlayerBoard(board,this);
+        this.playerBoard = playerBoard;
         pointsPerTurn = 0;
         strongholdsNumber = 0;
         remainingPoints = 0;
+    }
+
+    Player(Color color, String name, int id, Board board) {
+        this(color,name,id, (PlayerBoard) null);
+        this.playerBoard = new PlayerBoard(board,this);
     }
 
     public Color getColor() {

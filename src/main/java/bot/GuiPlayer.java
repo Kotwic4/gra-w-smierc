@@ -13,8 +13,14 @@ public class GuiPlayer extends Player {
         this.gui = gui;
     }
 
+    public GuiPlayer(Color color, String name, int id, PlayerBoard board, PlayerController gui) {
+        super(color, name, id, board);
+        this.gui = gui;
+    }
+
     @Override
     public void doTurn() {
         gui.doGuiTurn(this);
     }
+
 }
