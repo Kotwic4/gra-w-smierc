@@ -2,6 +2,7 @@ package board;
 
 import java.util.List;
 import java.util.Random;
+import java.util.LinkedList;
 
 public class Board {
     private Tile[][] tiles;
@@ -21,6 +22,7 @@ public class Board {
             tiles[i][j] = new Tile(new Coordinates(i, j));
           }
         }
+        strongholdList = new LinkedList<>();
         for (int i=0; i<width; i++){
           for (int j=0; j<height; j++){
             if(i > 0 && j > 0) tiles[i][j].addNeighbour(tiles[i-1][j-1]);
@@ -62,7 +64,7 @@ public class Board {
       for (int i=0; i<width; i++){
         for (int j=0; j<height; j++){
           if(tiles[i][j].isInhabitated() && tiles[i][j].getInhabitant().getAppeal() != appeal){
-            tiles[i][j].setInhabitant(null);
+            tiles[i][j].uncheckedSetIntabitant(null);
           }
         }
       }

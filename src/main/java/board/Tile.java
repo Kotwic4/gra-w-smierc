@@ -36,8 +36,25 @@ public class Tile {
         return inhabitant;
     }
 
-    public void setInhabitant(Organism inhabitant) {
-        this.inhabitant = inhabitant;
+    public void setInhabitant(Organism inhabitant) throws InvalidOrganismPositionException{
+        // Check, if this Player's organism would have a neighbour (connected to the stronghold) if it was on this Tile.
+        int nation = inhabitant.getNation();
+        boolean  managedToSet = false;
+        for (Tile neighbour: neighbours){
+          if (neighbour.isInhabitated() && neighbour.getInhabitant().getNation() == nation){
+            this.inhabitant = inhabitant;
+            managedToSet = true;
+            break;
+          }
+        }
+        if (!managedToSet){
+          throw new InvalidOrganismPositionException(inhabitant);
+        }
+    }
+
+    public void uncheckedSetIntabitant(Organism inhabitant){
+      // Force set inhabitant without checking neighbours - for stronghold's organism initialization
+      this.inhabitant = inhabitant;
     }
 
     public int getCost() {
@@ -60,7 +77,7 @@ public class Tile {
       stronghold = true;
     }
 
-    public boolean getStronghold(){
+    public boolean isStronghold(){
       return stronghold;
     }
 }

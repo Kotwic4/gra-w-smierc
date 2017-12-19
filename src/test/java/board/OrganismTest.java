@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class OrganismTest {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception {      
     }
 
     @After
