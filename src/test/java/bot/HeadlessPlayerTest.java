@@ -1,5 +1,6 @@
 package bot;
 
+import board.Board;
 import gui.TurnCommunicator;
 import org.junit.After;
 import org.junit.Before;
@@ -65,5 +66,21 @@ public class HeadlessPlayerTest {
         inOrder.verify(turnCommunicator).startHeadlessTurn(headlessPlayer);
         inOrder.verify(playerBoard).getAccessibleTiles();
         inOrder.verify(turnCommunicator).endHeadlessTurn(headlessPlayer);
+    }
+
+    @Test
+    public void constructor() {
+        Board board = mock(Board.class);
+        when(board.getHeight()).thenReturn(0);
+        when(board.getWidth()).thenReturn(0);
+        HeadlessPlayer player = new HeadlessPlayer(null, null, 0,board,null) {
+            @Override
+            protected void doTurn() {
+
+            }
+        };
+        verify(board).getHeight();
+        verify(board).getWidth();
+        verifyNoMoreInteractions(board);
     }
 }
