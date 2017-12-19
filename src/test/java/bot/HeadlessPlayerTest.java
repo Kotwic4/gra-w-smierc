@@ -73,7 +73,7 @@ public class HeadlessPlayerTest {
         Board board = mock(Board.class);
         when(board.getHeight()).thenReturn(0);
         when(board.getWidth()).thenReturn(0);
-        HeadlessPlayer player = new HeadlessPlayer(null, null, 0,board,null) {
+        new HeadlessPlayer(null, null, 0,board,null) {
             @Override
             protected void doTurn() {
 

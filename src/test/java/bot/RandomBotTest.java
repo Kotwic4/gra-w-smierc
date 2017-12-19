@@ -86,7 +86,7 @@ public class RandomBotTest {
         Board board = mock(Board.class);
         when(board.getHeight()).thenReturn(0);
         when(board.getWidth()).thenReturn(0);
-        RandomBot bot = new RandomBot(null,null,0,board,null);
+        new RandomBot(null,null,0,board,null);
         verify(board).getHeight();
         verify(board).getWidth();
         verifyNoMoreInteractions(board);
