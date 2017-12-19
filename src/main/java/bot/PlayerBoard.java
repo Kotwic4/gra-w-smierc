@@ -56,5 +56,9 @@ public class PlayerBoard {
                 .collect(Collectors.toList());
     }
 
+    void updateVision(){
+        //todo
+    }
+
 
 }

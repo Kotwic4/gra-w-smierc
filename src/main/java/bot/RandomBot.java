@@ -31,4 +31,5 @@ public class RandomBot extends HeadlessPlayer {
             accessibleTiles = getPlayerBoard().getAccessibleTiles();
         }
     }
+
 }
