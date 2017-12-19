@@ -1,15 +1,19 @@
 package bot;
 
 import gui.TurnCommunicator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
+import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
 
 public class HeadlessPlayerTest {
 
+    @Mock
     private PlayerBoard playerBoard;
+    @Mock
     private TurnCommunicator turnCommunicator;
     private HeadlessPlayer headlessPlayer;
     private InOrder inOrder;
@@ -27,39 +31,39 @@ public class HeadlessPlayerTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         playerBoard = mock(PlayerBoard.class);
         turnCommunicator = mock(TurnCommunicator.class);
         headlessPlayer = new TestHeadlessPlayer(playerBoard, turnCommunicator);
         inOrder = inOrder(playerBoard, turnCommunicator);
     }
 
+    @After
+    public void tearDown() {
+        verifyNoMoreInteractions(playerBoard);
+        verifyNoMoreInteractions(turnCommunicator);
+    }
 
     @Test
     public void startTurn() {
         headlessPlayer.startTurn();
-        inOrder.verify(playerBoard, times(1)).updateVision();
-        inOrder.verify(turnCommunicator, times(1)).startHeadlessTurn(headlessPlayer);
-        verifyNoMoreInteractions(playerBoard);
-        verifyNoMoreInteractions(turnCommunicator);
+        inOrder.verify(playerBoard).updateVision();
+        inOrder.verify(turnCommunicator).startHeadlessTurn(headlessPlayer);
+
     }
 
     @Test
     public void endTurn() {
         headlessPlayer.endTurn();
-        verify(turnCommunicator, times(1)).endHeadlessTurn(headlessPlayer);
-        verifyNoMoreInteractions(playerBoard);
-        verifyNoMoreInteractions(turnCommunicator);
+        verify(turnCommunicator).endHeadlessTurn(headlessPlayer);
     }
 
     @Test
     public void makeTurn() {
         headlessPlayer.makeTurn();
-        inOrder.verify(playerBoard, times(1)).updateVision();
-        inOrder.verify(turnCommunicator, times(1)).startHeadlessTurn(headlessPlayer);
-        inOrder.verify(playerBoard, times(1)).getAccessibleTiles();
-        inOrder.verify(turnCommunicator, times(1)).endHeadlessTurn(headlessPlayer);
-        verifyNoMoreInteractions(playerBoard);
-        verifyNoMoreInteractions(turnCommunicator);
+        inOrder.verify(playerBoard).updateVision();
+        inOrder.verify(turnCommunicator).startHeadlessTurn(headlessPlayer);
+        inOrder.verify(playerBoard).getAccessibleTiles();
+        inOrder.verify(turnCommunicator).endHeadlessTurn(headlessPlayer);
     }
 }
