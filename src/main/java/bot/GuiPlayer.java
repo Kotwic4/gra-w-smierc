@@ -1,21 +1,20 @@
 package bot;
 
-import board.IBoard;
-import gui.IPlayerGui;
+import board.Board;
+import gui.PlayerGui;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
+public class GuiPlayer extends PlayerImpl {
 
-public class GuiPlayer extends Player {
+    private PlayerGui gui;
 
-
-    public GuiPlayer(Color color, String name, int id, IBoard board) {
+    public GuiPlayer(Color color, String name, int id, Board board, PlayerGui gui) {
         super(color, name, id, board);
+        this.gui = gui;
     }
 
     @Override
-    public void makeTurn(IPlayerGui gui) {
-        startTurn(gui);
-        gui.makeGuiTurn(this);
-        endTurn(gui);
+    public void doTurn() {
+        gui.doGuiTurn(this);
     }
 }

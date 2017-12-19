@@ -1,31 +1,33 @@
 package bot;
 
-import board.IBoard;
-import gui.IPlayerGui;
+import board.Board;
+import gui.BotGui;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
-public class RandomBot extends Bot{
+public class RandomBot extends Bot {
 
     private Random randomGenerator;
 
-    public RandomBot(Color color, String name, int id, IBoard board) {
-        super(color, name, id, board);
+    RandomBot(Color color, String name, int id, Board board, BotGui botGui, Random randomGenerator) {
+        super(color, name, id, board, botGui);
+        this.randomGenerator = randomGenerator;
+    }
+
+    public RandomBot(Color color, String name, int id, Board board, BotGui botGui) {
+        this(color, name, id, board, botGui, new Random());
     }
 
     @Override
-    public void makeTurn(IPlayerGui gui) {
-        startTurn(gui);
-        List<IGuiTile> tiles = getAccessibleTiles();
-        while(!tiles.isEmpty()){
-            int index = randomGenerator.nextInt(tiles.size());
-            IGuiTile tile = tiles.get(index);
+    protected void doTurn() {
+        List<GuiTile> accessibleTiles = getPlayerBoard().getAccessibleTiles();
+        while (!accessibleTiles.isEmpty()) {
+            int index = randomGenerator.nextInt(accessibleTiles.size());
+            GuiTile tile = accessibleTiles.get(index);
             tile.inhabit();
-            tiles = getAccessibleTiles();
+            accessibleTiles = getPlayerBoard().getAccessibleTiles();
         }
-        endTurn(gui);
     }
 }
