@@ -11,14 +11,15 @@ public class RandomBot extends HeadlessPlayer {
 
     private Random randomGenerator;
 
-    RandomBot(Color color, String name, int id, Board board, TurnCommunicator turnCommunicator,
-                      Random randomGenerator) {
+    RandomBot(Color color, String name, int id, PlayerBoard board, TurnCommunicator turnCommunicator,
+              Random randomGenerator) {
         super(color, name, id, board, turnCommunicator);
         this.randomGenerator = randomGenerator;
     }
 
     public RandomBot(Color color, String name, int id, Board board, TurnCommunicator turnCommunicator) {
-        this(color, name, id, board, turnCommunicator, new Random());
+        super(color, name, id, board, turnCommunicator);
+        this.randomGenerator = new Random();
     }
 
     @Override
