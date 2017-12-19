@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 public class TileTest {
     Board board;
     Coordinates[] coordinates;
+    Tile[] tiles;
     int LENGTH = 6;
 
     @Before
@@ -25,10 +26,8 @@ public class TileTest {
       coordinates[4] = new Coordinates(1,4);
       coordinates[5] = new Coordinates(4,4);
 
-      Tile[] tiles = new Tile[LENGTH];
       for (int i=0; i<LENGTH; i++){
-        tiles[i] = new Tile(coordinates[i]);
-        tiles[i].uncheckedSetIntabitant(new Organism(1));
+         board.getTile(coordinates[i]).uncheckedSetIntabitant(new Organism(1));
       }
       board.markAsStronghold(coordinates[0]);
     }
