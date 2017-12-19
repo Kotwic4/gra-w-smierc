@@ -15,6 +15,10 @@ public class PlayerBoard {
     private int width;
     private int height;
 
+    PlayerBoard(PlayerTile[][] guiTiles) {
+        this.guiTiles = guiTiles;
+    }
+
     PlayerBoard(Board board, Player player) {
         width = board.getWidth();
         height = board.getHeight();
