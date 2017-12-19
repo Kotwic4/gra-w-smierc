@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface Tile {
     boolean isInhabitated();
 
-    Optional<? extends Player> getInhabitant();
+    Optional<Player> getInhabitant();
 
     void inhabit(Player player);
 

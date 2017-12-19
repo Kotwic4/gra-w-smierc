@@ -14,7 +14,7 @@ public class PlayerTile {
     PlayerTile(Tile tile, Player player) {
         this.tile = tile;
         this.player = player;
-        visible = false;
+        visible = true;
     }
 
     public boolean isAccessible() {
@@ -22,8 +22,11 @@ public class PlayerTile {
     }
 
     public boolean isVisible() {
-        //todo
-        return true;
+        return visible;
+    }
+
+    void setVisible(boolean visible){
+        this.visible = visible;
     }
 
     public void inhabit() {
