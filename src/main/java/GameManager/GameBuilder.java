@@ -12,9 +12,9 @@ class GameBuilder {
     List<Player> players;
     IBoardBuilder boardBuilder;
 
-    GameBuilder(int boardSize) {
+    GameBuilder(int boardWidth, int boardHeight) {
         players = new ArrayList<Player>();
-        board = new BoardImpl(boardSize, boardSize);
+        board = new BoardImpl(boardWidth, boardHeight);
         boardBuilder = new FlatBoardBuider();
     }
 

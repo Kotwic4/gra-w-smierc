@@ -1,6 +1,7 @@
 package GameManager;
 
-import javafx.scene.paint.Color;
+
+import java.awt.*;
 
 public class Player {
     Color color;
