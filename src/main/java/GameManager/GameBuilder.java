@@ -1,7 +1,6 @@
 package GameManager;
 
 import board.Board;
-import board.BoardImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ class GameBuilder {
 
     GameBuilder(int boardWidth, int boardHeight) {
         players = new ArrayList<Player>();
-        board = new BoardImpl(boardWidth, boardHeight);
+        board = new Board(boardWidth, boardHeight);
         boardBuilder = new FlatBoardBuider();
     }
 

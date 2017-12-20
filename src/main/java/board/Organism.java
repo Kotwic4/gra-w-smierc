@@ -2,7 +2,7 @@ package board;
 
 public class Organism {
     private int nation;
-    private int password;
+    private int appeal;
 
     public Organism(int nation){
         this.nation = nation;
@@ -12,11 +12,11 @@ public class Organism {
         return nation;
     }
 
-    int getPassword() {
-        return password;
+    int getAppeal() {
+        return appeal;
     }
 
-    void setPassword(int password) {
-        this.password = password;
+    void setAppeal(int appeal) {
+        this.appeal = appeal;
     }
 }

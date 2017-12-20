@@ -1,5 +1,6 @@
 package GameManager;
 
+import board.Coordinates;
 import board.Tile;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class GameSerializerTest {
                 tiles[i][j].setCost(3 * i + j);
 
             }
-            gb.board.markAsStronghold(1,i);
+            gb.board.markAsStronghold(new Coordinates(1,i));
         }
         GameSerializer.gsonSave(gb.getGameInstance(), "test.txt");
         Game game = GameSerializer.load("test.txt");
