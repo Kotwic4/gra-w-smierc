@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class Tile {
     private Organism inhabitant;
     private int cost;
-    private Coordinates coords;
+    private transient Coordinates coords;
     private transient List<Tile> neighbours;
     private boolean stronghold;
 

@@ -34,7 +34,6 @@ class GameSerializer {
 
             DummyGame dummyGame = gson.fromJson(reader, DummyGame.class);
             players = new ArrayList<>();
-            System.out.println(dummyGame);
             for (int i = 0; i < dummyGame.players.length; i++)
                 players.add(new Player(dummyGame.players[i].color, dummyGame.players[i].id));
             board = new Board(dummyGame.board.width,dummyGame.board.height);
@@ -42,7 +41,7 @@ class GameSerializer {
                 for (int j = 0; j < dummyGame.board.tiles[i].length; j++){
                     Tile tile = board.getTile(new Coordinates(i,j));
                     tile.setCost(dummyGame.board.tiles[i][j].cost);
-                    if(dummyGame.board.tiles[i][j].isBase)
+                    if(dummyGame.board.tiles[i][j].stronghold)
                         board.markAsStronghold(new Coordinates(i,j));
             }
         } catch (FileNotFoundException e) {
@@ -65,11 +64,11 @@ class GameSerializer {
         class DummyBoard {
             class DummyTile {
                 class DummyOrganism {
-                    int playerId;
+                    int nation;
                 }
 
                 int cost;
-                boolean isBase;
+                boolean stronghold;
                 DummyOrganism organism;
             }
 

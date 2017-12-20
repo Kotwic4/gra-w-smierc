@@ -6,11 +6,11 @@ import java.util.LinkedList;
 
 public class Board {
     private Tile[][] tiles;
-    private List<Tile> strongholdList;
+    private transient List<Tile> strongholdList;
     private final int width;
     private final int height;
-    private final Random random;
-    private int lastAppeal;
+    private transient final Random random;
+    private transient int lastAppeal;
 
     public Board(int width, int height){
         random = new Random();
