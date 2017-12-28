@@ -9,10 +9,10 @@ import static org.junit.Assert.*;
 /**
  * Created by Paweł Taborowski on 18.12.17.
  */
-public class TileTest {
+public class TileImplementationTest {
     Board board;
     Coordinates[] coordinates;
-    Tile[] tiles;
+    TileImplementation[] tiles;
     int LENGTH = 6;
 
     @Before
@@ -43,7 +43,7 @@ public class TileTest {
     @Test
     public void broadcastAppeal() {
       try {
-          Tile startingTile = board.getTile(new Coordinates(2, 2));
+          TileImplementation startingTile = board.getTile(new Coordinates(2, 2));
           int fakeAppeal = 5;
           startingTile.broadcastAppeal(fakeAppeal);
 

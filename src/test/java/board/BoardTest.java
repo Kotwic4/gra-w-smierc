@@ -4,8 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 /**
@@ -31,7 +29,7 @@ public class BoardTest {
     public void getTile() {
         try {
             Coordinates coords = new Coordinates(4, 3);
-            Tile tile = board.getTile(coords);
+            TileImplementation tile = board.getTile(coords);
             assertEquals(coords.getX(), tile.getCoords().getX());
             assertEquals(coords.getY(), tile.getCoords().getY());
 
@@ -41,7 +39,7 @@ public class BoardTest {
 
         Coordinates invalidCoords = new Coordinates(5,5);
         try{
-            Tile tile = board.getTile(invalidCoords);
+            TileImplementation tile = board.getTile(invalidCoords);
             fail();
         }catch(InvalidTileCoordsException e){
             // It's OK to be here.

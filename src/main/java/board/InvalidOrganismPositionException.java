@@ -5,6 +5,6 @@ package board;
  */
 public class InvalidOrganismPositionException extends Exception{
     public InvalidOrganismPositionException(Organism organism) {
-        super("Impossible to put " + organism.getNation() + "'s Organism on a tile with no connection to a Stronghold");
+        super("Impossible to put " + organism.getNation() + "'s Organism on a tile with either no connection to a Stronghold or too many friendly neighbouring units");
     }
 }
