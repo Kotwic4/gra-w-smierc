@@ -12,22 +12,10 @@ import static org.junit.Assert.*;
 public class OrganismTest {
 
     @Before
-    public void setUp() throws Exception {      
+    public void setUp() throws Exception {
     }
 
     @After
     public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void getNation() {
-    }
-
-    @Test
-    public void getAppeal() {
-    }
-
-    @Test
-    public void setAppeal() {
     }
 }

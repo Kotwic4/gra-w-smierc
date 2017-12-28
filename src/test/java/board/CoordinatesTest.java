@@ -24,14 +24,6 @@ public class CoordinatesTest {
     }
 
     @Test
-    public void setX() {
-    }
-
-    @Test
     public void getY() {
-    }
-
-    @Test
-    public void setY() {
     }
 }

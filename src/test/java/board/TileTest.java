@@ -42,13 +42,17 @@ public class TileTest {
 
     @Test
     public void broadcastAppeal() {
-      Tile startingTile = board.getTile(new Coordinates(2,2));
-      int mockAppeal = 5;
-      startingTile.broadcastAppeal(mockAppeal);
+      try {
+          Tile startingTile = board.getTile(new Coordinates(2, 2));
+          int fakeAppeal = 5;
+          startingTile.broadcastAppeal(fakeAppeal);
 
-      for (int i = 0; i < LENGTH; i++){
-        if (i == 5) assertNotEquals(mockAppeal, board.getTile(coordinates[i]).getInhabitant().getAppeal());
-        else assertEquals(mockAppeal, board.getTile(coordinates[i]).getInhabitant().getAppeal());
+          for (int i = 0; i < LENGTH; i++) {
+              if (i == 5) assertNotEquals(fakeAppeal, board.getTile(coordinates[i]).getInhabitant().getAppeal());
+              else assertEquals(fakeAppeal, board.getTile(coordinates[i]).getInhabitant().getAppeal());
+          }
+      }catch (InvalidTileCoordsException e){
+          fail();
       }
     }
 

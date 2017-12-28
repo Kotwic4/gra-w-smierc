@@ -1,7 +1,7 @@
 package board;
 
 public class Organism {
-    private int nation;
+    private final int nation;
     private int appeal;
 
     public Organism(int nation){

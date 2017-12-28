@@ -37,17 +37,21 @@ public class Board {
         }
     }
 
-    public Tile getTile(Coordinates coords){
-        return tiles[coords.getX()][coords.getY()];
+    public Tile getTile(Coordinates coords) throws InvalidTileCoordsException{
+        try {
+            return tiles[coords.getX()][coords.getY()];
+        }catch(ArrayIndexOutOfBoundsException e){
+            throw new InvalidTileCoordsException(coords);
+        }
     }
 
-    public void markAsStronghold(Coordinates coords){
-        Tile tile = tiles[coords.getX()][coords.getY()];
+    public void markAsStronghold(Coordinates coords) throws InvalidTileCoordsException{
+        Tile tile = getTile(coords);
         tile.setStronghold();
         strongholdList.add(tile);
     }
 
-    public void markAndDelete(){
+    public void markAndClear(){
       int appeal = lastAppeal;
       while (appeal == lastAppeal){
         appeal = random.nextInt(10000);
@@ -70,13 +74,15 @@ public class Board {
       }
     }
 
-    public Tile[][] getTiles() {
-        return tiles;
-    }
+//    This shouldn't be here, right?
+//    public Tile[][] getTiles() {
+//        return tiles;
+//    }
 
-    public List<Tile> getStrongholdList() {
-        return strongholdList;
-    }
+//    I don't remember whether this should stay here?
+//    public List<Tile> getStrongholdList() {
+//        return strongholdList;
+//    }
 
     public int getWidth(){
       return width;
