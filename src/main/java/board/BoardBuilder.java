@@ -56,7 +56,7 @@ public class BoardBuilder {
 
     public Board generateBoard(){
         Board board = new Board(tiles, strongholdList);
-    return board;
+        return board;
     }
 
     public int getWidth(){

@@ -58,4 +58,5 @@ public class Board {
     public int getHeight(){
       return height;
     }
+
 }
