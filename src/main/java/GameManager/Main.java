@@ -10,7 +10,7 @@ public class Main {
         //Game game = a.getGameInstance();
 
         Game game = GameSerializer.load("testboard.txt");
-        GameSerializer.gsonSave(game, "testboard.txt");
+        GameSerializer.save(game, "testboard.txt");
     }
 }
 

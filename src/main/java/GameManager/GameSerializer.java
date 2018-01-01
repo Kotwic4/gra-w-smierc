@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class GameSerializer {
-    public static void gsonSave(Game game, String path) {
+    public static void save(Game game, String path) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonedGame = gson.toJson(game);
         try (PrintWriter fileWriter = new PrintWriter(path)) {
