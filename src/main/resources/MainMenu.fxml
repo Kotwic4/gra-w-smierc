@@ -7,6 +7,6 @@
         <Button fx:id="newGameButton" text="Nowa Gra" onAction="#sceneHandler"/>
         <Button fx:id="boardEditorButton" text="Edytor plansz"/>
         <Button fx:id="settingsButton" text="Ustawienia"/>
-        <Button fx:id="exitButton" text="Wyjście"/>
+        <Button fx:id="exitButton" text="Wyjście" onAction="#exitButtonHandler"/>
     </children>
 </VBox>

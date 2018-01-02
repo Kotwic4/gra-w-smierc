@@ -21,8 +21,8 @@
             </VBox>
             <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <VBox >
-                <Button text="Koniec tury"/>
-                <Button text="Poddaję się"/>
+                <Button fx:id="endTurnButton" text="Koniec tury" onAction="#endTurnButtonHandler"/>
+                <Button fx:id="surrenderButton" text="Poddaję się" onAction="#surrenderButtonHandler"/>
             </VBox>
         </HBox>
 
