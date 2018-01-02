@@ -1,8 +1,10 @@
 package board;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -10,82 +12,55 @@ import static org.junit.Assert.*;
  * Created by Paweł Taborowski on 18.12.17.
  */
 public class TileImplementationTest {
-    Board board;
-    Coordinates[] coordinates;
-    TileImplementation[] tiles;
-    int LENGTH = 6;
+    private BoardBuilder boardBuilder;
+    private List<TileImplementation> connectedTiles;
+    private TileImplementation notConnectedTile;
+    private int LENGTH = 5;
 
     @Before
     public void setUp() throws Exception {
-      /* board = new Board(5,6);
-      coordinates = new Coordinates[LENGTH];
-      coordinates[0] = new Coordinates(3,2);
-      coordinates[1] = new Coordinates(2,2);
-      coordinates[2] = new Coordinates(1,2);
-      coordinates[3] = new Coordinates(1,3);
-      coordinates[4] = new Coordinates(1,4);
-      coordinates[5] = new Coordinates(4,4);
+      boardBuilder = new BoardBuilder(5,6);
+      connectedTiles = new LinkedList<>();
+      connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(3,2)));
+      connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(2,2)));
+      connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(1,2)));
+      connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(1,3)));
+      connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(1,4)));
+      notConnectedTile = boardBuilder.getTileImplementation(new Coordinates(4,4));
+      /*
+      Board being generated:
+      _____
+      _#__#
+      _#___
+      _###_
+      _____
+      _____
+       */
 
-      for (int i=0; i<LENGTH; i++){
-         board.getTile(coordinates[i]).uncheckedSetIntabitant(new Organism(1));
+      for (TileImplementation tile: connectedTiles){
+         tile.uncheckedSetIntabitant(new Organism(1));
       }
-      board.markAsStronghold(coordinates[0]); */
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void isInhabitated() {
+      notConnectedTile.uncheckedSetIntabitant(new Organism(1));
     }
 
     @Test
     public void broadcastAppeal() {
-        /*
       try {
-          TileImplementation startingTile = board.getTile(new Coordinates(2, 2));
+          Tile startingTile = boardBuilder.getTileImplementation(new Coordinates(2, 2));
           int fakeAppeal = 5;
           startingTile.broadcastAppeal(fakeAppeal);
 
-          for (int i = 0; i < LENGTH; i++) {
-              if (i == 5) assertNotEquals(fakeAppeal, board.getTile(coordinates[i]).getInhabitant().getAppeal());
-              else assertEquals(fakeAppeal, board.getTile(coordinates[i]).getInhabitant().getAppeal());
+          for (Tile connectedTile: connectedTiles) {
+              assertEquals(fakeAppeal, connectedTile.getInhabitant().getAppeal());
           }
+
+          assertNotEquals(fakeAppeal, notConnectedTile.getInhabitant().getAppeal());
       }catch (InvalidTileCoordsException e){
           fail();
-      } */
-    }
-
-    @Test
-    public void getInhabitant() {
+      }
     }
 
     @Test
     public void setInhabitant() {
-    }
-
-    @Test
-    public void getCost() {
-    }
-
-    @Test
-    public void setCost() {
-    }
-
-    @Test
-    public void getCoords() {
-    }
-
-    @Test
-    public void addNeighbour() {
-    }
-
-    @Test
-    public void setStronghold() {
-    }
-
-    @Test
-    public void getStronghold() {
     }
 }

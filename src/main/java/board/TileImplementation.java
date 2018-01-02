@@ -17,10 +17,7 @@ class TileImplementation implements Tile{
     }
 
     public boolean isInhabitated(){
-        if(this.inhabitant!=null){
-            return true;
-        }
-        return false;
+        return this.inhabitant != null;
     }
 
     public void broadcastAppeal(int appeal){
@@ -38,7 +35,6 @@ class TileImplementation implements Tile{
     }
 
     public void setInhabitant(Organism inhabitant) throws InvalidOrganismPositionException{
-        // Check, if this Player's organism would have a neighbour (connected to the stronghold) if it was on this Tile.
         if(checkIfInhabitable(inhabitant)){
             this.inhabitant = inhabitant;
         } else {
@@ -58,7 +54,7 @@ class TileImplementation implements Tile{
     }
 
     public void uncheckedSetIntabitant(Organism inhabitant){
-      // Force setting inhabitant without checking neighbours - for stronghold's organism initialization
+      // Force setting inhabitant without checking neighbours - required for stronghold's organism initialization
       this.inhabitant = inhabitant;
     }
 
