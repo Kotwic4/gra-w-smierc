@@ -25,6 +25,7 @@ public class PlayerBoard {
                 playerTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x, y)), player);
             }
         }
+        //todo set tiles neighbours
         return new PlayerBoard(playerTiles);
     }
 

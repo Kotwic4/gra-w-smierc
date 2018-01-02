@@ -3,6 +3,7 @@ package bot;
 import board.Tile;
 import javafx.scene.paint.Color;
 
+import java.util.List;
 import java.util.Optional;
 
 public class PlayerTile {
@@ -10,6 +11,7 @@ public class PlayerTile {
     private Tile tile;
     private boolean visible;
     private Player player;
+    private List<PlayerTile> neighbours;
 
     PlayerTile(Tile tile, Player player) {
         this.tile = tile;
@@ -46,5 +48,13 @@ public class PlayerTile {
 
     public Optional<Integer> getCost() {
         return visible ? Optional.of(tile.getCost()) : Optional.empty();
+    }
+
+    public List<PlayerTile> getNeighbours() {
+        return neighbours;
+    }
+
+    public void setNeighbours(List<PlayerTile> neighbours) {
+        this.neighbours = neighbours;
     }
 }
