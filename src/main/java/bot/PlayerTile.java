@@ -16,7 +16,7 @@ public class PlayerTile {
     PlayerTile(Tile tile, Player player) {
         this.tile = tile;
         this.player = player;
-        visible = false;
+        visible = true; //todo change to false when PlayerBoard update implemented
     }
 
     public boolean isAccessible() {
