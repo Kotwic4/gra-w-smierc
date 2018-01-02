@@ -14,7 +14,7 @@ public class PlayerTile {
     PlayerTile(Tile tile, Player player) {
         this.tile = tile;
         this.player = player;
-        visible = true;
+        visible = false;
     }
 
     public boolean isAccessible() {
@@ -25,12 +25,12 @@ public class PlayerTile {
         return visible;
     }
 
-    void setVisible(boolean visible){
+    void setVisible(boolean visible) {
         this.visible = visible;
     }
 
     public void inhabit() {
-        if(isAccessible()){
+        if (isAccessible()) {
             player.subPoints(tile.getCost());
             tile.inhabit(player);
         }

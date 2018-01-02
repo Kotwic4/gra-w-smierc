@@ -11,6 +11,5 @@ public class CheatBot extends HeadlessPlayer {
     @Override
     protected void doTurn(Player player) {
         //todo Implement CheatBot behaviour
-        super.doTurn(player);
     }
 }

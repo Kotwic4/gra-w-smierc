@@ -9,9 +9,7 @@ import org.mockito.Mock;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class PlayerTileTest {
@@ -144,7 +142,7 @@ public class PlayerTileTest {
         playerTile.setVisible(true);
         when(tile.getInhabitant()).thenReturn(Optional.of(player));
         when(player.getColor()).thenReturn(Color.BLACK);
-        assertEquals(playerTile.getColor().orElseThrow(Exception::new),Color.BLACK);
+        assertEquals(playerTile.getColor().orElseThrow(Exception::new), Color.BLACK);
         verify(tile).getInhabitant();
         verify(player).getColor();
     }

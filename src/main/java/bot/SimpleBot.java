@@ -12,6 +12,5 @@ public class SimpleBot extends HeadlessPlayer {
     @Override
     protected void doTurn(Player player) {
         //todo Implement SimpleBot behaviour
-        super.doTurn(player);
     }
 }

@@ -16,9 +16,9 @@ public class Player {
     private PlayerStrategy playerStrategy = null;
     private static final int VISIBLE_RANGE = 5;
     private static final int POINTS_PER_ORGANISM = 1;
-    private static final int POINTS_PER_STRONGHOLDS = 1;
+    private static final int POINTS_PER_STRONGHOLDS = 10;
 
-    Player(Color color, String name, int id){
+    Player(Color color, String name, int id) {
         this.color = color;
         this.name = name;
         this.id = id;
@@ -48,35 +48,32 @@ public class Player {
         return strongholdsNumber;
     }
 
-    void setPlayerStrategy(PlayerStrategy playerStrategy){
+    public void setPlayerStrategy(PlayerStrategy playerStrategy) {
         this.playerStrategy = playerStrategy;
     }
 
     public void makeTurn() {
-        playerStrategy.doTurn(this);
+        if(playerStrategy != null){
+            playerStrategy.startTurn(this);
+            playerStrategy.doTurn(this);
+            playerStrategy.endTurn(this);
+        }
     }
 
-    public void createPlayerBoard(Board board){
-        int width = board.getWidth();
-        int height = board.getHeight();
-        PlayerTile[][] playerTiles = new PlayerTile[width][height];
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                playerTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x,y)), this);
-            }
-        }
-        this.playerBoard = new PlayerBoard(playerTiles);
+    public void setPlayerBoard(PlayerBoard playerBoard){
+        this.playerBoard = playerBoard;
     }
 
     public PlayerBoard getPlayerBoard() {
         return playerBoard;
     }
 
-    void addPoints(int value){
+    void addPoints(int value) {
         remainingPoints += value;
     }
 
-    void subPoints(int cost) {
+    void subPoints(int cost) throws NotEnoughPointsException {
+        if(cost > remainingPoints) throw new NotEnoughPointsException();
         remainingPoints -= cost;
     }
 
@@ -86,6 +83,7 @@ public class Player {
     }
 
     public void removeStronhold() {
+        if(strongholdsNumber == 0) throw new PlayerHaveNoStrongholdsException();
         pointsPerTurn -= POINTS_PER_STRONGHOLDS;
         strongholdsNumber--;
     }
@@ -101,10 +99,10 @@ public class Player {
     }
 
     public boolean isAlive() {
-        return strongholdsNumber == 0;
+        return strongholdsNumber != 0;
     }
 
-    int getVisibleRange(){
+    int getVisibleRange() {
         return VISIBLE_RANGE;
     }
 

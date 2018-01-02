@@ -1,5 +1,6 @@
 package bot;
 
+import board.Board;
 import board.Coordinates;
 
 import java.util.ArrayList;
@@ -15,7 +16,19 @@ public class PlayerBoard {
     private int width;
     private int height;
 
-    private boolean checkCoords(Coordinates cords){
+    public PlayerBoard createPlayerBoard(Board board, Player player) {
+        int width = board.getWidth();
+        int height = board.getHeight();
+        PlayerTile[][] playerTiles = new PlayerTile[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                playerTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x, y)), player);
+            }
+        }
+        return new PlayerBoard(playerTiles);
+    }
+
+    private boolean checkCoords(Coordinates cords) {
         return cords.getX() < width && cords.getY() < height;
     }
 
@@ -26,7 +39,7 @@ public class PlayerBoard {
     }
 
     public Optional<PlayerTile> getPlayerTile(Coordinates cords) {
-        if(checkCoords(cords)) return Optional.empty();
+        if (checkCoords(cords)) return Optional.empty();
         else return Optional.of(playerTiles[cords.getX()][cords.getY()]);
     }
 
@@ -38,9 +51,9 @@ public class PlayerBoard {
         return height;
     }
 
-    public List<PlayerTile> getAccessibleTiles(){
+    public List<PlayerTile> getAccessibleTiles() {
         List<PlayerTile> list = new ArrayList<>();
-        for(PlayerTile[] array : playerTiles){
+        for (PlayerTile[] array : playerTiles) {
             list.addAll(Arrays.asList(array));
         }
         return list.stream()
@@ -48,7 +61,7 @@ public class PlayerBoard {
                 .collect(Collectors.toList());
     }
 
-    void update(){
+    void update() {
         //todo
     }
 

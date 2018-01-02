@@ -1,6 +1,5 @@
 package bot;
 
-import gui.TurnCommunicator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,43 +8,38 @@ import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
 
-public class HeadlessPlayerTest {
+public class PlayerStrategyTest {
 
-    @Mock
-    private PlayerBoard playerBoard;
-    @Mock
-    private TurnCommunicator turnCommunicator;
     @Mock
     private Player player;
+    @Mock
+    private PlayerBoard playerBoard;
 
-    private HeadlessPlayer headlessPlayer;
+    private PlayerStrategy playerStrategy;
     private InOrder inOrder;
 
     @Before
     public void setUp() {
-        playerBoard = mock(PlayerBoard.class);
-        turnCommunicator = mock(TurnCommunicator.class);
         player = mock(Player.class);
-        headlessPlayer = new HeadlessPlayer(turnCommunicator) {
+        playerBoard = mock(PlayerBoard.class);
+        playerStrategy = new PlayerStrategy() {
             @Override
             protected void doTurn(Player player) {
-                player.getPlayerBoard().getAccessibleTiles();
             }
         };
-        inOrder = inOrder(playerBoard, turnCommunicator, player);
+        inOrder = inOrder(playerBoard, player);
     }
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(playerBoard, turnCommunicator, player);
+        verifyNoMoreInteractions(playerBoard, player);
     }
 
     @Test
     public void startTurn() {
         when(player.getPointsPerTurn()).thenReturn(10);
         when(player.getPlayerBoard()).thenReturn(playerBoard);
-        headlessPlayer.startTurn(player);
-        inOrder.verify(turnCommunicator).startHeadlessTurn(player);
+        playerStrategy.startTurn(player);
         inOrder.verify(player).getPointsPerTurn();
         inOrder.verify(player).addPoints(10);
         inOrder.verify(player).getPlayerBoard();
@@ -54,9 +48,6 @@ public class HeadlessPlayerTest {
 
     @Test
     public void endTurn() {
-        headlessPlayer.endTurn(player);
-        verify(turnCommunicator).endHeadlessTurn(player);
+        playerStrategy.endTurn(player);
     }
-
-
 }

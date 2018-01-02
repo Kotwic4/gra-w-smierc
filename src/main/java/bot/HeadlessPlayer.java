@@ -11,13 +11,14 @@ public abstract class HeadlessPlayer extends PlayerStrategy {
     }
 
     @Override
-    public void startTurn(Player player) {
+    protected final void startTurn(Player player) {
         turnCommunicator.startHeadlessTurn(player);
         super.startTurn(player);
     }
 
     @Override
-    protected void doTurn(Player player) {
+    protected final void endTurn(Player player) {
+        super.endTurn(player);
         turnCommunicator.endHeadlessTurn(player);
     }
 

@@ -1,8 +1,6 @@
 package bot;
 
-import board.Board;
 import gui.TurnCommunicator;
-import javafx.scene.paint.Color;
 
 import java.util.List;
 import java.util.Random;
@@ -18,14 +16,14 @@ public class RandomBot extends HeadlessPlayer {
 
     @Override
     protected void doTurn(Player player) {
-        List<PlayerTile> accessibleTiles = player.getPlayerBoard().getAccessibleTiles();
+        PlayerBoard playerBoard = player.getPlayerBoard();
+        List<PlayerTile> accessibleTiles = playerBoard.getAccessibleTiles();
         while (!accessibleTiles.isEmpty()) {
             int index = randomGenerator.nextInt(accessibleTiles.size());
             PlayerTile tile = accessibleTiles.get(index);
             tile.inhabit();
-            accessibleTiles = player.getPlayerBoard().getAccessibleTiles();
+            accessibleTiles = playerBoard.getAccessibleTiles();
         }
-        super.doTurn(player);
     }
 
 }
