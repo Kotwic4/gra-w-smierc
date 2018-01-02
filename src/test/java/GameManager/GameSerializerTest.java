@@ -1,14 +1,11 @@
 package GameManager;
 
 import board.Coordinates;
-import board.InvalidOrganismPositionException;
-import board.Organism;
 import board.Tile;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class GameSerializerTest {
             gb.board.markAsStronghold(new Coordinates(1,i));
         }
         assert gb.board.getStrongholdList().size() == 3;
-        GameSerializer.gsonSave(gb.getGameInstance(), "test.txt");
+        GameSerializer.save(gb.getGameInstance(), "test.txt");
 
         Game game = GameSerializer.load("test.txt");
         Tile[][] tiles2 = game.board.getTiles();
@@ -45,7 +42,7 @@ public class GameSerializerTest {
     @Test
     public void testLoadAndSave(){
         Game game = GameSerializer.load("test.txt");
-        GameSerializer.gsonSave(game, "test2.txt");
+        GameSerializer.save(game, "test2.txt");
         try {
             byte[] f1 = Files.readAllBytes(Paths.get("test.txt"));
             byte[] f2 = Files.readAllBytes(Paths.get("test2.txt"));
