@@ -39,7 +39,7 @@ public class MainMenuController {
     @FXML
     private void sceneHandler() throws IOException {
         System.out.println("Scene changing...");
-        Parent root = FXMLLoader.load(getClass().getResource("Game.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Game.fxml"));
         Stage window=(Stage)newGameButton.getScene().getWindow();
         window.setScene(new Scene(root));
     }
