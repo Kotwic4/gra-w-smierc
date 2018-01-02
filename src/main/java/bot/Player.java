@@ -1,35 +1,27 @@
 package bot;
 
 import board.Board;
+import board.Coordinates;
 import javafx.scene.paint.Color;
 
-public abstract class Player {
+public class Player {
 
     private Color color;
     private String name;
     private int id;
-    private int remainingPoints;
-    private int pointsPerTurn;
-    private int strongholdsNumber;
+    private int remainingPoints = 0;
+    private int pointsPerTurn = 0;
+    private int strongholdsNumber = 0;
+    private PlayerBoard playerBoard = null;
+    private PlayerStrategy playerStrategy = null;
     private static final int VISIBLE_RANGE = 5;
     private static final int POINTS_PER_ORGANISM = 1;
     private static final int POINTS_PER_STRONGHOLDS = 1;
-    private PlayerBoard playerBoard;
 
-
-    Player(Color color, String name, int id, PlayerBoard playerBoard){
+    Player(Color color, String name, int id){
         this.color = color;
         this.name = name;
         this.id = id;
-        this.playerBoard = playerBoard;
-        pointsPerTurn = 0;
-        strongholdsNumber = 0;
-        remainingPoints = 0;
-    }
-
-    Player(Color color, String name, int id, Board board) {
-        this(color,name,id, (PlayerBoard) null);
-        this.playerBoard = new PlayerBoard(board,this);
     }
 
     public Color getColor() {
@@ -56,25 +48,32 @@ public abstract class Player {
         return strongholdsNumber;
     }
 
-    protected void startTurn(){
-        remainingPoints += getPointsPerTurn();
-        playerBoard.updateVision();
+    void setPlayerStrategy(PlayerStrategy playerStrategy){
+        this.playerStrategy = playerStrategy;
     }
-
-    protected void endTurn(){
-
-    }
-
-    protected abstract void doTurn();
 
     public void makeTurn() {
-        startTurn();
-        doTurn();
-        endTurn();
+        playerStrategy.doTurn(this);
+    }
+
+    public void createPlayerBoard(Board board){
+        int width = board.getWidth();
+        int height = board.getHeight();
+        PlayerTile[][] playerTiles = new PlayerTile[width][height];
+        for(int x = 0; x < width; x++){
+            for(int y = 0; y < height; y++){
+                playerTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x,y)), this);
+            }
+        }
+        this.playerBoard = new PlayerBoard(playerTiles);
     }
 
     public PlayerBoard getPlayerBoard() {
         return playerBoard;
+    }
+
+    void addPoints(int value){
+        remainingPoints += value;
     }
 
     void subPoints(int cost) {
@@ -93,12 +92,12 @@ public abstract class Player {
 
     public void addOrganism() {
         pointsPerTurn += POINTS_PER_ORGANISM;
-        playerBoard.updateVision();
+        playerBoard.update();
     }
 
     public void removeOrganism() {
         pointsPerTurn -= POINTS_PER_ORGANISM;
-        playerBoard.updateVision();
+        playerBoard.update();
     }
 
     public boolean isAlive() {
@@ -108,4 +107,6 @@ public abstract class Player {
     int getVisibleRange(){
         return VISIBLE_RANGE;
     }
+
+
 }

@@ -1,49 +1,33 @@
 package bot;
 
-import board.Board;
 import board.Coordinates;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 public class PlayerBoard {
 
-    private PlayerTile[][] guiTiles;
+    private PlayerTile[][] playerTiles;
     private int width;
     private int height;
 
-    PlayerBoard(PlayerTile[][] guiTiles) {
-        this.guiTiles = guiTiles;
+    private boolean checkCoords(Coordinates cords){
+        return cords.getX() < width && cords.getY() < height;
     }
 
-    PlayerBoard(Board board, Player player) {
-        width = board.getWidth();
-        height = board.getHeight();
-        guiTiles = new PlayerTile[width][height];
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                guiTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x,y)), player);
-            }
-        }
+    public PlayerBoard(PlayerTile[][] playerTiles) {
+        this.playerTiles = playerTiles;
+        width = playerTiles.length;
+        height = playerTiles[0].length;
     }
 
-    public PlayerTile getGuiTile(Coordinates cords) {
-        return guiTiles[cords.getX()][cords.getY()];
-    }
-
-    public PlayerTile[][] getGuiTiles() {
-        return guiTiles;
-    }
-
-    private List<PlayerTile> getGuiTilesList() {
-        List<PlayerTile> list = new ArrayList<>();
-        for(PlayerTile[] array : guiTiles){
-            list.addAll(Arrays.asList(array));
-        }
-        return list;
+    public Optional<PlayerTile> getPlayerTile(Coordinates cords) {
+        if(checkCoords(cords)) return Optional.empty();
+        else return Optional.of(playerTiles[cords.getX()][cords.getY()]);
     }
 
     public int getWidth() {
@@ -55,12 +39,16 @@ public class PlayerBoard {
     }
 
     public List<PlayerTile> getAccessibleTiles(){
-        return getGuiTilesList().stream()
+        List<PlayerTile> list = new ArrayList<>();
+        for(PlayerTile[] array : playerTiles){
+            list.addAll(Arrays.asList(array));
+        }
+        return list.stream()
                 .filter(PlayerTile::isAccessible)
                 .collect(Collectors.toList());
     }
 
-    void updateVision(){
+    void update(){
         //todo
     }
 
