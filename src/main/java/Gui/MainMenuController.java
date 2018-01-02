@@ -44,4 +44,10 @@ public class MainMenuController {
         window.setScene(new Scene(root));
     }
 
+    @FXML
+    private void exitButtonHandler() {
+        Stage stage =(Stage)newGameButton.getScene().getWindow();
+        stage.close();
+    }
+
 }
