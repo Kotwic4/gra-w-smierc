@@ -1,0 +1,12 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<VBox fx:controller="Gui.MainMenuController"
+      xmlns:fx="http://javafx.com/fxml" alignment="center"
+      spacing="10">
+    <children>
+        <Button fx:id="newGameButton" text="Nowa Gra" onAction="#sceneHandler"/>
+        <Button fx:id="boardEditorButton" text="Edytor plansz"/>
+        <Button fx:id="settingsButton" text="Ustawienia"/>
+        <Button fx:id="exitButton" text="Wyjście"/>
+    </children>
+</VBox>
