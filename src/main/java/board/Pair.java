@@ -24,4 +24,16 @@ public class Pair {
     public void setY(int y) {
         this.y = y;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pair pair = (Pair) o;
+
+        if (getX() != pair.getX()) return false;
+        return getY() == pair.getY();
+    }
+
 }
