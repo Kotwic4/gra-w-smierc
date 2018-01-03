@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.LinkedList;
 
 public class Board {
-    private Tile[][] tiles;
+    private final Tile[][] tiles;
     private final List<? extends Tile> strongholdList;
     private final int width;
     private final int height;

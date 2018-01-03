@@ -62,5 +62,8 @@ public class TileImplementationTest {
 
     @Test
     public void setInhabitant() {
+        // TODO: implement
     }
+
+    // TODO: Implement test for setting neighbours
 }

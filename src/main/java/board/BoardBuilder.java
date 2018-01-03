@@ -6,6 +6,9 @@ import java.util.List;
 /**
  * Created by Paweł Taborowski on 28.12.17.
  */
+// TODO: make it fluent, check if one thing isn't set more than once
+// e.g. Board board = new BoardBuilder(width=5, height=6).setInhabitant(coords, nation=1).setInhabitant(coords2, nation=5).setCost(coords,cost=5).setStronghold(coords).build();
+//if (setInhabitant!=default) reject;
 public class BoardBuilder {
     private TileImplementation[][] tiles;
     private List<TileImplementation> strongholdList;
