@@ -16,7 +16,7 @@ public class PlayerBoard {
     private int width;
     private int height;
 
-    public PlayerBoard createPlayerBoard(Board board, Player player) {
+    static public PlayerBoard createPlayerBoard(Board board, Player player) {
         int width = board.getWidth();
         int height = board.getHeight();
         PlayerTile[][] playerTiles = new PlayerTile[width][height];

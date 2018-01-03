@@ -1,7 +1,5 @@
 package bot;
 
-import board.Board;
-import board.Coordinates;
 import javafx.scene.paint.Color;
 
 public class Player {
@@ -53,14 +51,14 @@ public class Player {
     }
 
     public void makeTurn() {
-        if(playerStrategy != null){
+        if (playerStrategy != null) {
             playerStrategy.startTurn(this);
             playerStrategy.doTurn(this);
             playerStrategy.endTurn(this);
         }
     }
 
-    public void setPlayerBoard(PlayerBoard playerBoard){
+    public void setPlayerBoard(PlayerBoard playerBoard) {
         this.playerBoard = playerBoard;
     }
 
@@ -73,7 +71,7 @@ public class Player {
     }
 
     void subPoints(int cost) throws NotEnoughPointsException {
-        if(cost > remainingPoints) throw new NotEnoughPointsException();
+        if (cost > remainingPoints) throw new NotEnoughPointsException();
         remainingPoints -= cost;
     }
 
@@ -83,7 +81,7 @@ public class Player {
     }
 
     public void removeStronhold() {
-        if(strongholdsNumber == 0) throw new PlayerHaveNoStrongholdsException();
+        if (strongholdsNumber == 0) throw new PlayerHaveNoStrongholdsException();
         pointsPerTurn -= POINTS_PER_STRONGHOLDS;
         strongholdsNumber--;
     }

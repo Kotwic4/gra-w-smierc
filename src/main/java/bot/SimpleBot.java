@@ -41,11 +41,12 @@ public class SimpleBot extends HeadlessPlayer {
                     value += STRONGHOLD;
                 }
                 value -= playerTile.getCost().get();
-                if(value > max || chosenTile == null){
+                if(value > max){
                     chosenTile = playerTile;
                     max = value;
                 }
             }
+            if(chosenTile == null) break;
             chosenTile.inhabit();
             accessibleTiles = playerBoard.getAccessibleTiles();
         }
