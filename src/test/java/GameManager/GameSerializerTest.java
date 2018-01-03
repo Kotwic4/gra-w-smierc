@@ -1,15 +1,16 @@
 package GameManager;
 
+import static org.junit.Assert.assertEquals;
+
 import board.Coordinates;
 import board.Tile;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class GameSerializerTest {
 
@@ -24,29 +25,62 @@ public class GameSerializerTest {
             }
             gb.board.markAsStronghold(new Coordinates(1,i));
         }
-        assert gb.board.getStrongholdList().size() == 3;
-        GameSerializer.save(gb.getGameInstance(), "test.txt");
 
-        Game game = GameSerializer.load("test.txt");
-        Tile[][] tiles2 = game.board.getTiles();
-        for(int i=0;i<3;i++)
-            for(int j=0;j<3;j++){
-                assert tiles2[i][j].getCost() == 3*i+j;
+        Game expected = gb.getGameInstance();
 
-            }
-        List<Tile> strongholds= game.board.getStrongholdList();
-        assert strongholds.size() == 3;
+        try {
+            GameSerializer.save(gb.getGameInstance(), "testSaveAndLoad.txt");
+        } catch (FileAlreadyExistsException e) {
+            e.printStackTrace();
+        }
 
+        Game result = null;
+        try {
+            DummyGame dummyGame = GameSerializer.load("testSaveAndLoad.txt").get();
+            result = new GameDeserializer(dummyGame).deserialize().get();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void loadTest(){
+        try {
+            assertEquals(GameSerializer.load("test.txt").isPresent(), true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testLoadAndSave(){
-        Game game = GameSerializer.load("test.txt");
-        GameSerializer.save(game, "test2.txt");
+        DummyGame dummyGame = null;
+        Game game = null;
         try {
-            byte[] f1 = Files.readAllBytes(Paths.get("test.txt"));
-            byte[] f2 = Files.readAllBytes(Paths.get("test2.txt"));
-            assertArrayEquals(f1,f2);
+            assertEquals(GameSerializer.load("testSaveAndLoad.txt").isPresent(), true);
+            dummyGame = GameSerializer.load("testSaveAndLoad.txt").get();
+            assertEquals(new GameDeserializer(dummyGame).deserialize().isPresent(), true);
+            game = new GameDeserializer(dummyGame).deserialize().get();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            GameSerializer.save(game, "testSaveAndLoad2.txt");
+        } catch (FileAlreadyExistsException e) {
+            e.printStackTrace();
+        }
+        try {
+            byte[] f1 = Files.readAllBytes(Paths.get("testSaveAndLoad.txt"));
+            byte[] f2 = Files.readAllBytes(Paths.get("testSaveAndLoad2.txt"));
+            //assertArrayEquals(f1.toString().getBytes(),f2.toString().getBytes());
+            assertEquals(f1.length, f2.length);
+            for(int i=0; i<f1.length; i++)
+            {
+                assertEquals(f1[i], f2[i]);
+            }
         } catch (IOException e) {
             assert false;
             e.printStackTrace();

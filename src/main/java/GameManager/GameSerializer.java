@@ -7,16 +7,20 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
+import javax.swing.text.html.Option;
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 class GameSerializer {
-    public static void save(Game game, String path) {
+    public static void save(Game game, String path) throws FileAlreadyExistsException {
+        /*if(new File(path).exists()) {
+            throw new FileAlreadyExistsException(path);
+        }*/
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonedGame = gson.toJson(game);
         try (PrintWriter fileWriter = new PrintWriter(path)) {
@@ -26,58 +30,23 @@ class GameSerializer {
         }
     }
 
-    public static Game load(String path) {
-        List<Player> players = null;
-        Board board = null;
+    public static Optional<DummyGame> load(String path) throws FileNotFoundException{
+        DummyGame dummyGame;
         try (JsonReader reader = new JsonReader(new FileReader(path))) {
             Gson gson = new Gson();
-
-            DummyGame dummyGame = gson.fromJson(reader, DummyGame.class);
-            players = new ArrayList<>();
-            for (int i = 0; i < dummyGame.players.length; i++)
-                players.add(new Player(dummyGame.players[i].color, dummyGame.players[i].id));
-            board = new Board(dummyGame.board.width,dummyGame.board.height);
-            for (int i = 0; i < dummyGame.board.tiles.length; i++)
-                for (int j = 0; j < dummyGame.board.tiles[i].length; j++){
-                    Tile tile = board.getTile(new Coordinates(i,j));
-                    tile.setCost(dummyGame.board.tiles[i][j].cost);
-                    if(dummyGame.board.tiles[i][j].stronghold)
-                        board.markAsStronghold(new Coordinates(i,j));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            dummyGame = gson.fromJson(reader, DummyGame.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            return Optional.empty();
         }
-        return new Game(players, board);
+        return Optional.of(dummyGame);
     }
 
-    /**
-     * Created by Albert on 10.12.2017.
-     */
-    static class DummyGame {
-        class DummyPlayer {
-            int id;
-            Color color;
-        }
-
-        class DummyBoard {
-            class DummyTile {
-                class DummyOrganism {
-                    int nation;
-                }
-
-                int cost;
-                boolean stronghold;
-                DummyOrganism organism;
-            }
-
-            DummyTile[][] tiles;
-            int width;
-            int height;
-        }
-
-        DummyBoard board;
-        DummyPlayer[] players;
+    public static DummyGame loadFromString(String jsonGame)
+    {
+        DummyGame dummyGame;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        dummyGame = gson.fromJson(jsonGame, DummyGame.class);
+        return dummyGame;
     }
+
 }

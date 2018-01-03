@@ -80,4 +80,20 @@ public class Tile {
     public boolean isStronghold(){
       return stronghold;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tile tile = (Tile) o;
+
+        if (getCost() != tile.getCost()) return false;
+        if (isStronghold() != tile.isStronghold()) return false;
+        if (getInhabitant() != null ? !getInhabitant().equals(tile.getInhabitant()) : tile.getInhabitant() != null)
+            return false;
+
+        boolean resu = getCoords() != null ? getCoords().equals(tile.getCoords()) : tile.getCoords() == null;
+        return resu;
+    }
 }
