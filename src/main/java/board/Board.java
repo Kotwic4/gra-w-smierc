@@ -1,5 +1,6 @@
 package board;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.LinkedList;
@@ -84,5 +85,19 @@ public class Board {
 
     public int getHeight(){
       return height;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+
+        if (getWidth() != board.getWidth()) return false;
+        if (getHeight() != board.getHeight()) return false;
+        if (lastAppeal != board.lastAppeal) return false;
+        if (!Arrays.deepEquals(getTiles(), board.getTiles())) return false;
+        return getStrongholdList() != null ? getStrongholdList().equals(board.getStrongholdList()) : board.getStrongholdList() == null;
     }
 }
