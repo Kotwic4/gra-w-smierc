@@ -5,6 +5,7 @@ import board.Tile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.IntSummaryStatistics;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -86,6 +87,52 @@ public class BoardSerializer {
         }
         return board;
     }
+    public static void save(Board board, Writer writer) throws IOException {
+        writer.write(getSerializedString(board));
+    }
+    public static String getSerializedString(Board board) {
+        if(board == null){
+            return null;
+        }
+
+        int width, height;
+        width = board.getWidth();
+        height = board.getHeight();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("width=");
+        sb.append(width);
+        sb.append("\n");
+        sb.append("height=");
+        sb.append(height);
+        sb.append("\n");
+
+        Tile[][] tiles = board.getTiles();
+        for(int i=0; i<height; i++){
+            for(int j=0; j<width; j++){
+                sb.append(tileToString(tiles[i][j]));
+                if(j < width-1)sb.append(" ");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    private static String tileToString(Tile tile){
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append(tile.getCost());
+        sb.append(",");
+        if(tile.isStronghold()){
+            sb.append(1);
+        } else {
+            sb.append(0);
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
     public static class MalformedFileException extends Exception{
 
     }
