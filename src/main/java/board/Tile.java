@@ -90,10 +90,9 @@ public class Tile {
 
         if (getCost() != tile.getCost()) return false;
         if (isStronghold() != tile.isStronghold()) return false;
-        if (getInhabitant() != null ? !getInhabitant().equals(tile.getInhabitant()) : tile.getInhabitant() != null)
-            return false;
-
-        boolean resu = getCoords() != null ? getCoords().equals(tile.getCoords()) : tile.getCoords() == null;
-        return resu;
+        //if (getInhabitant() != null ? !getInhabitant().equals(tile.getInhabitant()) : tile.getInhabitant() != null)
+        //return false;
+        //return getCoords() != null ? getCoords().equals(tile.getCoords()) : tile.getCoords() == null;
+        return true;
     }
 }

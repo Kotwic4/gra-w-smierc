@@ -96,8 +96,9 @@ public class Board {
 
         if (getWidth() != board.getWidth()) return false;
         if (getHeight() != board.getHeight()) return false;
-        if (lastAppeal != board.lastAppeal) return false;
+        //if (lastAppeal != board.lastAppeal) return false;
         if (!Arrays.deepEquals(getTiles(), board.getTiles())) return false;
-        return getStrongholdList() != null ? getStrongholdList().equals(board.getStrongholdList()) : board.getStrongholdList() == null;
+        //return getStrongholdList() != null ? getStrongholdList().equals(board.getStrongholdList()) : board.getStrongholdList() == null;
+        return true;
     }
 }
