@@ -53,9 +53,13 @@ class TileImplementation implements Tile{
         return foundFriendlyNeighbours > 0 && foundFriendlyNeighbours < maximumNeighbouringFriendsCount;
     }
 
-    public void uncheckedSetIntabitant(Organism inhabitant){
+    public void uncheckedSetIntabitant(Organism inhabitant) throws TileAlreadyInhabitedException {
       // Force setting inhabitant without checking neighbours - required for stronghold's organism initialization
-      this.inhabitant = inhabitant;
+      if(this.inhabitant == null) {
+          this.inhabitant = inhabitant;
+      } else {
+          throw new TileAlreadyInhabitedException(this.coords);
+      }
     }
 
     public int getCost() {

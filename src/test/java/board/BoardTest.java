@@ -4,31 +4,21 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Paweł Taborowski on 18.12.17.
- */
 public class BoardTest {
 
     @Test
     public void markAndClear() throws Exception{
         // SETUP
-        BoardBuilder boardBuilder = new BoardBuilder(5, 6);
-
         Coordinates strongholdCoord = new Coordinates(0, 1);
-        boardBuilder.markAsStronghold(strongholdCoord);
-        Organism strongholdOrganism = new Organism(0);
-        boardBuilder.getTileImplementation(strongholdCoord).uncheckedSetIntabitant(strongholdOrganism);
-
         Coordinates organismToRemoveCoord = new Coordinates(4, 5);
-        boardBuilder.getTileImplementation(organismToRemoveCoord).uncheckedSetIntabitant(new Organism(0));
-
         Coordinates[] wellPlacedTiles = {new Coordinates(1, 1), new Coordinates(2, 1), new Coordinates(2, 2), new Coordinates(2, 3)};
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,6 ).markAsStronghold(strongholdCoord).setInhabitant(strongholdCoord, 0).setInhabitant(organismToRemoveCoord, 0);
 
         for (Coordinates wellPlacedTile : wellPlacedTiles) {
-            boardBuilder.getTileImplementation(wellPlacedTile).uncheckedSetIntabitant(new Organism(0));
+            boardBuilder.setInhabitant(wellPlacedTile, 0);
         }
 
-        Board board = boardBuilder.generateBoard();
+        Board board = boardBuilder.build();
 
         // EXECUTE
         board.markAndClear();
@@ -42,7 +32,7 @@ public class BoardTest {
 
     @Test
     public void getTile() {
-        Board board = new BoardBuilder(5,6).generateBoard();
+        Board board = new Board.BoardBuilder(5,6).build();
         try {
             Coordinates coords = new Coordinates(4, 3);
             TileImplementation tile = (TileImplementation) board.getTile(coords);

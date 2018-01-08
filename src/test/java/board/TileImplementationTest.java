@@ -8,18 +8,15 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Paweł Taborowski on 18.12.17.
- */
 public class TileImplementationTest {
-    private BoardBuilder boardBuilder;
+    private Board.BoardBuilder boardBuilder;
     private List<TileImplementation> connectedTiles;
     private TileImplementation notConnectedTile;
     private int LENGTH = 5;
 
     @Before
     public void setUp() throws Exception {
-      boardBuilder = new BoardBuilder(5,6);
+      boardBuilder = new Board.BoardBuilder(5,6);
       connectedTiles = new LinkedList<>();
       connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(3,2)));
       connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(2,2)));
@@ -29,12 +26,12 @@ public class TileImplementationTest {
       notConnectedTile = boardBuilder.getTileImplementation(new Coordinates(4,4));
       /*
       Board being generated:
-      _____
-      _#__#
-      _#___
-      _###_
-      _____
-      _____
+      /*
+      ......
+      ..###.
+      ..#...
+      ..#...
+      ....#.
        */
 
       for (TileImplementation tile: connectedTiles){
@@ -62,7 +59,26 @@ public class TileImplementationTest {
 
     @Test
     public void setInhabitant() {
-        // TODO: implement
+        try {
+            Coordinates coords = new Coordinates(4, 2);
+            TileImplementation tile = boardBuilder.getTileImplementation(coords);
+            tile.setInhabitant(new Organism(1));
+        } catch (InvalidOrganismPositionException e) {
+            fail();
+        } catch (InvalidTileCoordsException e) {
+            fail();
+        }
+
+        try {
+            Coordinates coords = new Coordinates(4, 0);
+            TileImplementation tile = boardBuilder.getTileImplementation(coords);
+            tile.setInhabitant(new Organism(1));
+            fail();
+        } catch (InvalidOrganismPositionException e) {
+            //It's OK to be there
+        } catch (InvalidTileCoordsException e) {
+            fail();
+        }
     }
 
     // TODO: Implement test for setting neighbours
