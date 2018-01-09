@@ -1,6 +1,7 @@
-package GameManager;
+package gameManager;
 
 import board.Board;
+import bot.Player;
 
 import java.util.List;
 

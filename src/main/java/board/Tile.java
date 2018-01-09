@@ -1,5 +1,9 @@
 package board;
 
+import bot.Player;
+
+import java.util.Optional;
+
 /**
  * Created by Paweł Taborowski on 28.12.17.
  */
@@ -13,4 +17,10 @@ public interface Tile {
   Coordinates getCoords();
   boolean isStronghold();
   void checkAppealAndReact(int appeal);
+
+  boolean canInhabit(Player player);
+
+  void inhabit(Player player);
+
+  Optional<Player> getPlayer();
 }

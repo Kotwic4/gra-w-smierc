@@ -1,4 +1,4 @@
-package GameManager;
+package gameManager;
 
 import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;

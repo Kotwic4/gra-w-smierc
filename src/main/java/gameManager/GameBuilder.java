@@ -1,6 +1,7 @@
-package GameManager;
+package gameManager;
 
 import board.Board;
+import bot.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +10,11 @@ import java.util.List;
 class GameBuilder {
     Board board;
     List<Player> players;
-    IBoardBuilder boardBuilder;
+    Board.BoardBuilder boardBuilder;
 
     GameBuilder(int boardWidth, int boardHeight) {
         players = new ArrayList<Player>();
-        board = new Board(boardWidth, boardHeight);
-        boardBuilder = new FlatBoardBuider();
+        boardBuilder = new Board.BoardBuilder(boardWidth,boardHeight);
     }
 
     void addPlayer(Player player) {
@@ -22,7 +22,7 @@ class GameBuilder {
     }
 
     public void createBoard() {
-        boardBuilder.fillBoard(board);
+        board = boardBuilder.build();
     }
 
     public void createBoard(IBoardBuilder boardBuilder) {

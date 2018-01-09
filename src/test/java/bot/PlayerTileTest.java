@@ -132,18 +132,18 @@ public class PlayerTileTest {
     @Test
     public void getColorVisibleUninhabited() {
         playerTile.setVisible(true);
-        when(tile.getInhabitant()).thenReturn(Optional.empty());
+        when(tile.getPlayer()).thenReturn(Optional.empty());
         assertFalse(playerTile.getColor().isPresent());
-        verify(tile).getInhabitant();
+        verify(tile).getPlayer();
     }
 
     @Test
     public void getColorVisibleBlackInhabited() throws Exception {
         playerTile.setVisible(true);
-        when(tile.getInhabitant()).thenReturn(Optional.of(player));
+        when(tile.getPlayer()).thenReturn(Optional.of(player));
         when(player.getColor()).thenReturn(Color.BLACK);
         assertEquals(playerTile.getColor().orElseThrow(Exception::new), Color.BLACK);
-        verify(tile).getInhabitant();
+        verify(tile).getPlayer();
         verify(player).getColor();
     }
 

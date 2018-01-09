@@ -1,4 +1,4 @@
-package GameManager;
+package gameManager;
 
 
 import board.Board;

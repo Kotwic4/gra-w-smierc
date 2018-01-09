@@ -1,5 +1,6 @@
 package board;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.LinkedList;
@@ -73,6 +74,11 @@ public class Board {
                 e.getMessage();
             }
             return this;
+        }
+
+        public void setTileCost(int cost, Coordinates coordinates){
+            TileImplementation tileImplementation = getTileImplementation(coordinates);
+            tileImplementation.setCost(cost);
         }
 
         public int getWidth(){
@@ -154,6 +160,7 @@ public class Board {
       return height;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -161,11 +168,23 @@ public class Board {
 
         Board board = (Board) o;
 
-        if (getWidth() != board.getWidth()) return false;
-        if (getHeight() != board.getHeight()) return false;
-        //if (lastAppeal != board.lastAppeal) return false;
-        if (!Arrays.deepEquals(getTiles(), board.getTiles())) return false;
-        //return getStrongholdList() != null ? getStrongholdList().equals(board.getStrongholdList()) : board.getStrongholdList() == null;
-        return true;
+        if (width != board.width) return false;
+        if (height != board.height) return false;
+        if (lastAppeal != board.lastAppeal) return false;
+        if (!Arrays.deepEquals(tiles, board.tiles)) return false;
+        if (strongholdList != null ? !strongholdList.equals(board.strongholdList) : board.strongholdList != null)
+            return false;
+        return random != null ? random.equals(board.random) : board.random == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.deepHashCode(tiles);
+        result = 31 * result + (strongholdList != null ? strongholdList.hashCode() : 0);
+        result = 31 * result + width;
+        result = 31 * result + height;
+        result = 31 * result + (random != null ? random.hashCode() : 0);
+        result = 31 * result + lastAppeal;
+        return result;
     }
 }

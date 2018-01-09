@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           fx:controller="Gui.GameController">
+           fx:controller="gui.GameController">
 <VBox>
         <GridPane fx:id="grid" alignment="CENTER">
         </GridPane>

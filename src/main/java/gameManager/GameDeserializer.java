@@ -1,8 +1,9 @@
-package GameManager;
+package gameManager;
 
 import board.Board;
 import board.Coordinates;
 import board.Tile;
+import bot.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +27,18 @@ public class GameDeserializer {
 
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < dummyGame.getPlayersNumber(); i++)
-            players.add(new Player(dummyGame.getPlayerColor(i), dummyGame.getPlayerId(i)));
+            players.add(new Player(dummyGame.getPlayerColor(i), "", dummyGame.getPlayerId(i)));
 
-        Board board = new Board(dummyGame.getBoardDimension().width,dummyGame.getBoardDimension().height);
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(dummyGame.getBoardDimension().width,dummyGame.getBoardDimension().height);
         for (int i = 0; i < dummyGame.getBoardLenght(); i++) {
             for (int j = 0; j < dummyGame.getNumberOfTiles(); j++) {
-                Tile tile = board.getTile(new Coordinates(i, j));
-                tile.setCost(dummyGame.getCostOnTile(i, j));
+                boardBuilder.setTileCost(dummyGame.getCostOnTile(i, j),new Coordinates(i,j));
                 if (dummyGame.getStrongholdOfTile(i, j)) {
-                    board.markAsStronghold(new Coordinates(i, j));
+                    boardBuilder.markAsStronghold(new Coordinates(i, j));
                 }
             }
         }
 
-        return Optional.of(new Game(players, board));
+        return Optional.of(new Game(players, boardBuilder.build()));
     }
 }

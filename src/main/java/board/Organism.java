@@ -1,8 +1,12 @@
 package board;
 
+import bot.Player;
+
 public class Organism {
   
     private final int nation;
+
+    private Player player;
 
     private int appeal;
 
@@ -12,6 +16,10 @@ public class Organism {
 
     public int getNation() {
         return nation;
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
     int getAppeal() {

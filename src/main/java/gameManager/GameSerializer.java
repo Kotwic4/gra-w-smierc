@@ -1,18 +1,11 @@
-package GameManager;
+package gameManager;
 
-import board.Board;
-import board.Coordinates;
-import board.Tile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
-import javax.swing.text.html.Option;
-import java.awt.*;
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 class GameSerializer {

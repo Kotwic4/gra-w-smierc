@@ -1,7 +1,10 @@
 package board;
 
+import bot.Player;
+
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Optional;
 
 class TileImplementation implements Tile{
     private Organism inhabitant;
@@ -91,6 +94,21 @@ class TileImplementation implements Tile{
       if (knownAppeal != appeal){
         inhabitant = null;
       }
+    }
+
+    @Override
+    public boolean canInhabit(Player player) {
+        return false;
+    }
+
+    @Override
+    public void inhabit(Player player) {
+
+    }
+
+    @Override
+    public Optional<Player> getPlayer() {
+        return Optional.empty();
     }
 
     int getMaximumNeighbouringFriendsCount() {

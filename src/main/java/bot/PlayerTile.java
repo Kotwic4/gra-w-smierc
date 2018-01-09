@@ -39,11 +39,11 @@ public class PlayerTile {
     }
 
     public Optional<Player> getPlayer(){
-        return visible ? tile.getInhabitant() : Optional.empty();
+        return visible ? tile.getPlayer() : Optional.empty();
     }
 
     public Optional<Color> getColor() {
-        return visible ? tile.getInhabitant().map(Player::getColor) : Optional.empty();
+        return visible ? tile.getPlayer().map(Player::getColor) : Optional.empty();
     }
 
     public Optional<Boolean> isStronghold() {

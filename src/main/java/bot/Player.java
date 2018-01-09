@@ -16,7 +16,7 @@ public class Player {
     private static final int POINTS_PER_ORGANISM = 1;
     private static final int POINTS_PER_STRONGHOLDS = 10;
 
-    Player(Color color, String name, int id) {
+    public Player(Color color, String name, int id) {
         this.color = color;
         this.name = name;
         this.id = id;

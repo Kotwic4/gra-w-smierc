@@ -1,4 +1,6 @@
-package GameManager;
+package gameManager;
+
+import javafx.scene.paint.Color;
 
 import java.awt.*;
 
