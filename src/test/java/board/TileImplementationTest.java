@@ -1,5 +1,6 @@
 package board;
 
+import bot.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +14,7 @@ public class TileImplementationTest {
     private List<TileImplementation> connectedTiles;
     private TileImplementation notConnectedTile;
     private int LENGTH = 5;
+    private Player player;
 
     @Before
     public void setUp() throws Exception {
@@ -35,10 +37,12 @@ public class TileImplementationTest {
       .....
       */
 
+      player = new Player(null,"", 1);
+
       for (TileImplementation tile: connectedTiles){
-         tile.uncheckedSetIntabitant(new Organism(1));
+         tile.uncheckedSetIntabitant(new Organism(player));
       }
-      notConnectedTile.uncheckedSetIntabitant(new Organism(1));
+      notConnectedTile.uncheckedSetIntabitant(new Organism(player));
     }
 
     @Test
@@ -63,7 +67,7 @@ public class TileImplementationTest {
         try {
             Coordinates coords = new Coordinates(4, 2);
             TileImplementation tile = boardBuilder.getTileImplementation(coords);
-            tile.inhabit(new Organism(1));
+            tile.inhabit(player);
         } catch (InvalidOrganismPositionException|InvalidTileCoordsException e) {
             fail();
         }
@@ -71,7 +75,7 @@ public class TileImplementationTest {
         try {
             Coordinates coords = new Coordinates(4, 0);
             TileImplementation tile = boardBuilder.getTileImplementation(coords);
-            tile.inhabit(new Organism(1));
+            tile.inhabit(player);
             fail();
         } catch (InvalidOrganismPositionException e) {
             //It's OK to be there
