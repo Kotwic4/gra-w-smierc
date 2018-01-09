@@ -25,14 +25,15 @@ public class TileImplementationTest {
       connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(1,4)));
       notConnectedTile = boardBuilder.getTileImplementation(new Coordinates(4,4));
       /*
-      Board being generated:
-      /*
-      ......
-      ..###.
-      ..#...
-      ..#...
-      ....#.
-       */
+      Logical board being generated:
+
+      .....
+      .#..#
+      .#...
+      .###.
+      .....
+      .....
+      */
 
       for (TileImplementation tile: connectedTiles){
          tile.uncheckedSetIntabitant(new Organism(1));
@@ -63,9 +64,7 @@ public class TileImplementationTest {
             Coordinates coords = new Coordinates(4, 2);
             TileImplementation tile = boardBuilder.getTileImplementation(coords);
             tile.setInhabitant(new Organism(1));
-        } catch (InvalidOrganismPositionException e) {
-            fail();
-        } catch (InvalidTileCoordsException e) {
+        } catch (InvalidOrganismPositionException|InvalidTileCoordsException e) {
             fail();
         }
 
@@ -80,6 +79,4 @@ public class TileImplementationTest {
             fail();
         }
     }
-
-    // TODO: Implement test for setting neighbours
 }

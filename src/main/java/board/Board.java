@@ -8,7 +8,7 @@ import java.util.LinkedList;
 /*
 Use this as follows :
 Board board = new Board.BoardBuilder(width, height).markAsStronghold(coords).setInhabitant(coords, nation).build();
- */
+*/
 
 public class Board {
     private final Tile[][] tiles;
@@ -34,21 +34,63 @@ public class Board {
                 }
             }
             strongholdList = new LinkedList<>();
-            makeConnectionsBetweenTiles();
+            new connectionGenerator().makeConnectionsBetweenTiles();
         }
 
-        private void makeConnectionsBetweenTiles(){
-            for (int i=0; i<width; i++){
-                for (int j=0; j<height; j++){
-                    if(i > 0 && j > 0) tiles[i][j].addNeighbour(tiles[i-1][j-1]);
-                    if(i > 0) tiles[i][j].addNeighbour(tiles[i-1][j]);
-                    if(i > 0 && j < height-1) tiles[i][j].addNeighbour(tiles[i-1][j+1]);
-                    if(j < height-1) tiles[i][j].addNeighbour(tiles[i][j+1]);
-                    if(i < width-1 && j < height-1) tiles[i][j].addNeighbour(tiles[i+1][j+1]);
-                    if(i < width-1) tiles[i][j].addNeighbour(tiles[i+1][j]);
-                    if(i < width-1 && j > 0) tiles[i][j].addNeighbour(tiles[i+1][j-1]);
-                    if(j > 0) tiles[i][j].addNeighbour(tiles[i][j-1]);
+        private class connectionGenerator{
+            private void makeConnectionsBetweenTiles(){
+                for (int x=0; x<width; x++){
+                    for (int y=0; y<height; y++){
+                        if(isNotOnLeftBorder(x) && isNotOnBottomBorder(y))
+                            tiles[x][y].addNeighbour(tiles[stepLeft(x)][stepDown(y)]);
+                        if(isNotOnLeftBorder(x))
+                            tiles[x][y].addNeighbour(tiles[stepLeft(x)][y]);
+                        if(isNotOnLeftBorder(x) && isNotOnTopBorder(y))
+                            tiles[x][y].addNeighbour(tiles[stepLeft(x)][stepUp(y)]);
+                        if(isNotOnTopBorder(y))
+                            tiles[x][y].addNeighbour(tiles[x][stepUp(y)]);
+                        if(isNotOnRightBorder(x) && isNotOnTopBorder(y))
+                            tiles[x][y].addNeighbour(tiles[stepRight(x)][stepUp(y)]);
+                        if(isNotOnRightBorder(x))
+                            tiles[x][y].addNeighbour(tiles[stepRight(x)][y]);
+                        if(isNotOnRightBorder(x) && isNotOnBottomBorder(y))
+                            tiles[x][y].addNeighbour(tiles[stepRight(x)][stepDown(y)]);
+                        if(isNotOnBottomBorder(y))
+                            tiles[x][y].addNeighbour(tiles[x][stepDown(y)]);
+                    }
                 }
+            }
+
+            private boolean isNotOnLeftBorder(int x){
+                return x > 0;
+            }
+
+            private boolean isNotOnRightBorder(int x){
+                return x < width-1;
+            }
+
+            private boolean isNotOnBottomBorder(int y){
+                return y > 0;
+            }
+
+            private boolean isNotOnTopBorder(int y){
+                return y < height-1;
+            }
+
+            private int stepLeft(int x){
+                return x-1;
+            }
+
+            private int stepRight(int x){
+                return x+1;
+            }
+
+            private int stepUp(int y){
+                return y+1;
+            }
+
+            private int stepDown(int y){
+                return y-1;
             }
         }
 
@@ -67,12 +109,8 @@ public class Board {
             }
         }
 
-        public BoardBuilder setInhabitant(Coordinates coords, int nation) {
-            try {
-                tiles[coords.getX()][coords.getY()].uncheckedSetIntabitant(new Organism(nation));
-            } catch (TileAlreadyInhabitedException e) {
-                e.getMessage();
-            }
+        public BoardBuilder setInhabitant(Coordinates coords, int nation) throws TileAlreadyInhabitedException{
+            tiles[coords.getX()][coords.getY()].uncheckedSetIntabitant(new Organism(nation));
             return this;
         }
 
@@ -100,11 +138,15 @@ public class Board {
             return maximumNeighbouringFriendsCount;
         }
 
-        public void setMaximumNeighbouringFriendsCount (int maximumNeighbouringFriendsCount) throws InvalidTileCoordsException{
-            for (int x = 0; x < width; x++){
-                for (int y=0; y < height; y++){
-                    getTileImplementation(new Coordinates(x,y)).setMaximumNeighbouringFriendsCount(maximumNeighbouringFriendsCount);
+        public void setMaximumNeighbouringFriendsCount (int maximumNeighbouringFriendsCount) {
+            try {
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        getTileImplementation(new Coordinates(x, y)).setMaximumNeighbouringFriendsCount(maximumNeighbouringFriendsCount);
+                    }
                 }
+            } catch(InvalidTileCoordsException e){
+                    // Can't happen.
             }
         }
 
