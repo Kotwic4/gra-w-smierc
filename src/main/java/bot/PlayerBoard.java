@@ -40,7 +40,7 @@ public class PlayerBoard {
     }
 
     public Optional<PlayerTile> getPlayerTile(Coordinates cords) {
-        if (checkCoords(cords)) return Optional.empty();
+        if (!checkCoords(cords)) return Optional.empty();
         else return Optional.of(playerTiles[cords.getX()][cords.getY()]);
     }
 

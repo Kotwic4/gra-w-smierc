@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
+import java.util.Optional;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -95,7 +96,9 @@ GameController  implements PlayerController,TurnCommunicator{
         for(int i=0;i<NUM_BUTTON_LINES;i++)
             for(int j =0;j<BUTTONS_PER_LINE;j++)
                 if(playerBoard.getPlayerTile(new Coordinates(i,j)).isPresent()) {
-                    buttons[i][j].setStyle("-fx-background-color: #" + playerBoard.getPlayerTile(new Coordinates(i, j)).get().getColor().toString().substring(2, 8));
+                    Optional<Color> tileColor = playerBoard.getPlayerTile(new Coordinates(i, j)).get().getColor();
+                    if (tileColor.isPresent())
+                    buttons[i][j].setStyle("-fx-background-color: #" + tileColor.get().toString().substring(2, 8));
                     buttons[i][j].setOnAction(event -> {
                         playerBoard.getPlayerTile(((PositionedButton)event.getSource()).coordinates).get().inhabit();
                     });
@@ -109,6 +112,7 @@ GameController  implements PlayerController,TurnCommunicator{
     public void doGuiTurn(Player player) {
         Platform.runLater(()->{
             assignButtonsToPlayerTiles(player.getPlayerBoard());
+            newOrganisms.setText(Integer.toString(player.getRemainingPoints()));
         });
         synchronized (guiTurnLock){
             try {

@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
 
 public class GameBuilder {
@@ -22,12 +23,9 @@ public class GameBuilder {
         boardBuilder = new Board.BoardBuilder(boardWidth,boardHeight);
     }
 
-    public GameBuilder addPlayer(PlayerStrategy playerStrategy, String name) {
-        Random random = new Random();
-        nextPlayerId++;
-        Player player = new Player(Color.color(random.nextDouble(),random.nextDouble(), random.nextDouble()), name, nextPlayerId);
-        player.setPlayerStrategy(playerStrategy);
-        players.add(player);
+    public GameBuilder addPlayer(Player player) {
+        if(players.stream().noneMatch(player1 -> player.getId()==player.getId()))
+            players.add(player);
         return this;
     }
 

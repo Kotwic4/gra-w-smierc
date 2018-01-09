@@ -32,7 +32,9 @@ public class PlayerTile {
     }
 
     public void inhabit() {
+        System.out.println("inhabit");
         if (isAccessible()) {
+            System.out.println("isaccessible");
             player.subPoints(tile.getCost());
             tile.inhabit(player);
         }

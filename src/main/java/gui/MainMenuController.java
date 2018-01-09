@@ -3,6 +3,7 @@ package gui;
 import board.Coordinates;
 import bot.GuiPlayer;
 import bot.Player;
+import bot.PlayerStrategy;
 import bot.SimpleBot;
 import gameManager.Game;
 import gameManager.GameBuilder;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -46,12 +48,19 @@ public class MainMenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Game.fxml"));
         Parent root = fxmlLoader.load();
         GameController gameController = fxmlLoader.getController();
+        Player gamer = new Player(Color.RED,"Ty",1);
+        gamer.setPlayerStrategy(new GuiPlayer(gameController));
+        Player bot = new Player(Color.BLUE,"Bot",2);
+        bot.setPlayerStrategy(new SimpleBot(gameController));
         GameBuilder gameBuilder = new GameBuilder(20,20);
         gameBuilder.boardBuilder.markAsStronghold(new Coordinates(0,0));
-        gameBuilder.boardBuilder.markAsStronghold(new Coordinates(0,0));
-        gameBuilder.boardBuilder.setInhabitant(new Coordinates(0,0),1);
-        Game game = gameBuilder.addPlayer(new GuiPlayer(gameController),"Ty").createBoard().
-                addPlayer(new GuiPlayer(gameController),"Nie Ty").getGameInstance();
+        gameBuilder.boardBuilder.markAsStronghold(new Coordinates(19,19));
+        gameBuilder.boardBuilder.setInhabitant(new Coordinates(0,0),bot);
+        gameBuilder.boardBuilder.setInhabitant(new Coordinates(19,19),gamer);
+        gamer.addStronhold();
+        bot.addStronhold();
+        Game game = gameBuilder.addPlayer(gamer).createBoard().
+                addPlayer(bot).getGameInstance();
         Stage window=(Stage)newGameButton.getScene().getWindow();
         window.setScene(new Scene(root));
         Thread thread = new Thread(game);
