@@ -42,11 +42,11 @@ class TileImplementation implements Tile{
     }
 
     @Override
-    public void inhabit(Player player) throws InvalidOrganismPositionException {
+    public void inhabit(Player player) {
         if (canInhabit(player)) {
             this.inhabitant = new Organism(player);
         } else {
-            throw new InvalidOrganismPositionException(inhabitant);
+            throw new InvalidOrganismPositionException(player);
         }
     }
 
