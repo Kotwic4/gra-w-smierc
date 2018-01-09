@@ -8,19 +8,15 @@ import java.util.Optional;
  * Created by Paweł Taborowski on 28.12.17.
  */
 public interface Tile {
-  boolean isInhabitated();
+  boolean isInhabited();
   void broadcastAppeal(int appeal);
   Organism getInhabitant();
-  boolean checkIfInhabitable(Organism inhabitant);
-  void setInhabitant(Organism inhabitant) throws InvalidOrganismPositionException;
   int getCost();
   Coordinates getCoords();
   boolean isStronghold();
   void checkAppealAndReact(int appeal);
-
   boolean canInhabit(Player player);
 
-  void inhabit(Player player);
-
+  void inhabit(Player player) throws InvalidOrganismPositionException;
   Optional<Player> getPlayer();
 }

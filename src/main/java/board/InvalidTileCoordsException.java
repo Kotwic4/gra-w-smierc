@@ -5,6 +5,6 @@ package board;
  */
 public class InvalidTileCoordsException extends RuntimeException{
     public InvalidTileCoordsException(Coordinates coords) {
-        super("There is no tile at (" + coords.getX() + ", " + coords.getY() + ").");
+        super("There is no tile at " + coords.toString() + ".");
     }
 }

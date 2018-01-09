@@ -63,7 +63,7 @@ public class TileImplementationTest {
         try {
             Coordinates coords = new Coordinates(4, 2);
             TileImplementation tile = boardBuilder.getTileImplementation(coords);
-            tile.setInhabitant(new Organism(1));
+            tile.inhabit(new Organism(1));
         } catch (InvalidOrganismPositionException|InvalidTileCoordsException e) {
             fail();
         }
@@ -71,7 +71,7 @@ public class TileImplementationTest {
         try {
             Coordinates coords = new Coordinates(4, 0);
             TileImplementation tile = boardBuilder.getTileImplementation(coords);
-            tile.setInhabitant(new Organism(1));
+            tile.inhabit(new Organism(1));
             fail();
         } catch (InvalidOrganismPositionException e) {
             //It's OK to be there

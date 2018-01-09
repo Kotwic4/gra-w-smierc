@@ -12,20 +12,24 @@ class TileImplementation implements Tile{
     private Coordinates coords;
     private List<TileImplementation> neighbours;
     private boolean stronghold;
-    private int maximumNeighbouringFriendsCount = 4;
+    private int maximumNeighbouringFriendsCount;
+    private static int DEFAULT_COST = 1;
+    protected static int DEFAULT_NEIGHBOURING_FRIENDS_COUNT = 4;
 
     public TileImplementation(Coordinates coords) {
       this.coords = coords;
+        cost = DEFAULT_COST;
+        maximumNeighbouringFriendsCount = DEFAULT_NEIGHBOURING_FRIENDS_COUNT;
       neighbours = new LinkedList<>();
     }
 
-    public boolean isInhabitated(){
+    public boolean isInhabited() {
         return this.inhabitant != null;
     }
 
     public void broadcastAppeal(int appeal){
         for(TileImplementation neighbour: neighbours){
-          if(neighbour.isInhabitated()){
+            if (neighbour.isInhabited()) {
             if (neighbour.getInhabitant().getAppeal() == appeal) continue;
             neighbour.getInhabitant().setAppeal(appeal);
             neighbour.broadcastAppeal(appeal);
@@ -37,23 +41,26 @@ class TileImplementation implements Tile{
         return inhabitant;
     }
 
-    public void setInhabitant(Organism inhabitant) throws InvalidOrganismPositionException{
-        if(checkIfInhabitable(inhabitant)){
-            this.inhabitant = inhabitant;
+    @Override
+    public void inhabit(Player player) throws InvalidOrganismPositionException {
+        if (canInhabit(player)) {
+            this.inhabitant = new Organism(player);
         } else {
-          throw new InvalidOrganismPositionException(inhabitant);
+            throw new InvalidOrganismPositionException(inhabitant);
         }
     }
 
-    public boolean checkIfInhabitable(Organism inhabitant){
-        int nation = inhabitant.getNation();
+    @Override
+    public boolean canInhabit(Player player) {
         int foundFriendlyNeighbours = 0;
-        for (TileImplementation neighbour: neighbours){
-            if (neighbour.isInhabitated() && neighbour.getInhabitant().getNation() == nation){
+        if (this.isInhabited()) return false;
+        for (TileImplementation neighbour : neighbours) {
+            if (neighbour.isInhabited() && neighbour.getInhabitant().getPlayer() == player) {
                 foundFriendlyNeighbours++;
             }
         }
         return foundFriendlyNeighbours > 0 && foundFriendlyNeighbours < maximumNeighbouringFriendsCount;
+
     }
 
     public void uncheckedSetIntabitant(Organism inhabitant) throws TileAlreadyInhabitedException {
@@ -65,12 +72,24 @@ class TileImplementation implements Tile{
       }
     }
 
+    @Override
+    public Optional<Player> getPlayer() {
+        if (this.isInhabited())
+            return Optional.of(getInhabitant().getPlayer());
+        else
+            return Optional.empty();
+    }
+
     public int getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
+    public void setCost(int cost) throws CostAlreadyAssignedException {
+        if (this.cost != DEFAULT_COST) {
+            throw new CostAlreadyAssignedException(this);
+        } else {
+            this.cost = cost;
+        }
     }
 
     public Coordinates getCoords() {
@@ -94,21 +113,6 @@ class TileImplementation implements Tile{
       if (knownAppeal != appeal){
         inhabitant = null;
       }
-    }
-
-    @Override
-    public boolean canInhabit(Player player) {
-        return false;
-    }
-
-    @Override
-    public void inhabit(Player player) {
-
-    }
-
-    @Override
-    public Optional<Player> getPlayer() {
-        return Optional.empty();
     }
 
     int getMaximumNeighbouringFriendsCount() {
