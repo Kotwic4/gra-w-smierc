@@ -1,5 +1,7 @@
 package gui;
 
+import bot.Player;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -7,8 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class
-GameController {
+GameController implements PlayerController,TurnCommunicator{
+
+    private final Lock guiTurnLock = new ReentrantLock();
 
     @FXML
     private GridPane grid;
@@ -49,6 +57,7 @@ GameController {
             }
         }
 
+
         newOrganisms.setText("10");
         livingOrganisms.setText("3");
 
@@ -66,9 +75,41 @@ GameController {
 
     @FXML
     private void endTurnButtonHandler() {
-        System.out.println("Zakonczono ture.");
+        synchronized (guiTurnLock){
+            guiTurnLock.notifyAll();
+        }
     }
 
 
+    @Override
+    public void doGuiTurn(Player player) {
+        synchronized (guiTurnLock){
+            try {
+                guiTurnLock.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void startHeadlessTurn(Player player) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Bot start");
+            alert.showAndWait();
+            alert.hide();
+        });
+
+    }
+
+    @Override
+    public void endHeadlessTurn(Player player) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Bot stop");
+            alert.showAndWait();
+        });
+    }
 }
 

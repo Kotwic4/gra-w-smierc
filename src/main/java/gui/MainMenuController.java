@@ -1,5 +1,10 @@
 package gui;
 
+import bot.GuiPlayer;
+import bot.SimpleBot;
+import gameManager.Game;
+import gameManager.GameBuilder;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,18 +35,21 @@ public class MainMenuController {
     private ResourceBundle resources;
     public MainMenuController() {
     }
-    @FXML
-    private void printOutput()
-    {
-        newGameButton.setText("aaaa");
-    }
+
 
     @FXML
     private void sceneHandler() throws IOException {
         System.out.println("Scene changing...");
-        Parent root = FXMLLoader.load(getClass().getResource("/Game.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Game.fxml"));
+        Parent root = fxmlLoader.load();
+        GameController gameController = fxmlLoader.getController();
+        GameBuilder gameBuilder = new GameBuilder(20,20);
+        Game game = gameBuilder.addPlayer(new GuiPlayer(gameController),"Ty").createBoard().
+                addPlayer(new GuiPlayer(gameController),"Nie Ty").getGameInstance();
         Stage window=(Stage)newGameButton.getScene().getWindow();
         window.setScene(new Scene(root));
+        Thread thread = new Thread(game);
+        thread.start();
     }
 
     @FXML
