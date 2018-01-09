@@ -1,22 +1,16 @@
 package board;
 
-import bot.Player;
-
-import java.util.List;
-import java.util.Optional;
-
+/**
+ * Created by Paweł Taborowski on 28.12.17.
+ */
 public interface Tile {
-    boolean isInhabitated();
-
-    Optional<Player> getInhabitant();
-
-    void inhabit(Player player);
-
-    boolean canInhabit(Player player);
-
-    boolean isStronghold();
-
-    int getCost();
-
-    List<? extends Tile> getNeighbours();
+  boolean isInhabitated();
+  void broadcastAppeal(int appeal);
+  Organism getInhabitant();
+  boolean checkIfInhabitable(Organism inhabitant);
+  void setInhabitant(Organism inhabitant) throws InvalidOrganismPositionException;
+  int getCost();
+  Coordinates getCoords();
+  boolean isStronghold();
+  void checkAppealAndReact(int appeal);
 }

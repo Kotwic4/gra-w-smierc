@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="Gui.GameController">
+<VBox>
+        <GridPane fx:id="grid" alignment="CENTER">
+        </GridPane>
+        <HBox>
+            <VBox >
+                <HBox>
+                <Label text="Posiadane jednowstki:"/>
+                    <Label fx:id="livingOrganisms"/>
+                </HBox>
+               <HBox>
+                <Label text="Nowe jednowstki:"/>
+                   <Label fx:id="newOrganisms"/>
+                </HBox>
+            </VBox>
+            <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <VBox >
+                <Button fx:id="endTurnButton" text="Koniec tury" onAction="#endTurnButtonHandler"/>
+                <Button fx:id="surrenderButton" text="Poddaję się" onAction="#surrenderButtonHandler"/>
+            </VBox>
+        </HBox>
+
+</VBox>
+</StackPane>
