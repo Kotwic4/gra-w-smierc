@@ -14,7 +14,7 @@ import java.util.Random;
 public class GameBuilder {
     Board board;
     private List<Player> players;
-    private Board.BoardBuilder boardBuilder;
+    public Board.BoardBuilder boardBuilder;
     private int nextPlayerId = 0;
 
     public GameBuilder(int boardWidth, int boardHeight) {
@@ -33,11 +33,6 @@ public class GameBuilder {
 
     public GameBuilder createBoard() {
         board = boardBuilder.build();
-        return this;
-    }
-
-    public GameBuilder createBoard(IBoardBuilder boardBuilder) {
-        boardBuilder.fillBoard(board);
         return this;
     }
 

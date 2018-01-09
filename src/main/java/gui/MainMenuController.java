@@ -1,9 +1,12 @@
 package gui;
 
+import board.Coordinates;
 import bot.GuiPlayer;
+import bot.Player;
 import bot.SimpleBot;
 import gameManager.Game;
 import gameManager.GameBuilder;
+import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,12 +41,15 @@ public class MainMenuController {
 
 
     @FXML
-    private void sceneHandler() throws IOException {
+    private void newGameButtonHandler() throws IOException {
         System.out.println("Scene changing...");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Game.fxml"));
         Parent root = fxmlLoader.load();
         GameController gameController = fxmlLoader.getController();
         GameBuilder gameBuilder = new GameBuilder(20,20);
+        gameBuilder.boardBuilder.markAsStronghold(new Coordinates(0,0));
+        gameBuilder.boardBuilder.markAsStronghold(new Coordinates(0,0));
+        gameBuilder.boardBuilder.setInhabitant(new Coordinates(0,0),1);
         Game game = gameBuilder.addPlayer(new GuiPlayer(gameController),"Ty").createBoard().
                 addPlayer(new GuiPlayer(gameController),"Nie Ty").getGameInstance();
         Stage window=(Stage)newGameButton.getScene().getWindow();
