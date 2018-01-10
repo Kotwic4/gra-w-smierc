@@ -1,7 +1,7 @@
 package board;
 
-public class TileAlreadyInhabitedException extends Exception {
+public class TileAlreadyInhabitedException extends RuntimeException {
     public TileAlreadyInhabitedException(Coordinates coords) {
-        super("Tile (" + coords.getX() + ", " + coords.getY() + ") already inhabited.");
+        super("Tile " + coords.toString() + " already inhabited.");
     }
 }

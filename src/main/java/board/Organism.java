@@ -3,19 +3,13 @@ package board;
 import bot.Player;
 
 public class Organism {
-  
-    private final int nation;
 
-    private Player player;
+    private final Player player;
 
     private int appeal;
 
-    public Organism(int nation){
-        this.nation = nation;
-    }
-
-    public int getNation() {
-        return nation;
+    public Organism(Player player) {
+        this.player = player;
     }
 
     public Player getPlayer(){
@@ -37,7 +31,7 @@ public class Organism {
 
         Organism organism = (Organism) o;
 
-        if (getNation() != organism.getNation()) return false;
+        if (!getPlayer().equals(organism.getPlayer())) return false;
         return getAppeal() == organism.getAppeal();
     }
 }
