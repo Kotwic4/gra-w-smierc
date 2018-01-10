@@ -17,6 +17,6 @@ public interface Tile {
   void checkAppealAndReact(int appeal);
   boolean canInhabit(Player player);
 
-    void inhabit(Player player);
+  void inhabit(Player player);
   Optional<Player> getPlayer();
 }

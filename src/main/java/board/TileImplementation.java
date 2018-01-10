@@ -29,10 +29,10 @@ class TileImplementation implements Tile{
 
     public void broadcastAppeal(int appeal){
         for(TileImplementation neighbour: neighbours){
-            if (neighbour.isInhabited()) {
-            if (neighbour.getInhabitant().getAppeal() == appeal) continue;
-            neighbour.getInhabitant().setAppeal(appeal);
-            neighbour.broadcastAppeal(appeal);
+            if (neighbour.isInhabited() && neighbour.getPlayer().get() == getPlayer().get()) {
+                if (neighbour.getInhabitant().getAppeal() == appeal) continue;
+                neighbour.getInhabitant().setAppeal(appeal);
+                neighbour.broadcastAppeal(appeal);
           }
         }
     }
@@ -44,7 +44,8 @@ class TileImplementation implements Tile{
     @Override
     public void inhabit(Player player) {
         if (canInhabit(player)) {
-            this.inhabitant = new Organism(player);
+//            this.inhabitant = new Organism(player);
+            uncheckedSetIntabitant(new Organism(player));
         } else {
             throw new InvalidOrganismPositionException(player);
         }
@@ -67,6 +68,16 @@ class TileImplementation implements Tile{
       // Force setting inhabitant without checking neighbours - required for stronghold's organism initialization
       if(this.inhabitant == null) {
           this.inhabitant = inhabitant;
+          Player player = inhabitant.getPlayer();
+          player.addOrganism();
+          if(isStronghold()){
+              player.addStronhold();
+          }
+          for (TileImplementation neighbour : neighbours) {
+              if(neighbour.getPlayer().isPresent() && neighbour.getPlayer().get() != player){
+                  neighbour.unHabit();
+              }
+          }
       } else {
           throw new TileAlreadyInhabitedException(this.coords);
       }
@@ -111,8 +122,16 @@ class TileImplementation implements Tile{
     public void checkAppealAndReact(int appeal){
       int knownAppeal = getInhabitant().getAppeal();
       if (knownAppeal != appeal){
-        inhabitant = null;
+          unHabit();
       }
+    }
+
+    private void unHabit(){
+        getInhabitant().getPlayer().removeOrganism();
+        if(isStronghold()){
+            getInhabitant().getPlayer().removeStronhold();
+        }
+        inhabitant = null;
     }
 
     int getMaximumNeighbouringFriendsCount() {

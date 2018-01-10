@@ -22,7 +22,7 @@ public class PlayerBoard {
         PlayerTile[][] playerTiles = new PlayerTile[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                playerTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x, y)), player);
+                playerTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x, y)), player,board);
             }
         }
         //todo set tiles neighbours

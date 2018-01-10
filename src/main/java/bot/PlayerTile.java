@@ -1,5 +1,6 @@
 package bot;
 
+import board.Board;
 import board.Tile;
 import javafx.scene.paint.Color;
 
@@ -12,10 +13,12 @@ public class PlayerTile {
     private boolean visible;
     private Player player;
     private List<PlayerTile> neighbours;
+    private Board board;
 
-    PlayerTile(Tile tile, Player player) {
+    PlayerTile(Tile tile, Player player, Board board) {
         this.tile = tile;
         this.player = player;
+        this.board = board;
         visible = true; //todo change to false when PlayerBoard update implemented
     }
 
@@ -35,6 +38,7 @@ public class PlayerTile {
         if (isAccessible()) {
             player.subPoints(tile.getCost());
             tile.inhabit(player);
+            board.markAndClear();
         }
     }
 

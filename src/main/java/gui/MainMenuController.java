@@ -54,8 +54,6 @@ public class MainMenuController {
         gameBuilder.boardBuilder.markAsStronghold(new Coordinates(19,19));
         gameBuilder.boardBuilder.setInhabitant(new Coordinates(0,0),bot);
         gameBuilder.boardBuilder.setInhabitant(new Coordinates(19,19),gamer);
-        gamer.addStronhold();
-        bot.addStronhold();
         Game game = gameBuilder.addPlayer(gamer).createBoard().
                 addPlayer(bot).getGameInstance();
         Stage window=(Stage)newGameButton.getScene().getWindow();
