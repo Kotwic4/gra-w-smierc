@@ -14,7 +14,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         URL a = getClass().getResource("/MainMenu.fxml");
-        System.out.println(a);
         Parent root = FXMLLoader.load(a);
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));

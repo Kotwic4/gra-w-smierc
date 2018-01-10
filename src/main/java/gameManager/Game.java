@@ -34,7 +34,6 @@ public class Game implements Runnable {
     public void run() {
         while (true)
             for (Player player : players) {
-                System.out.println("new Player");
                 player.makeTurn();
             }
 

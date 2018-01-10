@@ -13,7 +13,7 @@ import java.util.function.Predicate;
 
 
 public class GameBuilder {
-    Board board;
+    private Board board;
     private List<Player> players;
     public Board.BoardBuilder boardBuilder;
     private int nextPlayerId = 0;
@@ -24,7 +24,7 @@ public class GameBuilder {
     }
 
     public GameBuilder addPlayer(Player player) {
-        if(players.stream().noneMatch(player1 -> player.getId()==player.getId()))
+        if(players.stream().noneMatch(player1 -> player1.getId()==player.getId()))
             players.add(player);
         return this;
     }

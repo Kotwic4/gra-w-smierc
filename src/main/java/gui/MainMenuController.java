@@ -1,10 +1,7 @@
 package gui;
 
 import board.Coordinates;
-import bot.GuiPlayer;
-import bot.Player;
-import bot.PlayerStrategy;
-import bot.SimpleBot;
+import bot.*;
 import gameManager.Game;
 import gameManager.GameBuilder;
 import javafx.concurrent.Task;
@@ -19,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainMenuController {
@@ -44,14 +42,13 @@ public class MainMenuController {
 
     @FXML
     private void newGameButtonHandler() throws IOException {
-        System.out.println("Scene changing...");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Game.fxml"));
         Parent root = fxmlLoader.load();
         GameController gameController = fxmlLoader.getController();
         Player gamer = new Player(Color.RED,"Ty",1);
         gamer.setPlayerStrategy(new GuiPlayer(gameController));
         Player bot = new Player(Color.BLUE,"Bot",2);
-        bot.setPlayerStrategy(new SimpleBot(gameController));
+        bot.setPlayerStrategy(new RandomBot(gameController,new Random()));
         GameBuilder gameBuilder = new GameBuilder(20,20);
         gameBuilder.boardBuilder.markAsStronghold(new Coordinates(0,0));
         gameBuilder.boardBuilder.markAsStronghold(new Coordinates(19,19));

@@ -11,7 +11,7 @@
         <HBox>
             <VBox >
                 <HBox>
-                <Label text="Posiadane jednowstki:"/>
+                <Label text=" "/>
                     <Label fx:id="livingOrganisms"/>
                 </HBox>
                <HBox>
