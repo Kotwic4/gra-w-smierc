@@ -101,7 +101,7 @@ public class BoardEditController {
         dialog.showAndWait();
 
         String result = textField.getText();
-        if(!result.isEmpty() && !Pattern.matches("[a-zA-Z]+", result)) {
+        if(Pattern.matches("[1-9]+", result)) {
             button.setText(result);
         }
 
@@ -111,7 +111,8 @@ public class BoardEditController {
     @FXML
     private void saveBoardButtonHandler() throws IOException {
         ObservableList<Node> list = grid.getChildren();
-        Board.BoardBuilder board = new Board.BoardBuilder(20,20);
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(20,20);
+
         for(Node node : list) {
             Integer row = GridPane.getRowIndex(node);
             Integer column = GridPane.getColumnIndex(node);
@@ -120,13 +121,17 @@ public class BoardEditController {
             if (node instanceof Button){
                 String s = ((Button) node).getText();
                 if(s.equals("S")) {
-                    board.markAsStronghold(coords);
+                    boardBuilder.markAsStronghold(coords);
                 } else if(Pattern.matches("[1-9]+", s)){
-                    board.setTileCost(Integer.parseInt(s), coords);
+                    boardBuilder.setTileCost(Integer.parseInt(s), coords);
                 }
             }
         }
-       // BoardSerializer.save(board, new BufferedWriter(new FileWriter("newBoardSave.txt")));
+
+        Board board = boardBuilder.build();
+        FileWriter fw = new FileWriter("newBoardSave.txt");
+        BoardSerializer.save(board, fw);
+        fw.close();
 
 
     }
