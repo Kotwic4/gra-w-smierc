@@ -212,7 +212,7 @@ public class Board {
         if (!Arrays.deepEquals(tiles, board.tiles)) return false;
         if (strongholdList != null ? !strongholdList.equals(board.strongholdList) : board.strongholdList != null)
             return false;
-        return random != null ? random.equals(board.random) : board.random == null;
+        return true;
     }
 
     @Override

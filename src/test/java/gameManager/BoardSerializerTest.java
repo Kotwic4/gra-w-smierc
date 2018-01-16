@@ -58,7 +58,7 @@ public class BoardSerializerTest {
         } catch (BoardSerializer.MalformedFileException e) {
             e.printStackTrace();
         }
-        assertEquals(boardExpected.equals(boardResult), true);
+        assertEquals(boardExpected,boardResult);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class BoardSerializerTest {
             e.printStackTrace();
         }
         Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
-
+        boardBuilder.markAsStronghold(new Coordinates(0,0));
 
         int tmp = 1;
         for(int i=0; i<5; i++){
@@ -93,6 +93,6 @@ public class BoardSerializerTest {
         } catch (BoardSerializer.MalformedFileException e) {
             e.printStackTrace();
         }
-        assertEquals(boardExpected.equals(boardResult), true);
+        assertEquals(boardExpected,boardResult);
     }
 }

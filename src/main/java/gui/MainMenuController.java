@@ -48,7 +48,7 @@ public class MainMenuController {
         Player gamer = new Player(Color.RED,"Ty",1);
         gamer.setPlayerStrategy(new GuiPlayer(gameController));
         Player bot = new Player(Color.BLUE,"Bot",2);
-        bot.setPlayerStrategy(new RandomBot(gameController,new Random()));
+        bot.setPlayerStrategy(new GuiPlayer(gameController));
         GameBuilder gameBuilder = new GameBuilder(20,20);
         gameBuilder.boardBuilder.markAsStronghold(new Coordinates(0,0));
         gameBuilder.boardBuilder.markAsStronghold(new Coordinates(19,19));

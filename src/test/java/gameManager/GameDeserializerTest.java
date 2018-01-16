@@ -20,6 +20,6 @@ public class GameDeserializerTest {
         DummyGame dummyGame = GameSerializer.loadFromString("{\"players\":[],\"board\":{\"tiles\":[[{\"cost\":0,\"stronghold\":false},{\"cost\":0,\"stronghold\":false}],[{\"cost\":0,\"stronghold\":false},{\"cost\":0,\"stronghold\":false}]],\"width\":2,\"height\":2}}");
         GameDeserializer gameDeserializer = new GameDeserializer(dummyGame);
         Game result = gameDeserializer.deserialize().get();
-        assertEquals(result, expected);
+        assertEquals(expected,result);
     }
 }

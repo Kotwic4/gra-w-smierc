@@ -2,6 +2,7 @@ package board;
 
 import bot.Player;
 
+import javax.sound.midi.Track;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -140,5 +141,17 @@ class TileImplementation implements Tile{
 
     void setMaximumNeighbouringFriendsCount(int maximumNeighbouringFriendsCount) {
         this.maximumNeighbouringFriendsCount = maximumNeighbouringFriendsCount;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TileImplementation tile = (TileImplementation) o;
+        if (isStronghold() != tile.isStronghold()) return false;
+        if (cost != tile.cost) return false;
+        if (isInhabited() != isInhabited()) return false;
+        if (isInhabited() && (!inhabitant.equals(tile.inhabitant))) return false;
+        return true;
     }
 }
