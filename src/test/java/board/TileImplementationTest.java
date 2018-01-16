@@ -13,11 +13,10 @@ public class TileImplementationTest {
     private Board.BoardBuilder boardBuilder;
     private List<TileImplementation> connectedTiles;
     private TileImplementation notConnectedTile;
-    private int LENGTH = 5;
     private Player player;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
       boardBuilder = new Board.BoardBuilder(5,6);
       connectedTiles = new LinkedList<>();
       connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(3,2)));

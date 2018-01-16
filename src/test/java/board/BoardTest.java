@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class BoardTest {
 
     @Test
-    public void markAndClear() throws Exception{
+    public void markAndClear() {
         // SETUP
         Coordinates strongholdCoord = new Coordinates(0, 1);
         Coordinates organismToRemoveCoord = new Coordinates(4, 5);
