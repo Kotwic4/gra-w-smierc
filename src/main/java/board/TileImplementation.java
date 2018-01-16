@@ -15,12 +15,14 @@ class TileImplementation implements Tile{
     private int maximumNeighbouringFriendsCount;
     private static int DEFAULT_COST = 1;
     protected static int DEFAULT_NEIGHBOURING_FRIENDS_COUNT = 4;
+    private List<TileObserver> tileObservers;
 
     public TileImplementation(Coordinates coords) {
       this.coords = coords;
         cost = DEFAULT_COST;
         maximumNeighbouringFriendsCount = DEFAULT_NEIGHBOURING_FRIENDS_COUNT;
       neighbours = new LinkedList<>();
+        tileObservers = new LinkedList<>();
     }
 
     public boolean isInhabited() {
@@ -121,5 +123,19 @@ class TileImplementation implements Tile{
 
     void setMaximumNeighbouringFriendsCount(int maximumNeighbouringFriendsCount) {
         this.maximumNeighbouringFriendsCount = maximumNeighbouringFriendsCount;
+    }
+
+    public void registerObserver(TileObserver tileObserver) {
+        tileObservers.add(tileObserver);
+    }
+
+    public void removeObserver(TileObserver tileObserver) {
+        tileObservers.remove(tileObserver);
+    }
+
+    public void notifyObservers() {
+        for (TileObserver tileObserver : tileObservers) {
+            tileObserver.update(this);
+        }
     }
 }

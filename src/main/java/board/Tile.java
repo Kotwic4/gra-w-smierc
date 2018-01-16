@@ -19,4 +19,10 @@ public interface Tile {
 
     void inhabit(Player player);
   Optional<Player> getPlayer();
+
+    void registerObserver(TileObserver tileObserver);
+
+    void removeObserver(TileObserver tileObserver);
+
+    void notifyObservers();
 }
