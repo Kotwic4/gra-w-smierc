@@ -5,7 +5,7 @@
       spacing="10">
     <children>
         <Button fx:id="newGameButton" text="Nowa Gra" onAction="#newGameButtonHandler"/>
-        <Button fx:id="boardEditorButton" text="Edytor plansz"/>
+        <Button fx:id="boardEditorButton" text="Edytor plansz" onAction="#boardEditorButtonHandler"/>
         <Button fx:id="settingsButton" text="Ustawienia"/>
         <Button fx:id="exitButton" text="Wyjście" onAction="#exitButtonHandler"/>
     </children>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="gui.BoardEditController">
+    <VBox>
+        <GridPane fx:id="grid" alignment="CENTER">
+        </GridPane>
+        <HBox>
+            <VBox >
+                <Button fx:id="saveBoardButton" text="Zapisz" onAction="#saveBoardButtonHandler"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+
+</StackPane>
