@@ -22,31 +22,31 @@ public class SimpleBot extends HeadlessPlayer {
         while (!accessibleTiles.isEmpty()) {
             PlayerTile chosenTile = null;
             double max = 0;
-            for(PlayerTile playerTile: accessibleTiles){
+            for (PlayerTile playerTile : accessibleTiles) {
                 double value = 0;
-                for(PlayerTile neighbour: playerTile.getNeighbours()){
+                for (PlayerTile neighbour : playerTile.getNeighbours()) {
                     int nvalue = 0;
-                    if(neighbour.isVisible()){
-                        if(neighbour.getPlayer().isPresent()){
+                    if (neighbour.isVisible()) {
+                        if (neighbour.getPlayer().isPresent()) {
                             nvalue += NEIGHBOUR_PLAYER;
                         }
-                        if(neighbour.isStronghold().get()){
+                        if (neighbour.isStronghold().get()) {
                             nvalue += NEIGHBOUR_STRONGHOLD;
                         }
                         nvalue -= neighbour.getCost().get();
                     }
                     value += nvalue * NEIGHBOUR_MULTIPLY;
                 }
-                if(playerTile.isStronghold().get()){
+                if (playerTile.isStronghold().get()) {
                     value += STRONGHOLD;
                 }
                 value -= playerTile.getCost().get();
-                if(value > max){
+                if (value > max) {
                     chosenTile = playerTile;
                     max = value;
                 }
             }
-            if(chosenTile == null) break;
+            if (chosenTile == null) break;
             chosenTile.inhabit();
             accessibleTiles = playerBoard.getAccessibleTiles();
         }

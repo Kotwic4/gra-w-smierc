@@ -68,34 +68,46 @@ public class Player {
 
     void addPoints(int value) {
         remainingPoints += value;
+        if (playerBoard != null) {
+            playerBoard.update();
+        }
     }
 
     void subPoints(int cost) throws NotEnoughPointsException {
         if (cost > remainingPoints) throw new NotEnoughPointsException();
         remainingPoints -= cost;
+        if (playerBoard != null) {
+            playerBoard.update();
+        }
     }
 
     public void addStronhold() {
         pointsPerTurn += POINTS_PER_STRONGHOLDS;
         strongholdsNumber++;
+        if (playerBoard != null) {
+            playerBoard.update();
+        }
     }
 
     public void removeStronhold() {
         if (strongholdsNumber == 0) throw new PlayerHaveNoStrongholdsException();
         pointsPerTurn -= POINTS_PER_STRONGHOLDS;
         strongholdsNumber--;
+        if (playerBoard != null) {
+            playerBoard.update();
+        }
     }
 
     public void addOrganism() {
         pointsPerTurn += POINTS_PER_ORGANISM;
-        if(playerBoard != null){
+        if (playerBoard != null) {
             playerBoard.update();
         }
     }
 
     public void removeOrganism() {
         pointsPerTurn -= POINTS_PER_ORGANISM;
-        if(playerBoard != null){
+        if (playerBoard != null) {
             playerBoard.update();
         }
     }
