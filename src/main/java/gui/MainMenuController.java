@@ -1,10 +1,5 @@
 package gui;
 
-import board.Coordinates;
-import bot.*;
-import gameManager.Game;
-import gameManager.GameBuilder;
-import javafx.concurrent.Task;
 import bot.GuiPlayer;
 import bot.SimpleBot;
 import gameManager.Game;
@@ -15,12 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainMenuController {
@@ -45,25 +38,26 @@ public class MainMenuController {
 
 
     @FXML
-    private void newGameButtonHandler() throws IOException {
+    private void sceneHandler() throws IOException {
+        System.out.println("Scene changing...");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Game.fxml"));
         Parent root = fxmlLoader.load();
         GameController gameController = fxmlLoader.getController();
-        Player gamer = new Player(Color.RED,"Ty",1);
-        gamer.setPlayerStrategy(new GuiPlayer(gameController));
-        Player bot = new Player(Color.BLUE,"Bot",2);
-        bot.setPlayerStrategy(new GuiPlayer(gameController));
         GameBuilder gameBuilder = new GameBuilder(20,20);
-        gameBuilder.boardBuilder.markAsStronghold(new Coordinates(0,0));
-        gameBuilder.boardBuilder.markAsStronghold(new Coordinates(19,19));
-        gameBuilder.boardBuilder.setInhabitant(new Coordinates(0,0),bot);
-        gameBuilder.boardBuilder.setInhabitant(new Coordinates(19,19),gamer);
-        Game game = gameBuilder.addPlayer(gamer).createBoard().
-                addPlayer(bot).getGameInstance();
+        Game game = gameBuilder.addPlayer(new GuiPlayer(gameController),"Ty").createBoard().
+                addPlayer(new GuiPlayer(gameController),"Nie Ty").getGameInstance();
         Stage window=(Stage)newGameButton.getScene().getWindow();
         window.setScene(new Scene(root));
         Thread thread = new Thread(game);
         thread.start();
+    }
+
+    @FXML
+    private void boardEditorButtonHandler() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage window=(Stage)newGameButton.getScene().getWindow();
+        window.setScene(new Scene(root, 300, 275));
     }
 
     @FXML
