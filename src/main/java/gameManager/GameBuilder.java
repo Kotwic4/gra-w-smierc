@@ -24,13 +24,26 @@ public class GameBuilder {
     }
 
     public GameBuilder addPlayer(Player player) {
-        if(players.stream().noneMatch(player1 -> player1.getId()==player.getId()))
-            players.add(player);
+        players.add(player);
+        return this;
+    }
+
+    public GameBuilder addPlayer(PlayerStrategy playerStrategy, String name) {
+        Random random = new Random();
+        nextPlayerId++;
+        Player player = new Player(Color.color(random.nextDouble(),random.nextDouble(), random.nextDouble()), name, nextPlayerId);
+        player.setPlayerStrategy(playerStrategy);
+        players.add(player);
         return this;
     }
 
     public GameBuilder createBoard() {
         board = boardBuilder.build();
+        return this;
+    }
+
+    public GameBuilder createBoard(IBoardBuilder boardBuilder) {
+        boardBuilder.fillBoard(board);
         return this;
     }
 

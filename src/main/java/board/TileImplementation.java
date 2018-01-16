@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Optional;
 
-class TileImplementation implements Tile{
+class TileImplementation extends Tile{
     private Organism inhabitant;
     private int cost;
     private Coordinates coords;

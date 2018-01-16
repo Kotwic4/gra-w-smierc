@@ -16,6 +16,10 @@ import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class
 GameController  implements PlayerController,TurnCommunicator{
 
@@ -61,6 +65,9 @@ GameController  implements PlayerController,TurnCommunicator{
             }
         }
 
+        newOrganisms.setText("10");
+        livingOrganisms.setText("3");
+
     }
 
     @FXML
@@ -93,10 +100,6 @@ GameController  implements PlayerController,TurnCommunicator{
 
     @Override
     public void doGuiTurn(Player player) {
-        Platform.runLater(()->{
-            assignButtonsToPlayerTiles(player.getPlayerBoard());
-            newOrganisms.setText(Integer.toString(player.getRemainingPoints()));
-        });
         synchronized (guiTurnLock){
             try {
                 guiTurnLock.wait();
@@ -108,14 +111,22 @@ GameController  implements PlayerController,TurnCommunicator{
 
     @Override
     public void startHeadlessTurn(Player player) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Bot start");
+            alert.showAndWait();
+            alert.hide();
+        });
 
     }
 
     @Override
     public void endHeadlessTurn(Player player) {
-
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Bot stop");
+            alert.showAndWait();
+        });
     }
-
-
 }
 
