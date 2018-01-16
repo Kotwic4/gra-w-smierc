@@ -47,6 +47,7 @@ class TileImplementation implements Tile{
     public void inhabit(Player player) {
         if (canInhabit(player)) {
             this.inhabitant = new Organism(player);
+            notifyObservers();
         } else {
             throw new InvalidOrganismPositionException(player);
         }
@@ -114,6 +115,7 @@ class TileImplementation implements Tile{
       int knownAppeal = getInhabitant().getAppeal();
       if (knownAppeal != appeal){
         inhabitant = null;
+          notifyObservers();
       }
     }
 
