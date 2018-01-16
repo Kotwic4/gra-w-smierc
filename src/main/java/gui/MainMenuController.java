@@ -67,6 +67,14 @@ public class MainMenuController {
     }
 
     @FXML
+    private void boardEditorButtonHandler() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage window=(Stage)newGameButton.getScene().getWindow();
+        window.setScene(new Scene(root, 300, 275));
+    }
+
+    @FXML
     private void exitButtonHandler() {
         Stage stage =(Stage)newGameButton.getScene().getWindow();
         stage.close();
