@@ -1,10 +1,11 @@
 package gameManager;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import board.Organism;
+import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.Optional;
 
@@ -13,8 +14,17 @@ class GameSerializer {
         /*if(new File(path).exists()) {
             throw new FileAlreadyExistsException(path);
         }*/
+        JsonSerializer<Organism> serializer = (src, typeOfSrc, context) -> {
+            JsonObject Organism = new JsonObject();
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Organism.addProperty("playerID", src.getPlayer().getId());
+
+            return Organism;
+        };
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Organism.class, serializer)
+                .create();
         String jsonedGame = gson.toJson(game);
         StringWriter sw = new StringWriter();
         sw.write(jsonedGame);
@@ -30,14 +40,6 @@ class GameSerializer {
             return Optional.empty();
         }
         return Optional.of(dummyGame);
-    }
-
-    public static DummyGame loadFromString(String jsonGame)
-    {
-        DummyGame dummyGame;
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        dummyGame = gson.fromJson(jsonGame, DummyGame.class);
-        return dummyGame;
     }
 
 }

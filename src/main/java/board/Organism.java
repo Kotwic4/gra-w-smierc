@@ -4,7 +4,7 @@ import bot.Player;
 
 public class Organism {
 
-    private final Player player;
+    transient private final Player player;
 
     private int appeal;
 

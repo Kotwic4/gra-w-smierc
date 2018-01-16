@@ -48,29 +48,4 @@ public class GameSerializerTest {
         assertEquals(GameSerializer.load(new StringReader(testSaveAndLoad)).isPresent(), true);
     }
 
-    @Test
-    public void testLoadAndSave(){
-        DummyGame dummyGame = null;
-        Game game = null;
-        assertEquals(GameSerializer.load(new StringReader(testSaveAndLoad)).isPresent(), true);
-        dummyGame = GameSerializer.load(new StringReader(testSaveAndLoad)).get();
-        assertEquals(new GameDeserializer(dummyGame).deserialize().isPresent(), true);
-        game = new GameDeserializer(dummyGame).deserialize().get();
-        GameSerializer.save(game);//, "testSaveAndLoad2.txt"
-        try {
-            byte[] f1 = Files.readAllBytes(Paths.get("testSaveAndLoad.txt"));
-            byte[] f2 = Files.readAllBytes(Paths.get("testSaveAndLoad2.txt"));
-            //assertArrayEquals(f1.toString().getBytes(),f2.toString().getBytes());
-            assertEquals(f1.length, f2.length);
-            for(int i=0; i<f1.length; i++)
-            {
-                assertEquals(f1[i], f2[i]);
-            }
-        } catch (IOException e) {
-            assert false;
-            e.printStackTrace();
-        }
-    }
-
-
 }

@@ -11,11 +11,11 @@ class TileImplementation extends Tile{
     private Organism inhabitant;
     private int cost;
     private Coordinates coords;
-    private List<TileImplementation> neighbours;
+    transient List<TileImplementation> neighbours;
     private boolean stronghold;
     private int maximumNeighbouringFriendsCount;
-    private static int DEFAULT_COST = 1;
-    protected static int DEFAULT_NEIGHBOURING_FRIENDS_COUNT = 4;
+    transient private static int DEFAULT_COST = 1;
+    transient protected static int DEFAULT_NEIGHBOURING_FRIENDS_COUNT = 4;
 
     public TileImplementation(Coordinates coords) {
       this.coords = coords;
