@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,6 +15,8 @@ import java.nio.file.Paths;
 import static org.junit.Assert.assertEquals;
 
 public class GameSerializerTest {
+
+    String testSaveAndLoad = "{\"players\": [],\"board\": {\"tiles\": [[{\"cost\": 0,\"stronghold\": false},{\"cost\": 1,\"stronghold\": false},{\"cost\": 2,\"stronghold\": false}],[{\"cost\": 3,\"stronghold\": true},{\"cost\": 4,\"stronghold\": true},{\"cost\": 5,          \"stronghold\": true        }],[{\"cost\": 6,\"stronghold\": false},{\"cost\": 7,\"stronghold\": false},{\"cost\": 8,\"stronghold\": false}]],\"width\": 3,\"height\": 3}}\r\n";
 
     @Test
     public void testSaveAndLoad(){
@@ -26,21 +30,14 @@ public class GameSerializerTest {
             boardBuilder.markAsStronghold(new Coordinates(1,i));
         }
 
-        Game expected = gb.getGameInstance();
+        Game expected = gb.createBoard().getGameInstance();
 
-        try {
-            GameSerializer.save(gb.getGameInstance(), "testSaveAndLoad.txt");
-        } catch (FileAlreadyExistsException e) {
-            e.printStackTrace();
-        }
+        StringWriter sw = GameSerializer.save(gb.getGameInstance());//, "testSaveAndLoad.txt"
 
         Game result = null;
-        try {
-            DummyGame dummyGame = GameSerializer.load("testSaveAndLoad.txt").get();
-            result = new GameDeserializer(dummyGame).deserialize().get();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        DummyGame dummyGame = GameSerializer.load(new StringReader(sw.toString())).get();
+        result = new GameDeserializer(dummyGame).deserialize().get();
 
 
         assertEquals(expected, result);
@@ -48,30 +45,18 @@ public class GameSerializerTest {
 
     @Test
     public void loadTest(){
-        try {
-            assertEquals(GameSerializer.load("testSaveAndLoad.txt").isPresent(), true);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        assertEquals(GameSerializer.load(new StringReader(testSaveAndLoad)).isPresent(), true);
     }
 
     @Test
     public void testLoadAndSave(){
         DummyGame dummyGame = null;
         Game game = null;
-        try {
-            assertEquals(GameSerializer.load("testSaveAndLoad.txt").isPresent(), true);
-            dummyGame = GameSerializer.load("testSaveAndLoad.txt").get();
-            assertEquals(new GameDeserializer(dummyGame).deserialize().isPresent(), true);
-            game = new GameDeserializer(dummyGame).deserialize().get();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            GameSerializer.save(game, "testSaveAndLoad2.txt");
-        } catch (FileAlreadyExistsException e) {
-            e.printStackTrace();
-        }
+        assertEquals(GameSerializer.load(new StringReader(testSaveAndLoad)).isPresent(), true);
+        dummyGame = GameSerializer.load(new StringReader(testSaveAndLoad)).get();
+        assertEquals(new GameDeserializer(dummyGame).deserialize().isPresent(), true);
+        game = new GameDeserializer(dummyGame).deserialize().get();
+        GameSerializer.save(game);//, "testSaveAndLoad2.txt"
         try {
             byte[] f1 = Files.readAllBytes(Paths.get("testSaveAndLoad.txt"));
             byte[] f2 = Files.readAllBytes(Paths.get("testSaveAndLoad2.txt"));

@@ -9,23 +9,21 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.Optional;
 
 class GameSerializer {
-    public static void save(Game game, String path) throws FileAlreadyExistsException {
+    public static StringWriter save(Game game) {
         /*if(new File(path).exists()) {
             throw new FileAlreadyExistsException(path);
         }*/
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonedGame = gson.toJson(game);
-        try (PrintWriter fileWriter = new PrintWriter(path)) {
-            fileWriter.println(jsonedGame);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        StringWriter sw = new StringWriter();
+        sw.write(jsonedGame);
+        return sw;
     }
 
-    public static Optional<DummyGame> load(String path) throws FileNotFoundException{
+    public static Optional<DummyGame> load(StringReader stringReader) {
         DummyGame dummyGame;
-        try (JsonReader reader = new JsonReader(new FileReader(path))) {
+        try (JsonReader reader = new JsonReader(stringReader)) {
             Gson gson = new Gson();
             dummyGame = gson.fromJson(reader, DummyGame.class);
         } catch (IOException e) {
