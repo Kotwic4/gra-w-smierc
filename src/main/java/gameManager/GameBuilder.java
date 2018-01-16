@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 public class GameBuilder {
     private Board board;
     private List<Player> players;
-    public Board.BoardBuilder boardBuilder;
+    private Board.BoardBuilder boardBuilder;
     private int nextPlayerId = 0;
 
     public GameBuilder(int boardWidth, int boardHeight) {
@@ -23,14 +23,22 @@ public class GameBuilder {
         boardBuilder = new Board.BoardBuilder(boardWidth,boardHeight);
     }
 
-    public GameBuilder addPlayer(Player player) {
-        if(players.stream().noneMatch(player1 -> player1.getId()==player.getId()))
-            players.add(player);
+    public GameBuilder addPlayer(PlayerStrategy playerStrategy, String name) {
+        Random random = new Random();
+        nextPlayerId++;
+        Player player = new Player(Color.color(random.nextDouble(),random.nextDouble(), random.nextDouble()), name, nextPlayerId);
+        player.setPlayerStrategy(playerStrategy);
+        players.add(player);
         return this;
     }
 
     public GameBuilder createBoard() {
         board = boardBuilder.build();
+        return this;
+    }
+
+    public GameBuilder createBoard(IBoardBuilder boardBuilder) {
+        boardBuilder.fillBoard(board);
         return this;
     }
 

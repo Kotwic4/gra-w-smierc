@@ -26,18 +26,14 @@ public class Game implements Runnable {
 
         return (players != null ? players.equals(game.players) : game.players == null) && (board != null ? board.equals(game.board) : game.board == null);
     }
-
-
-
-
-
+  
+    @Override
     public void run() {
         while (true)
-            for (Player player : players) {
-                player.makeTurn();
-            }
-
-
+        for(Player player:players){
+            System.out.println("new Player");
+            player.makeTurn();
+        }
     }
 }
 
