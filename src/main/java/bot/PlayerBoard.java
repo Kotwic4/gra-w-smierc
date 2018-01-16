@@ -62,7 +62,7 @@ public class PlayerBoard {
                 .collect(Collectors.toList());
     }
 
-    void update() {
+    public void update() {
         //todo
     }
 
