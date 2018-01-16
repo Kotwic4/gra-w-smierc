@@ -9,17 +9,23 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
 
 public class GameBuilder {
-    Board board;
+    private Board board;
     private List<Player> players;
-    private Board.BoardBuilder boardBuilder;
+    public Board.BoardBuilder boardBuilder;
     private int nextPlayerId = 0;
 
     public GameBuilder(int boardWidth, int boardHeight) {
         players = new ArrayList<>();
         boardBuilder = new Board.BoardBuilder(boardWidth,boardHeight);
+    }
+
+    public GameBuilder addPlayer(Player player) {
+        players.add(player);
+        return this;
     }
 
     public GameBuilder addPlayer(PlayerStrategy playerStrategy, String name) {

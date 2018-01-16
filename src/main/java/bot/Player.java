@@ -88,12 +88,16 @@ public class Player {
 
     public void addOrganism() {
         pointsPerTurn += POINTS_PER_ORGANISM;
-        playerBoard.update();
+        if(playerBoard != null){
+            playerBoard.update();
+        }
     }
 
     public void removeOrganism() {
         pointsPerTurn -= POINTS_PER_ORGANISM;
-        playerBoard.update();
+        if(playerBoard != null){
+            playerBoard.update();
+        }
     }
 
     public boolean isAlive() {

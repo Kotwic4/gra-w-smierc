@@ -1,6 +1,8 @@
 package gui;
 
+import board.Coordinates;
 import bot.Player;
+import bot.PlayerBoard;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -8,15 +10,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+
+import java.util.Optional;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class
-GameController implements PlayerController,TurnCommunicator{
+GameController  implements PlayerController,TurnCommunicator{
 
     private final Lock guiTurnLock = new ReentrantLock();
+    private int BUTTONS_PER_LINE = 20;
+    private int NUM_BUTTON_LINES = 20;
+    private TileButton[][] buttons = new TileButton[NUM_BUTTON_LINES][BUTTONS_PER_LINE];
 
     @FXML
     private GridPane grid;
@@ -34,29 +44,26 @@ GameController implements PlayerController,TurnCommunicator{
     private Button endTurnButton;
 
     public GameController() {
-
     }
 
     @FXML
     public void initialize() {
         int BUTTON_PADDING = 0;
-        int BUTTONS_PER_LINE = 20;
-        int NUM_BUTTON_LINES = 20;
+
         grid.setPadding(new Insets(BUTTON_PADDING));
         grid.setHgap(BUTTON_PADDING);
         grid.setVgap(BUTTON_PADDING);
 
         for (int r = 0; r < NUM_BUTTON_LINES; r++) {
             for (int c = 0; c < BUTTONS_PER_LINE; c++) {
-                Button button = new Button(" ");
+                TileButton button = new TileButton(new Coordinates(r,c));
+                buttons[r][c] = button;
                 button.setOnAction(event -> {
-                    Button innerbutton = ((Button) event.getSource());
-                    innerbutton.setStyle("-fx-background-color: #ff0000");
+                    ((TileButton) event.getSource()).inhabitAssignedTile();
                 });
                 grid.add(button, c, r);
             }
         }
-
 
         newOrganisms.setText("10");
         livingOrganisms.setText("3");
@@ -80,6 +87,16 @@ GameController implements PlayerController,TurnCommunicator{
         }
     }
 
+    public void assignButtonsToPlayerTiles(PlayerBoard playerBoard){
+        for(int i=0;i<NUM_BUTTON_LINES;i++)
+            for(int j =0;j<BUTTONS_PER_LINE;j++)
+                if(playerBoard.getPlayerTile(new Coordinates(i,j)).isPresent()) {
+                    buttons[i][j].assignPlayerTile(playerBoard.getPlayerTile(new Coordinates(i,j)).get());
+                }
+                else
+                    buttons[i][j].setStyle("-fx-background-color: #000000");
+
+    }
 
     @Override
     public void doGuiTurn(Player player) {

@@ -1,21 +1,26 @@
 package bot;
 
+import board.Board;
 import board.Tile;
 import javafx.scene.paint.Color;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Optional;
 
-public class PlayerTile {
+public class PlayerTile extends Observable implements Observer{
 
     private Tile tile;
     private boolean visible;
     private Player player;
     private List<PlayerTile> neighbours;
+    private Board board;
 
-    PlayerTile(Tile tile, Player player) {
+    PlayerTile(Tile tile, Player player, Board board) {
         this.tile = tile;
         this.player = player;
+        this.board = board;
         visible = true; //todo change to false when PlayerBoard update implemented
     }
 
@@ -35,6 +40,7 @@ public class PlayerTile {
         if (isAccessible()) {
             player.subPoints(tile.getCost());
             tile.inhabit(player);
+            board.markAndClear();
         }
     }
 
@@ -60,5 +66,10 @@ public class PlayerTile {
 
     public void setNeighbours(List<PlayerTile> neighbours) {
         this.neighbours = neighbours;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        //todo
     }
 }

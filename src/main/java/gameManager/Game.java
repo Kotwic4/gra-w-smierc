@@ -2,6 +2,7 @@ package gameManager;
 
 import board.Board;
 import bot.Player;
+import javafx.concurrent.Task;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Game implements Runnable {
 
         return (players != null ? players.equals(game.players) : game.players == null) && (board != null ? board.equals(game.board) : game.board == null);
     }
-
+  
     @Override
     public void run() {
         while (true)
@@ -35,3 +36,4 @@ public class Game implements Runnable {
         }
     }
 }
+
