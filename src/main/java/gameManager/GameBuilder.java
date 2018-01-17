@@ -1,6 +1,7 @@
 package gameManager;
 
 import board.Board;
+import board.Coordinates;
 import bot.Player;
 import bot.PlayerBoard;
 import bot.PlayerStrategy;
@@ -17,6 +18,7 @@ public class GameBuilder {
     private List<Player> players;
     public Board.BoardBuilder boardBuilder;
     private int nextPlayerId = 0;
+    private boolean isBoardInitialized = false;
 
     public GameBuilder(int boardWidth, int boardHeight) {
         players = new ArrayList<>();
@@ -37,20 +39,20 @@ public class GameBuilder {
         return this;
     }
 
-    public GameBuilder createBoard() {
-        board = boardBuilder.build();
-        return this;
-    }
-
-    public GameBuilder createBoard(IBoardBuilder boardBuilder) {
-        boardBuilder.fillBoard(board);
-        return this;
+    public GameBuilder(Board.BoardBuilder boardBuilder){
+        players = new ArrayList<>();
+        this.boardBuilder = boardBuilder;
     }
 
     public Game getGameInstance() {
-        for(Player player: players)
-            player.setPlayerBoard(PlayerBoard.createPlayerBoard(board,player));
-        return new Game(players, board);
+        for(Player player: players){
+            boardBuilder.setStrongholdInhabitant(player);
+        }
+        Board board = boardBuilder.build();
+        for(Player player: players) {
+            player.setPlayerBoard(PlayerBoard.createPlayerBoard(board, player));
+        }
+            return new Game(players, board);
     }
 
 }

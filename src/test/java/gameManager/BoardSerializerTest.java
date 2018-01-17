@@ -54,7 +54,7 @@ public class BoardSerializerTest {
         Board boardExpected = boardBuilder.build();
         Board boardResult = null;
         try {
-            boardResult = BoardSerializer.load(br);
+            boardResult = BoardSerializer.load(br).build();
         } catch (BoardSerializer.MalformedFileException e) {
             e.printStackTrace();
         }
@@ -89,7 +89,7 @@ public class BoardSerializerTest {
         boardExpected = boardBuilder.build();
         Board boardResult = null;
         try {
-            boardResult = BoardSerializer.load(br);
+            boardResult = BoardSerializer.load(br).build();
         } catch (BoardSerializer.MalformedFileException e) {
             e.printStackTrace();
         }

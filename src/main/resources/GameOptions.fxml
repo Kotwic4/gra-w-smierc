@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="gui.GameOptionsController">
+
+    <VBox >
+        <Button fx:id="loadBoard" text="Wczytaj planszę" onAction="#loadBoardButton"/>
+        <Button fx:id="play" text="Poddaję się" onAction="#play"/>
+    </VBox>
+
+</StackPane>

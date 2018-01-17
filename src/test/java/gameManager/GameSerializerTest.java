@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 public class GameSerializerTest {
 
-    String testSaveAndLoad = "{\"players\": [],\"board\": {\"tiles\": [[{\"cost\": 0,\"stronghold\": false},{\"cost\": 1,\"stronghold\": false},{\"cost\": 2,\"stronghold\": false}],[{\"cost\": 3,\"stronghold\": true},{\"cost\": 4,\"stronghold\": true},{\"cost\": 5,          \"stronghold\": true        }],[{\"cost\": 6,\"stronghold\": false},{\"cost\": 7,\"stronghold\": false},{\"cost\": 8,\"stronghold\": false}]],\"width\": 3,\"height\": 3}}\r\n";
+    private String testSaveAndLoad = "{\"players\": [],\"board\": {\"tiles\": [[{\"cost\": 0,\"stronghold\": false},{\"cost\": 1,\"stronghold\": false},{\"cost\": 2,\"stronghold\": false}],[{\"cost\": 3,\"stronghold\": true},{\"cost\": 4,\"stronghold\": true},{\"cost\": 5,          \"stronghold\": true        }],[{\"cost\": 6,\"stronghold\": false},{\"cost\": 7,\"stronghold\": false},{\"cost\": 8,\"stronghold\": false}]],\"width\": 3,\"height\": 3}}\r\n";
 
     @Test
     public void testSaveAndLoad(){
@@ -32,7 +32,7 @@ public class GameSerializerTest {
 
         Game expected = gb.createBoard().getGameInstance();
 
-        StringWriter sw = GameSerializer.save(gb.getGameInstance());//, "testSaveAndLoad.txt"
+        StringWriter sw = GameSerializer.save(gb.getGameInstance());
 
         Game result = null;
 

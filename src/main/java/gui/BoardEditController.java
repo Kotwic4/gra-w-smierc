@@ -19,11 +19,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Observable;
@@ -101,7 +103,7 @@ public class BoardEditController {
         dialog.showAndWait();
 
         String result = textField.getText();
-        if(!result.isEmpty() && !Pattern.matches("[a-zA-Z]+", result)) {
+        if (!result.isEmpty() && !Pattern.matches("[a-zA-Z]+", result)) {
             button.setText(result);
         }
 
@@ -110,23 +112,32 @@ public class BoardEditController {
 
     @FXML
     private void saveBoardButtonHandler() throws IOException {
+
         ObservableList<Node> list = grid.getChildren();
-        Board.BoardBuilder board = new Board.BoardBuilder(20,20);
-        for(Node node : list) {
+        Board.BoardBuilder board = new Board.BoardBuilder(20, 20);
+        for (Node node : list) {
             Integer row = GridPane.getRowIndex(node);
             Integer column = GridPane.getColumnIndex(node);
 
             Coordinates coords = new Coordinates(column, row);
-            if (node instanceof Button){
+            if (node instanceof Button) {
                 String s = ((Button) node).getText();
-                if(s.equals("S")) {
+                if (s.equals("S")) {
                     board.markAsStronghold(coords);
-                } else if(Pattern.matches("[1-9]+", s)){
+                } else if (Pattern.matches("[1-9]+", s)) {
                     board.setTileCost(Integer.parseInt(s), coords);
                 }
             }
         }
-       // BoardSerializer.save(board, new BufferedWriter(new FileWriter("newBoardSave.txt")));
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Board");
+        File file = fileChooser.showSaveDialog(new Stage());
+        FileWriter fw;
+        if (file != null) {
+            fw = new FileWriter(file);
+            BoardSerializer.save(board.build(), fw);
+            fw.close();
+        }
 
 
     }
