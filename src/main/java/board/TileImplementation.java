@@ -15,12 +15,14 @@ class TileImplementation extends Tile{
     private int maximumNeighbouringFriendsCount;
     private static int DEFAULT_COST = 1;
     protected static int DEFAULT_NEIGHBOURING_FRIENDS_COUNT = 4;
+    private List<TileObserver> tileObservers;
 
     public TileImplementation(Coordinates coords) {
       this.coords = coords;
         cost = DEFAULT_COST;
         maximumNeighbouringFriendsCount = DEFAULT_NEIGHBOURING_FRIENDS_COUNT;
       neighbours = new LinkedList<>();
+        tileObservers = new LinkedList<>();
     }
 
     public boolean isInhabited() {
@@ -44,8 +46,8 @@ class TileImplementation extends Tile{
     @Override
     public void inhabit(Player player) {
         if (canInhabit(player)) {
-//            this.inhabitant = new Organism(player);
-            uncheckedSetIntabitant(new Organism(player));
+            this.inhabitant = new Organism(player);
+            notifyObservers();
         } else {
             throw new InvalidOrganismPositionException(player);
         }
@@ -123,6 +125,7 @@ class TileImplementation extends Tile{
       int knownAppeal = getInhabitant().getAppeal();
       if (knownAppeal != appeal){
           unHabit();
+          notifyObservers();
       }
     }
 
@@ -140,5 +143,19 @@ class TileImplementation extends Tile{
 
     void setMaximumNeighbouringFriendsCount(int maximumNeighbouringFriendsCount) {
         this.maximumNeighbouringFriendsCount = maximumNeighbouringFriendsCount;
+    }
+
+    public void registerObserver(TileObserver tileObserver) {
+        tileObservers.add(tileObserver);
+    }
+
+    public void removeObserver(TileObserver tileObserver) {
+        tileObservers.remove(tileObserver);
+    }
+
+    public void notifyObservers() {
+        for (TileObserver tileObserver : tileObservers) {
+            tileObserver.update(this);
+        }
     }
 }
