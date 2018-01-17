@@ -2,14 +2,14 @@ package bot;
 
 import board.Board;
 import board.Tile;
+import board.TileObserver;
 import javafx.scene.paint.Color;
 
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Optional;
 
-public class PlayerTile extends Observable implements Observer {
+public class PlayerTile extends Observable implements TileObserver {
 
     private Tile tile;
     private Player player;
@@ -143,9 +143,7 @@ public class PlayerTile extends Observable implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        update();
+    public void update(Tile tile) {
+        update();;
     }
-
-
 }
