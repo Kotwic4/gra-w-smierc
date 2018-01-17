@@ -1,5 +1,6 @@
 package bot;
 
+import board.Board;
 import board.Tile;
 import javafx.scene.paint.Color;
 import org.junit.After;
@@ -18,13 +19,17 @@ public class PlayerTileTest {
     private Player player;
     @Mock
     private Tile tile;
+    @Mock
+    private Board board;
+
     private PlayerTile playerTile;
 
     @Before
     public void setUp() {
         player = mock(Player.class);
         tile = mock(Tile.class);
-        playerTile = new PlayerTile(tile, player);
+        board = mock(Board.class);
+        playerTile = new PlayerTile(tile, player, board);
     }
 
     @After

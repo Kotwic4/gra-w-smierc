@@ -2,34 +2,54 @@ package gameManager;
 
 import board.Board;
 import bot.Player;
+import bot.PlayerBoard;
+import bot.PlayerStrategy;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Predicate;
 
 
-class GameBuilder {
-    Board board;
-    List<Player> players;
-    Board.BoardBuilder boardBuilder;
+public class GameBuilder {
+    private Board board;
+    private List<Player> players;
+    public Board.BoardBuilder boardBuilder;
+    private int nextPlayerId = 0;
 
-    GameBuilder(int boardWidth, int boardHeight) {
-        players = new ArrayList<Player>();
+    public GameBuilder(int boardWidth, int boardHeight) {
+        players = new ArrayList<>();
         boardBuilder = new Board.BoardBuilder(boardWidth,boardHeight);
     }
 
-    void addPlayer(Player player) {
+    public GameBuilder addPlayer(Player player) {
         players.add(player);
+        return this;
     }
 
-    public void createBoard() {
+    public GameBuilder addPlayer(PlayerStrategy playerStrategy, String name) {
+        Random random = new Random();
+        nextPlayerId++;
+        Player player = new Player(Color.color(random.nextDouble(),random.nextDouble(), random.nextDouble()), name, nextPlayerId);
+        player.setPlayerStrategy(playerStrategy);
+        players.add(player);
+        return this;
+    }
+
+    public GameBuilder createBoard() {
         board = boardBuilder.build();
+        return this;
     }
 
-    public void createBoard(IBoardBuilder boardBuilder) {
+    public GameBuilder createBoard(IBoardBuilder boardBuilder) {
         boardBuilder.fillBoard(board);
+        return this;
     }
 
     public Game getGameInstance() {
+        for(Player player: players)
+            player.setPlayerBoard(PlayerBoard.createPlayerBoard(board,player));
         return new Game(players, board);
     }
 

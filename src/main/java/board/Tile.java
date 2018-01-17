@@ -2,11 +2,9 @@ package board;
 
 import bot.Player;
 
+import java.util.Observable;
 import java.util.Optional;
 
-/**
- * Created by Paweł Taborowski on 28.12.17.
- */
 public interface Tile {
     boolean isInhabited();
 
