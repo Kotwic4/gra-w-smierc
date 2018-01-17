@@ -36,14 +36,14 @@ public class Board {
                 }
             }
             strongholdList = new LinkedList<>();
-            new connectionGenerator().makeConnectionsBetweenTiles();
+            new ConnectionGenerator().makeConnectionsBetweenTiles();
         }
 
-        private class connectionGenerator {
-            private void makeConnectionsBetweenTiles() {
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        if (isNotOnLeftBorder(x) && isNotOnBottomBorder(y))
+        private class ConnectionGenerator {
+            private void makeConnectionsBetweenTiles(){
+                for (int x=0; x<width; x++){
+                    for (int y=0; y<height; y++){
+                        if(isNotOnLeftBorder(x) && isNotOnBottomBorder(y))
                             tiles[x][y].addNeighbour(tiles[stepLeft(x)][stepDown(y)]);
                         if (isNotOnLeftBorder(x))
                             tiles[x][y].addNeighbour(tiles[stepLeft(x)][y]);
@@ -111,8 +111,8 @@ public class Board {
             }
         }
 
-        public BoardBuilder setInhabitant(Coordinates coords, Player player) throws TileAlreadyInhabitedException {
-            tiles[coords.getX()][coords.getY()].uncheckedSetIntabitant(new Organism(player));
+        public BoardBuilder setInhabitant(Coordinates coords, Player player) throws TileAlreadyInhabitedException, InvalidTileCoordsException {
+            getTileImplementation(coords).uncheckedSetIntabitant(new Organism(player));
             return this;
         }
 
