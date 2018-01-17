@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Optional;
 
-class TileImplementation extends Tile{
+class TileImplementation implements Tile{
     private Organism inhabitant;
     private int cost;
     private Coordinates coords;
@@ -46,7 +46,8 @@ class TileImplementation extends Tile{
     @Override
     public void inhabit(Player player) {
         if (canInhabit(player)) {
-            this.inhabitant = new Organism(player);
+//            this.inhabitant = new Organism(player);
+            uncheckedSetIntabitant(new Organism(player));
             notifyObservers();
         } else {
             throw new InvalidOrganismPositionException(player);

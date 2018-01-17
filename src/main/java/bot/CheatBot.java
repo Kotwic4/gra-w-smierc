@@ -10,7 +10,7 @@ public class CheatBot extends SimpleBot {
 
     @Override
     protected void doTurn(Player player) {
-        player.addPoints(player.getPointsPerTurn()*10);
+        player.addPoints(player.getPointsPerTurn() * 10);
         super.doTurn(player);
     }
 }
