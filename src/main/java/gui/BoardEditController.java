@@ -103,7 +103,7 @@ public class BoardEditController {
         dialog.showAndWait();
 
         String result = textField.getText();
-        if (!result.isEmpty() && !Pattern.matches("[a-zA-Z]+", result)) {
+        if(Pattern.matches("[1-9]+", result)) {
             button.setText(result);
         }
 
