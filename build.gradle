@@ -24,6 +24,7 @@ dependencies {
 }
 
 jar {
+    baseName = "Gra w Smierc"
     manifest {
         attributes(
                 'Main-Class': 'Application'
