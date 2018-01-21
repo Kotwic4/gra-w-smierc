@@ -31,12 +31,14 @@ public class PlayerTileTest {
         board = mock(Board.class);
         playerTile = new PlayerTile(tile, player, board);
         verify(player).addObserver(playerTile);
+        verify(tile).registerObserver(playerTile);
     }
 
     @After
     public void tearDown() {
         verifyNoMoreInteractions(player);
         verifyNoMoreInteractions(tile);
+        verifyNoMoreInteractions(board);
     }
 
     @Test
@@ -210,7 +212,23 @@ public class PlayerTileTest {
 
     @Test
     public void updateTileInformation() throws Exception {
-        //todo if there will be || instead od | test must fail !
+        when(tile.getPlayer()).thenReturn(Optional.of(player));
+        when(player.getVisibleRange()).thenReturn(5);
+        when(tile.isStronghold()).thenReturn(true);
+        when(tile.getCost()).thenReturn(10);
+        when(tile.canInhabit(player)).thenReturn(false);
+        playerTile.updateTileInformation();
+        verify(tile).getPlayer();
+        verify(player).getVisibleRange();
+        verify(tile).isStronghold();
+        verify(tile).getCost();
+        verify(tile).canInhabit(player);
+        assertTrue(playerTile.isVisible());
+        assertTrue(playerTile.isStronghold().get());
+        assertFalse(playerTile.isAccessible());
+        assertEquals(5,playerTile.getVisibleRange());
+        assertEquals(player, playerTile.getPlayer().get());
+        assertEquals(10, playerTile.getCost().get().intValue());
     }
 
     @Test

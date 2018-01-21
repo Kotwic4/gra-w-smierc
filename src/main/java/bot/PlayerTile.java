@@ -44,7 +44,7 @@ public class PlayerTile extends Observable implements TileObserver, Observer{
         return accessible;
     }
 
-    private int getVisibleRange() {
+    int getVisibleRange() {
         return visibleRange;
     }
 
