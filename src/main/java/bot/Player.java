@@ -2,7 +2,9 @@ package bot;
 
 import javafx.scene.paint.Color;
 
-public class Player {
+import java.util.Observable;
+
+public class Player extends Observable {
 
     private Color color;
     private String name;
@@ -68,57 +70,44 @@ public class Player {
 
     void addPoints(int value) {
         remainingPoints += value;
-        if (playerBoard != null) {
-            playerBoard.update();
-        }
+        notifyObservers();
     }
 
-    void subPoints(int cost) throws NotEnoughPointsException {
+    void subPoints(int cost) {
         if (cost > remainingPoints) throw new NotEnoughPointsException();
         remainingPoints -= cost;
-        if (playerBoard != null) {
-            playerBoard.update();
-        }
+        notifyObservers();
     }
 
-    public void addStronhold() {
+    public void addStronghold() {
         pointsPerTurn += POINTS_PER_STRONGHOLDS;
         strongholdsNumber++;
-        if (playerBoard != null) {
-            playerBoard.update();
-        }
+        notifyObservers();
     }
 
-    public void removeStronhold() {
+    public void removeStronghold() {
         if (strongholdsNumber == 0) throw new PlayerHaveNoStrongholdsException();
         pointsPerTurn -= POINTS_PER_STRONGHOLDS;
         strongholdsNumber--;
-        if (playerBoard != null) {
-            playerBoard.update();
-        }
+        notifyObservers();
     }
 
     public void addOrganism() {
         pointsPerTurn += POINTS_PER_ORGANISM;
-        if (playerBoard != null) {
-            playerBoard.update();
-        }
+        notifyObservers();
     }
 
     public void removeOrganism() {
         pointsPerTurn -= POINTS_PER_ORGANISM;
-        if (playerBoard != null) {
-            playerBoard.update();
-        }
+        notifyObservers();
     }
 
     public boolean isAlive() {
-        return strongholdsNumber != 0;
+        return strongholdsNumber > 0;
     }
 
     int getVisibleRange() {
         return VISIBLE_RANGE;
     }
-
 
 }

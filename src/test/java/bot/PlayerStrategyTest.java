@@ -42,8 +42,6 @@ public class PlayerStrategyTest {
         playerStrategy.startTurn(player);
         inOrder.verify(player).getPointsPerTurn();
         inOrder.verify(player).addPoints(10);
-        inOrder.verify(player).getPlayerBoard();
-        inOrder.verify(playerBoard).update();
     }
 
     @Test
