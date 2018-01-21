@@ -5,18 +5,15 @@ import board.Tile;
 import board.TileObserver;
 import javafx.scene.paint.Color;
 
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Optional;
+import java.util.*;
 
 public class PlayerTile extends Observable implements TileObserver, Observer{
 
     private Tile tile;
     private Player player;
-    private List<PlayerTile> neighbours;
     private Board board;
 
+    private List<PlayerTile> neighbours = new LinkedList<>();
     private int visibleRange = 0;
     private Player tilePlayer = null;
     private Boolean isStronghold = false;
@@ -25,9 +22,11 @@ public class PlayerTile extends Observable implements TileObserver, Observer{
 
     PlayerTile(Tile tile, Player player, Board board) {
         this.tile = tile;
+        tile.registerObserver(this);
         this.player = player;
         player.addObserver(this);
         this.board = board;
+        updateTileInformation();
     }
 
     public void inhabit() {
@@ -76,13 +75,7 @@ public class PlayerTile extends Observable implements TileObserver, Observer{
 
     private boolean updateTilePlayer(Player newPlayer) {
         if (newPlayer != tilePlayer) {
-            if(tilePlayer != player){
-                tilePlayer.deleteObserver(this);
-            }
             tilePlayer = newPlayer;
-            if(tilePlayer != player){
-                tilePlayer.addObserver(this);
-            }
             return true;
         }
         return false;
