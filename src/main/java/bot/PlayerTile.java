@@ -26,7 +26,6 @@ public class PlayerTile extends Observable implements TileObserver, Observer{
         this.player = player;
         player.addObserver(this);
         this.board = board;
-        updateTileInformation();
     }
 
     public void inhabit() {

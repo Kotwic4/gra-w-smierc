@@ -25,6 +25,11 @@ public class PlayerBoard {
             }
         }
         boardHelper.setNeighbours(playerTiles, PlayerTile::setNeighbours);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                playerTiles[x][y].updateTileInformation();
+            }
+        }
         return new PlayerBoard(playerTiles);
     }
 
