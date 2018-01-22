@@ -47,7 +47,6 @@ class TileImplementation implements Tile {
     @Override
     public void inhabit(Player player) {
         if (canInhabit(player)) {
-//            this.inhabitant = new Organism(player);
             uncheckedSetIntabitant(new Organism(player));
             notifyObservers();
         } else {
@@ -70,7 +69,7 @@ class TileImplementation implements Tile {
 
     public void uncheckedSetIntabitant(Organism inhabitant) throws TileAlreadyInhabitedException {
       // Force setting inhabitant without checking neighbours - required for stronghold's organism initialization
-      if(this.inhabitant == null) {
+      if(!isInhabited()) {
           this.inhabitant = inhabitant;
           Player player = inhabitant.getPlayer();
           player.addOrganism();
