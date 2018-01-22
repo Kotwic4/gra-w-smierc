@@ -2,11 +2,11 @@ package bot;
 
 import gui.TurnCommunicator;
 
-public abstract class HeadlessPlayer extends PlayerStrategy {
+abstract class HeadlessPlayer extends PlayerStrategy {
 
     private TurnCommunicator turnCommunicator;
 
-    public HeadlessPlayer(TurnCommunicator turnCommunicator) {
+    HeadlessPlayer(TurnCommunicator turnCommunicator) {
         this.turnCommunicator = turnCommunicator;
     }
 

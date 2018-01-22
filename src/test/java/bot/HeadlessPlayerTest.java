@@ -48,8 +48,6 @@ public class HeadlessPlayerTest {
         inOrder.verify(turnCommunicator).startHeadlessTurn(player);
         inOrder.verify(player).getPointsPerTurn();
         inOrder.verify(player).addPoints(10);
-        inOrder.verify(player).getPlayerBoard();
-        inOrder.verify(playerBoard).update();
     }
 
     @Test

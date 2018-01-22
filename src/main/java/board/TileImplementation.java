@@ -47,7 +47,8 @@ class TileImplementation implements Tile {
     @Override
     public void inhabit(Player player) {
         if (canInhabit(player)) {
-            this.inhabitant = new Organism(player);
+//            this.inhabitant = new Organism(player);
+            uncheckedSetIntabitant(new Organism(player));
             notifyObservers();
         } else {
             throw new InvalidOrganismPositionException(player);
@@ -74,7 +75,7 @@ class TileImplementation implements Tile {
           Player player = inhabitant.getPlayer();
           player.addOrganism();
           if(isStronghold()){
-              player.addStronhold();
+              player.addStronghold();
           }
           for (TileImplementation neighbour : neighbours) {
               if(neighbour.getPlayer().isPresent() && neighbour.getPlayer().get() != player){
@@ -133,7 +134,7 @@ class TileImplementation implements Tile {
     private void unHabit(){
         getInhabitant().getPlayer().removeOrganism();
         if(isStronghold()){
-            getInhabitant().getPlayer().removeStronhold();
+            getInhabitant().getPlayer().removeStronghold();
         }
         inhabitant = null;
     }

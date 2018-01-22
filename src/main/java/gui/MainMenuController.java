@@ -63,6 +63,7 @@ public class MainMenuController {
         Stage window=(Stage)newGameButton.getScene().getWindow();
         window.setScene(new Scene(root));
         Thread thread = new Thread(game);
+        thread.setDaemon(true);
         thread.start();
     }
 
