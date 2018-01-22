@@ -2,9 +2,8 @@ package board;
 
 import bot.Player;
 
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 class TileImplementation implements Tile{
     private Organism inhabitant;
@@ -15,14 +14,16 @@ class TileImplementation implements Tile{
     private int maximumNeighbouringFriendsCount;
     private static int DEFAULT_COST = 1;
     protected static int DEFAULT_NEIGHBOURING_FRIENDS_COUNT = 4;
-    private List<TileObserver> tileObservers;
+    private final Set<TileObserver> tileObservers;
 
     public TileImplementation(Coordinates coords) {
       this.coords = coords;
         cost = DEFAULT_COST;
         maximumNeighbouringFriendsCount = DEFAULT_NEIGHBOURING_FRIENDS_COUNT;
-      neighbours = new LinkedList<>();
-        tileObservers = new LinkedList<>();
+        neighbours = new LinkedList<>();
+        tileObservers = Collections
+                .newSetFromMap(new ConcurrentHashMap<TileObserver,
+                        Boolean>(0));
     }
 
     public boolean isInhabited() {
@@ -135,7 +136,7 @@ class TileImplementation implements Tile{
         tileObservers.remove(tileObserver);
     }
 
-    public void notifyObservers() {
+    private void notifyObservers() {
         for (TileObserver tileObserver : tileObservers) {
             tileObserver.update(this);
         }

@@ -30,5 +30,4 @@ public interface Tile {
 
     void registerObserver(TileObserver tileObserver);
     void removeObserver(TileObserver tileObserver);
-    void notifyObservers();
 }
