@@ -1,33 +1,34 @@
-//package gameManager;
-//
-//import board.Board;
-//import board.Tile;
-//import org.junit.Test;
-//import org.mockito.Mockito;
-//
-//import java.io.BufferedReader;
-//import java.io.IOException;
-//
-//import static org.junit.Assert.assertEquals;
-//import static org.mockito.Mockito.mock;
-//
-///**
-// * Created by Michał Pawłowicz on 06.01.18.
-// */
-//public class BoardSerializerTest {
-//    private final static String[] board1 = {
-//            "width=5",
-//            "height=5",
-//            "[1,1] [2,0] [3,0] [4,0] [5,0]",
-//            "[6,0] [7,0] [8,0] [9,0] [10,0]",
-//            "[11,0] [12,0] [13,0] [14,0] [15,0]",
-//            "[16,0] [17,0] [18,0] [19,0] [20,0]",
-//            "[21,0] [22,0] [23,0] [24,0] [25,0]",
-//            null
-//    };
-//
-//    @Test
-//    public void loadTest(){
+package gameManager;
+
+import board.Board;
+import board.Coordinates;
+import board.Tile;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+
+/**
+ * Created by Michał Pawłowicz on 06.01.18.
+ */
+public class BoardSerializerTest {
+    private final static String[] board1 = {
+            "width=5",
+            "height=5",
+            "[1,1] [2,0] [3,0] [4,0] [5,0]",
+            "[6,0] [7,0] [8,0] [9,0] [10,0]",
+            "[11,0] [12,0] [13,0] [14,0] [15,0]",
+            "[16,0] [17,0] [18,0] [19,0] [20,0]",
+            "[21,0] [22,0] [23,0] [24,0] [25,0]",
+            null
+    };
+
+    @Test
+    public void loadTest(){
 //        BufferedReader br;
 //        br = mock(BufferedReader.class);
 //        try {
@@ -40,18 +41,17 @@
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+//        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
 //
-//        Board boardExpected;
-//        boardExpected = new Board(5, 5);
-//        Tile[][] tiles = boardExpected.getTiles();
+//
 //        int tmp = 1;
 //        for(int i=0; i<5; i++){
 //            for(int j=0; j<5; j++){
-//                tiles[i][j].setCost(tmp++);
+//                boardBuilder.setTileCost(tmp++, new Coordinates(i,j));
 //            }
 //        }
-//        tiles[0][0].setStronghold();
-//
+//        boardBuilder.markAsStronghold(new Coordinates(0,0));
+//        Board boardExpected = boardBuilder.build();
 //        Board boardResult = null;
 //        try {
 //            boardResult = BoardSerializer.load(br);
@@ -59,10 +59,10 @@
 //            e.printStackTrace();
 //        }
 //        assertEquals(boardExpected.equals(boardResult), true);
-//    }
-//
-//    @Test
-//    public void loadTestIncorrect() {
+    }
+
+    @Test
+    public void loadTestIncorrect() {
 //        Board boardExpected = null;
 //        BufferedReader br = null;
 //
@@ -77,22 +77,22 @@
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+//        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
 //
-//        boardExpected = new Board(5, 5);
-//        Tile[][] tiles = boardExpected.getTiles();
+//
 //        int tmp = 1;
 //        for(int i=0; i<5; i++){
 //            for(int j=0; j<5; j++){
-//                tiles[i][j].setCost(tmp++);
+//                boardBuilder.setTileCost(tmp++, new Coordinates(i,j));
 //            }
 //        }
-//
+//        boardExpected = boardBuilder.build();
 //        Board boardResult = null;
 //        try {
 //            boardResult = BoardSerializer.load(br);
 //        } catch (BoardSerializer.MalformedFileException e) {
 //            e.printStackTrace();
 //        }
-//        assertEquals(boardExpected.equals(boardResult), false);
-//    }
-//}
+//        assertEquals(boardExpected.equals(boardResult), true);
+    }
+}

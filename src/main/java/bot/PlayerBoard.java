@@ -22,7 +22,7 @@ public class PlayerBoard {
         PlayerTile[][] playerTiles = new PlayerTile[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                playerTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x, y)), player);
+                playerTiles[x][y] = new PlayerTile(board.getTile(new Coordinates(x, y)), player,board);
             }
         }
         //todo set tiles neighbours
@@ -40,7 +40,7 @@ public class PlayerBoard {
     }
 
     public Optional<PlayerTile> getPlayerTile(Coordinates cords) {
-        if (checkCoords(cords)) return Optional.empty();
+        if (!checkCoords(cords)) return Optional.empty();
         else return Optional.of(playerTiles[cords.getX()][cords.getY()]);
     }
 
@@ -62,7 +62,7 @@ public class PlayerBoard {
                 .collect(Collectors.toList());
     }
 
-    void update() {
+    public void update() {
         //todo
     }
 

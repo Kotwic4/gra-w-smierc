@@ -1,29 +1,29 @@
-//package gameManager;
-//
-//import static org.junit.Assert.assertEquals;
-//
-//import board.Coordinates;
-//import board.Tile;
-//import org.junit.Test;
-//
-//import java.io.FileNotFoundException;
-//import java.io.IOException;
-//import java.nio.file.FileAlreadyExistsException;
-//import java.nio.file.Files;
-//import java.nio.file.Paths;
-//
-//public class GameSerializerTest {
-//
-//    @Test
-//    public void testSaveAndLoad(){
+package gameManager;
+
+import board.Board;
+import board.Coordinates;
+import org.junit.Test;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
+
+public class GameSerializerTest {
+
+    @Test
+    public void testSaveAndLoad(){
 //        GameBuilder gb = new GameBuilder(3,3);
-//        Tile[][] tiles = gb.board.getTiles();
+//        Board.BoardBuilder boardBuilder = gb.boardBuilder;
 //        for(int i=0;i<3;i++) {
 //            for (int j = 0; j < 3; j++) {
-//                tiles[i][j].setCost(3 * i + j);
+//                boardBuilder.setTileCost(3 * i + j,new Coordinates(i,j));
 //
 //            }
-//            gb.board.markAsStronghold(new Coordinates(1,i));
+//            boardBuilder.markAsStronghold(new Coordinates(1,i));
 //        }
 //
 //        Game expected = gb.getGameInstance();
@@ -44,19 +44,19 @@
 //
 //
 //        assertEquals(expected, result);
-//    }
-//
-//    @Test
-//    public void loadTest(){
+    }
+
+    @Test
+    public void loadTest(){
 //        try {
 //            assertEquals(GameSerializer.load("testSaveAndLoad.txt").isPresent(), true);
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        }
-//    }
-//
-//    @Test
-//    public void testLoadAndSave(){
+    }
+
+    @Test
+    public void testLoadAndSave(){
 //        DummyGame dummyGame = null;
 //        Game game = null;
 //        try {
@@ -85,7 +85,7 @@
 //            assert false;
 //            e.printStackTrace();
 //        }
-//    }
-//
-//
-//}
+    }
+
+
+}

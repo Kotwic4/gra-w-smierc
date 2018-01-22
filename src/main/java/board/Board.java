@@ -26,12 +26,12 @@ public class Board {
         private final int width;
         private final int height;
 
-        public BoardBuilder(int width, int height){
+        public BoardBuilder(int width, int height) {
             this.width = width;
             this.height = height;
             tiles = new TileImplementation[width][height];
-            for (int i=0; i<width; i++){
-                for (int j=0; j<height; j++){
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
                     tiles[i][j] = new TileImplementation(new Coordinates(i, j));
                 }
             }
@@ -45,68 +45,68 @@ public class Board {
                     for (int y=0; y<height; y++){
                         if(isNotOnLeftBorder(x) && isNotOnBottomBorder(y))
                             tiles[x][y].addNeighbour(tiles[stepLeft(x)][stepDown(y)]);
-                        if(isNotOnLeftBorder(x))
+                        if (isNotOnLeftBorder(x))
                             tiles[x][y].addNeighbour(tiles[stepLeft(x)][y]);
-                        if(isNotOnLeftBorder(x) && isNotOnTopBorder(y))
+                        if (isNotOnLeftBorder(x) && isNotOnTopBorder(y))
                             tiles[x][y].addNeighbour(tiles[stepLeft(x)][stepUp(y)]);
-                        if(isNotOnTopBorder(y))
+                        if (isNotOnTopBorder(y))
                             tiles[x][y].addNeighbour(tiles[x][stepUp(y)]);
-                        if(isNotOnRightBorder(x) && isNotOnTopBorder(y))
+                        if (isNotOnRightBorder(x) && isNotOnTopBorder(y))
                             tiles[x][y].addNeighbour(tiles[stepRight(x)][stepUp(y)]);
-                        if(isNotOnRightBorder(x))
+                        if (isNotOnRightBorder(x))
                             tiles[x][y].addNeighbour(tiles[stepRight(x)][y]);
-                        if(isNotOnRightBorder(x) && isNotOnBottomBorder(y))
+                        if (isNotOnRightBorder(x) && isNotOnBottomBorder(y))
                             tiles[x][y].addNeighbour(tiles[stepRight(x)][stepDown(y)]);
-                        if(isNotOnBottomBorder(y))
+                        if (isNotOnBottomBorder(y))
                             tiles[x][y].addNeighbour(tiles[x][stepDown(y)]);
                     }
                 }
             }
 
-            private boolean isNotOnLeftBorder(int x){
+            private boolean isNotOnLeftBorder(int x) {
                 return x > 0;
             }
 
-            private boolean isNotOnRightBorder(int x){
-                return x < width-1;
+            private boolean isNotOnRightBorder(int x) {
+                return x < width - 1;
             }
 
-            private boolean isNotOnBottomBorder(int y){
+            private boolean isNotOnBottomBorder(int y) {
                 return y > 0;
             }
 
-            private boolean isNotOnTopBorder(int y){
-                return y < height-1;
+            private boolean isNotOnTopBorder(int y) {
+                return y < height - 1;
             }
 
-            private int stepLeft(int x){
-                return x-1;
+            private int stepLeft(int x) {
+                return x - 1;
             }
 
-            private int stepRight(int x){
-                return x+1;
+            private int stepRight(int x) {
+                return x + 1;
             }
 
-            private int stepUp(int y){
-                return y+1;
+            private int stepUp(int y) {
+                return y + 1;
             }
 
-            private int stepDown(int y){
-                return y-1;
+            private int stepDown(int y) {
+                return y - 1;
             }
         }
 
-        public BoardBuilder markAsStronghold(Coordinates coords) throws InvalidTileCoordsException{
+        public BoardBuilder markAsStronghold(Coordinates coords) throws InvalidTileCoordsException {
             TileImplementation tile = getTileImplementation(coords);
             tile.setStronghold();
             strongholdList.add(tile);
             return this;
         }
 
-        public TileImplementation getTileImplementation(Coordinates coords) throws InvalidTileCoordsException{
+        public TileImplementation getTileImplementation(Coordinates coords) throws InvalidTileCoordsException {
             try {
                 return tiles[coords.getX()][coords.getY()];
-            }catch(ArrayIndexOutOfBoundsException e){
+            } catch (ArrayIndexOutOfBoundsException e) {
                 throw new InvalidTileCoordsException(coords);
             }
         }
@@ -126,7 +126,7 @@ public class Board {
             int maximumNeighbouringFriendsCount = 0;
             try {
                 maximumNeighbouringFriendsCount = getTileImplementation(new Coordinates(0, 0)).getMaximumNeighbouringFriendsCount();
-            } catch(InvalidTileCoordsException e){
+            } catch (InvalidTileCoordsException e) {
                 e.getMessage();
             }
 
@@ -146,56 +146,56 @@ public class Board {
             return this;
         }
 
-        public Board build(){
+        public Board build() {
             return new Board(this);
         }
     }
 
-    private Board(BoardBuilder builder){
-      this.tiles = builder.tiles;
-      this.strongholdList = builder.strongholdList;
-      this.width = tiles.length;
-      this.height = tiles[0].length;
-      random = new Random();
+    private Board(BoardBuilder builder) {
+        this.tiles = builder.tiles;
+        this.strongholdList = builder.strongholdList;
+        this.width = tiles.length;
+        this.height = tiles[0].length;
+        random = new Random();
     }
 
-    public Tile getTile(Coordinates coords) throws InvalidTileCoordsException{
+    public Tile getTile(Coordinates coords) throws InvalidTileCoordsException {
         try {
             return tiles[coords.getX()][coords.getY()];
-        }catch(ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw new InvalidTileCoordsException(coords);
         }
     }
 
-    public void markAndClear(){
-      int appeal = lastAppeal;
-      while (appeal == lastAppeal){
-        appeal = random.nextInt(10000);
-      }
-      lastAppeal = appeal;
-
-      for (Tile stronghold: strongholdList){
-          if (stronghold.isInhabited()) {
-          stronghold.getInhabitant().setAppeal(appeal);
-          stronghold.broadcastAppeal(appeal);
+    public void markAndClear() {
+        int appeal = lastAppeal;
+        while (appeal == lastAppeal) {
+            appeal = random.nextInt(10000);
         }
-      }
+        lastAppeal = appeal;
 
-      for (int i=0; i<width; i++){
-        for (int j=0; j<height; j++){
-            if (tiles[i][j].isInhabited()) {
-            tiles[i][j].checkAppealAndReact(appeal);
-          }
+        for (Tile stronghold : strongholdList) {
+            if (stronghold.isInhabited()) {
+                stronghold.getInhabitant().setAppeal(appeal);
+                stronghold.broadcastAppeal(appeal);
+            }
         }
-      }
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (tiles[i][j].isInhabited()) {
+                    tiles[i][j].checkAppealAndReact(appeal);
+                }
+            }
+        }
     }
 
-    public int getWidth(){
-      return width;
+    public int getWidth() {
+        return width;
     }
 
-    public int getHeight(){
-      return height;
+    public int getHeight() {
+        return height;
     }
 
 
