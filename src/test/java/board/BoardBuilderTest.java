@@ -6,6 +6,7 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 
 import bot.Player;
+import util.BoardHelper;
 
 public class BoardBuilderTest {
     private Board.BoardBuilder boardBuilder;
@@ -14,7 +15,7 @@ public class BoardBuilderTest {
 
     @Before
     public void setUp() {
-        boardBuilder = new Board.BoardBuilder(boardWidth, boardHeight);
+        boardBuilder = new Board.BoardBuilder(boardWidth, boardHeight, new BoardHelper<>());
     }
 
     @Test

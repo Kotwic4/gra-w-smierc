@@ -3,6 +3,7 @@ package gameManager;
 import board.Board;
 import board.Coordinates;
 import org.junit.Test;
+import util.BoardHelper;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +22,7 @@ public class BoardSerializerSaveTests {
 
     @Test
     public void saveTest() {
-        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);;
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5, new BoardHelper<>());
         int tmp = 1;
         for(int i=0; i<5; i++){
             for(int j=0; j<5; j++){

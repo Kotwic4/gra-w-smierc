@@ -27,7 +27,7 @@ public class Board {
         private final int width;
         private final int height;
 
-        public BoardBuilder(int width, int height) {
+        public BoardBuilder(int width, int height, BoardHelper<TileImplementation> boardHelper) {
             this.width = width;
             this.height = height;
             tiles = new TileImplementation[width][height];
@@ -37,7 +37,7 @@ public class Board {
                 }
             }
             strongholdList = new LinkedList<>();
-//            BoardHelper.setNeighbours(tiles, TileImplementation::setNeighbours);
+            boardHelper.setNeighbours(tiles, TileImplementation::setNeighbours);
         }
 
         public BoardBuilder markAsStronghold(Coordinates coords) throws InvalidTileCoordsException {
