@@ -5,7 +5,7 @@ import bot.Player;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-class TileImplementation extends Tile{
+class TileImplementation implements Tile {
     private Organism inhabitant;
     private int cost;
     private Coordinates coords;
