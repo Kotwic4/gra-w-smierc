@@ -5,6 +5,7 @@ import bot.Player;
 import bot.PlayerBoard;
 import bot.PlayerStrategy;
 import javafx.scene.paint.Color;
+import util.BoardHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class GameBuilder {
 
     public Game getGameInstance() {
         for(Player player: players)
-            player.setPlayerBoard(PlayerBoard.createPlayerBoard(board,player));
+            player.setPlayerBoard(PlayerBoard.createPlayerBoard(board,player,new BoardHelper<>()));
         return new Game(players, board);
     }
 

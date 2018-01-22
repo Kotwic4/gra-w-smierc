@@ -5,17 +5,15 @@ import board.Tile;
 import board.TileObserver;
 import javafx.scene.paint.Color;
 
-import java.util.List;
-import java.util.Observable;
-import java.util.Optional;
+import java.util.*;
 
-public class PlayerTile extends Observable implements TileObserver {
+public class PlayerTile extends Observable implements TileObserver, Observer{
 
     private Tile tile;
     private Player player;
-    private List<PlayerTile> neighbours;
     private Board board;
 
+    private List<PlayerTile> neighbours = new LinkedList<>();
     private int visibleRange = 0;
     private Player tilePlayer = null;
     private Boolean isStronghold = false;
@@ -24,7 +22,9 @@ public class PlayerTile extends Observable implements TileObserver {
 
     PlayerTile(Tile tile, Player player, Board board) {
         this.tile = tile;
+        tile.registerObserver(this);
         this.player = player;
+        player.addObserver(this);
         this.board = board;
     }
 
@@ -44,7 +44,7 @@ public class PlayerTile extends Observable implements TileObserver {
         return accessible;
     }
 
-    private int getVisibleRange() {
+    int getVisibleRange() {
         return visibleRange;
     }
 
@@ -64,11 +64,11 @@ public class PlayerTile extends Observable implements TileObserver {
         return isVisible() ? Optional.of(tileCost) : Optional.empty();
     }
 
-    public List<PlayerTile> getNeighbours() {
+    List<PlayerTile> getNeighbours() {
         return neighbours;
     }
 
-    public void setNeighbours(List<PlayerTile> neighbours) {
+    void setNeighbours(List<PlayerTile> neighbours) {
         this.neighbours = neighbours;
     }
 
@@ -129,7 +129,7 @@ public class PlayerTile extends Observable implements TileObserver {
         return false;
     }
 
-    public void update() {
+    void updateTileInformation() {
         Player newPlayer = tile.getPlayer().orElse(null);
         boolean updated = updateTilePlayer(newPlayer)
                 | updateVisible()
@@ -137,13 +137,18 @@ public class PlayerTile extends Observable implements TileObserver {
                 | updateTileCost()
                 | updateAccessible();
         if (updated) {
-            neighbours.forEach(PlayerTile::update);
+            neighbours.forEach(PlayerTile::updateTileInformation);
             notifyObservers();
         }
     }
 
     @Override
     public void update(Tile tile) {
-        update();;
+        updateTileInformation();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        updateTileInformation();
     }
 }

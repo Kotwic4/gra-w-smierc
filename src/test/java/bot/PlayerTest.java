@@ -1,6 +1,5 @@
 package bot;
 
-import board.Board;
 import javafx.scene.paint.Color;
 import org.junit.Test;
 import org.mockito.InOrder;
@@ -136,8 +135,8 @@ public class PlayerTest {
     @Test
     public void addStronhold() {
         Player player = new Player(Color.BLUE, "abc", 2);
-        player.addStronhold();
-        player.addStronhold();
+        player.addStronghold();
+        player.addStronghold();
         int points = player.getPointsPerTurn();
         assertEquals(20,points);
     }
@@ -145,9 +144,9 @@ public class PlayerTest {
     @Test
     public void removeStronhold() {
         Player player = new Player(Color.BLUE, "abc", 2);
-        player.addStronhold();
-        player.addStronhold();
-        player.removeStronhold();
+        player.addStronghold();
+        player.addStronghold();
+        player.removeStronghold();
         int points = player.getPointsPerTurn();
         assertEquals(10,points);
     }
@@ -155,7 +154,7 @@ public class PlayerTest {
     @Test(expected = PlayerHaveNoStrongholdsException.class)
     public void removeMoreStronhold() {
         Player player = new Player(Color.BLUE, "abc", 2);
-        player.removeStronhold();
+        player.removeStronghold();
     }
 
     @Test
@@ -167,7 +166,6 @@ public class PlayerTest {
         player.addOrganism();
         int points = player.getPointsPerTurn();
         assertEquals(2,points);
-        verify(playerBoard,times(2)).update();
     }
 
     @Test
@@ -179,21 +177,20 @@ public class PlayerTest {
         player.removeOrganism();
         int points = player.getPointsPerTurn();
         assertEquals(0,points);
-        verify(playerBoard,times(2)).update();
     }
 
     @Test
     public void isAlive() {
         Player player = new Player(Color.BLUE, "abc", 2);
-        player.addStronhold();
+        player.addStronghold();
         assertTrue(player.isAlive());
     }
 
     @Test
     public void isDead() {
         Player player = new Player(Color.BLUE, "abc", 2);
-        player.addStronhold();
-        player.removeStronhold();
+        player.addStronghold();
+        player.removeStronghold();
         assertFalse(player.isAlive());
     }
 
@@ -202,4 +199,6 @@ public class PlayerTest {
         Player player = new Player(Color.BLUE, "abc", 2);
         assertEquals(5,player.getVisibleRange());
     }
+
+    // todo chceck notify observers from add/remove stronghold/organism/points
 }
