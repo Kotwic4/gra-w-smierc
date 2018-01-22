@@ -111,10 +111,6 @@ class TileImplementation implements Tile {
         return coords;
     }
 
-    public void addNeighbour(TileImplementation tile){
-      neighbours.add(tile);
-    }
-
     public void setStronghold(){
       stronghold = true;
     }
@@ -145,6 +141,10 @@ class TileImplementation implements Tile {
 
     void setMaximumNeighbouringFriendsCount(int maximumNeighbouringFriendsCount) {
         this.maximumNeighbouringFriendsCount = maximumNeighbouringFriendsCount;
+    }
+
+    public void setNeighbours(List<TileImplementation> neighbours) {
+        this.neighbours = neighbours;
     }
 
     public void registerObserver(TileObserver tileObserver) {
