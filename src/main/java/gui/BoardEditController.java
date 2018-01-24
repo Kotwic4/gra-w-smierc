@@ -23,6 +23,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import util.BoardHelper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -114,7 +115,7 @@ public class BoardEditController {
     private void saveBoardButtonHandler() throws IOException {
 
         ObservableList<Node> list = grid.getChildren();
-        Board.BoardBuilder board = new Board.BoardBuilder(20, 20);
+        Board.BoardBuilder board = new Board.BoardBuilder(20, 20, new BoardHelper<>());
         for (Node node : list) {
             Integer row = GridPane.getRowIndex(node);
             Integer column = GridPane.getColumnIndex(node);

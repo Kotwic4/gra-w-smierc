@@ -3,6 +3,7 @@ package gui;
 import board.Board;
 import bot.GuiPlayer;
 import bot.Player;
+import bot.RandomBot;
 import gameManager.BoardSerializer;
 import gameManager.Game;
 import gameManager.GameBuilder;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class
 GameOptionsController {
@@ -73,12 +75,13 @@ GameOptionsController {
         Player gamer = new Player(Color.RED,"Ty",1);
         gamer.setPlayerStrategy(new GuiPlayer(gameController));
         Player bot = new Player(Color.BLUE,"Bot",2);
-        bot.setPlayerStrategy(new GuiPlayer(gameController));
+        bot.setPlayerStrategy(new RandomBot(gameController,new Random()));
         GameBuilder gameBuilder = new GameBuilder(boardBuilder);
         Game game = gameBuilder.addPlayer(gamer).addPlayer(bot).getGameInstance();
         Stage window=(Stage)loadBoard.getScene().getWindow();
         window.setScene(new Scene(root, 300, 275));
         Thread thread = new Thread(game);
+        thread.setDaemon(true);
         thread.start();
     }
 }

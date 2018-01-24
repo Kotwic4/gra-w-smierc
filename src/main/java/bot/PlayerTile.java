@@ -138,7 +138,9 @@ public class PlayerTile extends Observable implements TileObserver, Observer{
                 | updateAccessible();
         if (updated) {
             neighbours.forEach(PlayerTile::updateTileInformation);
+            setChanged();
             notifyObservers();
+            clearChanged();
         }
     }
 

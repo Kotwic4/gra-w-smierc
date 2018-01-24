@@ -2,6 +2,7 @@ package gameManager;
 
 import board.Board;
 import org.junit.Test;
+import util.BoardHelper;
 
 import java.io.StringReader;
 import java.util.LinkedList;
@@ -16,7 +17,7 @@ public class GameDeserializerTest {
     public void gameDeserializeTest(){
         Game expected = new Game(
                 new LinkedList<>(),
-                new Board.BoardBuilder(2,2).build()
+                new Board.BoardBuilder(2,2,new BoardHelper<>()).build()
         );
 
         DummyGame dummyGame = GameSerializer.load(new StringReader("{\"players\":[],\"board\":{\"tiles\":[[{\"cost\":1,\"stronghold\":false},{\"cost\":1,\"stronghold\":false}],[{\"cost\":1,\"stronghold\":false},{\"cost\":1,\"stronghold\":false}]],\"width\":2,\"height\":2}}")).get();

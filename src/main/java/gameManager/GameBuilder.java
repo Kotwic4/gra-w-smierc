@@ -51,7 +51,7 @@ public class GameBuilder {
         }
         Board board = boardBuilder.build();
         for(Player player: players) {
-            player.setPlayerBoard(PlayerBoard.createPlayerBoard(board, player));
+            player.setPlayerBoard(PlayerBoard.createPlayerBoard(board, player, new BoardHelper<>()));
         }
             return new Game(players, board);
     }

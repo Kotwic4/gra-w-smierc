@@ -102,6 +102,7 @@ GameController  implements PlayerController,TurnCommunicator{
     public void doGuiTurn(Player player) {
         synchronized (guiTurnLock){
             try {
+                assignButtonsToPlayerTiles(player.getPlayerBoard());
                 guiTurnLock.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();

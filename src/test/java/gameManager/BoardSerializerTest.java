@@ -5,6 +5,7 @@ import board.Coordinates;
 import board.Tile;
 import org.junit.Test;
 import org.mockito.Mockito;
+import util.BoardHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class BoardSerializerTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5,new BoardHelper<>());
 
 
         int tmp = 1;
@@ -77,7 +78,7 @@ public class BoardSerializerTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5, new BoardHelper<>());
         boardBuilder.markAsStronghold(new Coordinates(0,0));
 
         int tmp = 1;

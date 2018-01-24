@@ -70,36 +70,48 @@ public class Player extends Observable {
 
     void addPoints(int value) {
         remainingPoints += value;
+        setChanged();
         notifyObservers();
+        clearChanged();
     }
 
     void subPoints(int cost) {
         if (cost > remainingPoints) throw new NotEnoughPointsException();
         remainingPoints -= cost;
+        setChanged();
         notifyObservers();
+        clearChanged();
     }
 
     public void addStronghold() {
         pointsPerTurn += POINTS_PER_STRONGHOLDS;
         strongholdsNumber++;
+        setChanged();
         notifyObservers();
+        clearChanged();
     }
 
     public void removeStronghold() {
         if (strongholdsNumber == 0) throw new PlayerHaveNoStrongholdsException();
         pointsPerTurn -= POINTS_PER_STRONGHOLDS;
         strongholdsNumber--;
+        setChanged();
         notifyObservers();
+        clearChanged();
     }
 
     public void addOrganism() {
         pointsPerTurn += POINTS_PER_ORGANISM;
+        setChanged();
         notifyObservers();
+        clearChanged();
     }
 
     public void removeOrganism() {
         pointsPerTurn -= POINTS_PER_ORGANISM;
+        setChanged();
         notifyObservers();
+        clearChanged();
     }
 
     public boolean isAlive() {

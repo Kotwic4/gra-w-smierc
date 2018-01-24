@@ -1,8 +1,6 @@
 package board;
 
 import bot.Player;
-
-import javax.sound.midi.Track;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -147,7 +145,7 @@ class TileImplementation implements Tile {
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TileImplementation tile = (TileImplementation) o;
@@ -156,6 +154,7 @@ class TileImplementation implements Tile {
         if (isInhabited() != isInhabited()) return false;
         if (isInhabited() && (!inhabitant.equals(tile.inhabitant))) return false;
         return true;
+    }
         
     public void setNeighbours(List<TileImplementation> neighbours) {
         this.neighbours = neighbours;
