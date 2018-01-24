@@ -3,6 +3,7 @@ package gameManager;
 import board.Board;
 import board.Coordinates;
 import board.Tile;
+import util.BoardHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class BoardSerializer {
                 throw new MalformedFileException();
             }
 
-            boardBuilder = new Board.BoardBuilder(width,height);
+            boardBuilder = new Board.BoardBuilder(width,height, new BoardHelper<>());
             for(int line=0; line<height; line++){
                 currentLine = br.readLine();
                 if(currentLine == null){

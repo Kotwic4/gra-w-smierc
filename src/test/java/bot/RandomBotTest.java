@@ -95,4 +95,9 @@ public class RandomBotTest {
         verifyNoMoreInteractions(aTile, bTile, cTile);
     }
 
+    @Test
+    public void chooseTile() throws Exception {
+        //todo
+    }
+
 }

@@ -4,6 +4,7 @@ import board.Board;
 import board.Coordinates;
 import board.Tile;
 import bot.Player;
+import util.BoardHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class GameDeserializer {
         for (int i = 0; i < dummyGame.getPlayersNumber(); i++)
             players.add(new Player(dummyGame.getPlayerColor(i), "", dummyGame.getPlayerId(i)));
 
-        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(dummyGame.getBoardDimension().width,dummyGame.getBoardDimension().height);
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(dummyGame.getBoardDimension().width,dummyGame.getBoardDimension().height, new BoardHelper<>());
         for (int i = 0; i < dummyGame.getBoardLenght(); i++) {
             for (int j = 0; j < dummyGame.getNumberOfTiles(); j++) {
                 boardBuilder.setTileCost(dummyGame.getCostOnTile(i, j),new Coordinates(i,j));

@@ -6,6 +6,7 @@ import bot.Player;
 import bot.PlayerBoard;
 import bot.PlayerStrategy;
 import javafx.scene.paint.Color;
+import util.BoardHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class GameBuilder {
 
     public GameBuilder(int boardWidth, int boardHeight) {
         players = new ArrayList<>();
-        boardBuilder = new Board.BoardBuilder(boardWidth,boardHeight);
+        boardBuilder = new Board.BoardBuilder(boardWidth,boardHeight, new BoardHelper<>());
     }
 
     public GameBuilder addPlayer(Player player) {

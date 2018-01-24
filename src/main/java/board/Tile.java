@@ -5,18 +5,27 @@ import bot.Player;
 import java.util.Observable;
 import java.util.Optional;
 
-/**
- * Created by Paweł Taborowski on 28.12.17.
- */
-public abstract class Tile extends Observable{
-  abstract public boolean isInhabited();
-  abstract void broadcastAppeal(int appeal);
-  abstract public Organism getInhabitant();
-  abstract public int getCost();
-  abstract public Coordinates getCoords();
-  abstract public boolean isStronghold();
-  abstract void checkAppealAndReact(int appeal);
-  abstract public boolean canInhabit(Player player);
-  abstract public void inhabit(Player player);
-  abstract public Optional<Player> getPlayer();
+public interface Tile {
+    boolean isInhabited();
+
+    void broadcastAppeal(int appeal);
+
+    Organism getInhabitant();
+
+    int getCost();
+
+    Coordinates getCoords();
+
+    boolean isStronghold();
+
+    void checkAppealAndReact(int appeal);
+
+    boolean canInhabit(Player player);
+
+    void inhabit(Player player);
+
+    Optional<Player> getPlayer();
+
+    void registerObserver(TileObserver tileObserver);
+    void removeObserver(TileObserver tileObserver);
 }

@@ -6,8 +6,10 @@ import javax.sound.midi.Track;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
-class TileImplementation extends Tile{
+class TileImplementation implements Tile {
     private Organism inhabitant;
     private int cost;
     private Coordinates coords;
@@ -16,12 +18,16 @@ class TileImplementation extends Tile{
     private int maximumNeighbouringFriendsCount;
     transient private static int DEFAULT_COST = 1;
     transient protected static int DEFAULT_NEIGHBOURING_FRIENDS_COUNT = 4;
+    private final Set<TileObserver> tileObservers;
 
     public TileImplementation(Coordinates coords) {
       this.coords = coords;
         cost = DEFAULT_COST;
         maximumNeighbouringFriendsCount = DEFAULT_NEIGHBOURING_FRIENDS_COUNT;
-      neighbours = new LinkedList<>();
+        neighbours = new LinkedList<>();
+        tileObservers = Collections
+                .newSetFromMap(new ConcurrentHashMap<TileObserver,
+                        Boolean>(0));
     }
 
     public boolean isInhabited() {
@@ -45,8 +51,8 @@ class TileImplementation extends Tile{
     @Override
     public void inhabit(Player player) {
         if (canInhabit(player)) {
-//            this.inhabitant = new Organism(player);
             uncheckedSetIntabitant(new Organism(player));
+            notifyObservers();
         } else {
             throw new InvalidOrganismPositionException(player);
         }
@@ -67,12 +73,12 @@ class TileImplementation extends Tile{
 
     public void uncheckedSetIntabitant(Organism inhabitant) throws TileAlreadyInhabitedException {
       // Force setting inhabitant without checking neighbours - required for stronghold's organism initialization
-      if(this.inhabitant == null) {
+      if(!isInhabited()) {
           this.inhabitant = inhabitant;
           Player player = inhabitant.getPlayer();
           player.addOrganism();
           if(isStronghold()){
-              player.addStronhold();
+              player.addStronghold();
           }
           for (TileImplementation neighbour : neighbours) {
               if(neighbour.getPlayer().isPresent() && neighbour.getPlayer().get() != player){
@@ -108,10 +114,6 @@ class TileImplementation extends Tile{
         return coords;
     }
 
-    public void addNeighbour(TileImplementation tile){
-      neighbours.add(tile);
-    }
-
     public void setStronghold(){
       stronghold = true;
     }
@@ -124,13 +126,14 @@ class TileImplementation extends Tile{
       int knownAppeal = getInhabitant().getAppeal();
       if (knownAppeal != appeal){
           unHabit();
+          notifyObservers();
       }
     }
 
     private void unHabit(){
         getInhabitant().getPlayer().removeOrganism();
         if(isStronghold()){
-            getInhabitant().getPlayer().removeStronhold();
+            getInhabitant().getPlayer().removeStronghold();
         }
         inhabitant = null;
     }
@@ -153,5 +156,22 @@ class TileImplementation extends Tile{
         if (isInhabited() != isInhabited()) return false;
         if (isInhabited() && (!inhabitant.equals(tile.inhabitant))) return false;
         return true;
+        
+    public void setNeighbours(List<TileImplementation> neighbours) {
+        this.neighbours = neighbours;
+    }
+
+    public void registerObserver(TileObserver tileObserver) {
+        tileObservers.add(tileObserver);
+    }
+
+    public void removeObserver(TileObserver tileObserver) {
+        tileObservers.remove(tileObserver);
+    }
+
+    private void notifyObservers() {
+        for (TileObserver tileObserver : tileObservers) {
+            tileObserver.update(this);
+        }
     }
 }

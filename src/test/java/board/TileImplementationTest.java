@@ -3,6 +3,7 @@ package board;
 import bot.Player;
 import org.junit.Before;
 import org.junit.Test;
+import util.BoardHelper;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,12 +14,11 @@ public class TileImplementationTest {
     private Board.BoardBuilder boardBuilder;
     private List<TileImplementation> connectedTiles;
     private TileImplementation notConnectedTile;
-    private int LENGTH = 5;
     private Player player;
 
     @Before
-    public void setUp() throws Exception {
-      boardBuilder = new Board.BoardBuilder(5,6);
+    public void setUp() {
+      boardBuilder = new Board.BoardBuilder(5,6, new BoardHelper<>());
       connectedTiles = new LinkedList<>();
       connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(3,2)));
       connectedTiles.add(boardBuilder.getTileImplementation(new Coordinates(2,2)));
