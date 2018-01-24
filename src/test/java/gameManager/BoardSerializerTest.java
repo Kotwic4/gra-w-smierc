@@ -29,70 +29,70 @@ public class BoardSerializerTest {
 
     @Test
     public void loadTest(){
-//        BufferedReader br;
-//        br = mock(BufferedReader.class);
-//        try {
-//            Mockito.when(br.readLine()).thenReturn(
-//                    board1[0], board1[1],
-//                    board1[2], board1[3],
-//                    board1[4], board1[5],
-//                    board1[6], board1[7]
-//            );
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
-//
-//
-//        int tmp = 1;
-//        for(int i=0; i<5; i++){
-//            for(int j=0; j<5; j++){
-//                boardBuilder.setTileCost(tmp++, new Coordinates(i,j));
-//            }
-//        }
-//        boardBuilder.markAsStronghold(new Coordinates(0,0));
-//        Board boardExpected = boardBuilder.build();
-//        Board boardResult = null;
-//        try {
-//            boardResult = BoardSerializer.load(br);
-//        } catch (BoardSerializer.MalformedFileException e) {
-//            e.printStackTrace();
-//        }
-//        assertEquals(boardExpected.equals(boardResult), true);
+        BufferedReader br;
+        br = mock(BufferedReader.class);
+        try {
+            Mockito.when(br.readLine()).thenReturn(
+                    board1[0], board1[1],
+                    board1[2], board1[3],
+                    board1[4], board1[5],
+                    board1[6], board1[7]
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
+
+
+        int tmp = 1;
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                boardBuilder.setTileCost(tmp++, new Coordinates(i,j));
+            }
+        }
+        boardBuilder.markAsStronghold(new Coordinates(0,0));
+        Board boardExpected = boardBuilder.build();
+        Board boardResult = null;
+        try {
+            boardResult = BoardSerializer.load(br).build();
+        } catch (BoardSerializer.MalformedFileException e) {
+            e.printStackTrace();
+        }
+        assertEquals(boardExpected,boardResult);
     }
 
     @Test
     public void loadTestIncorrect() {
-//        Board boardExpected = null;
-//        BufferedReader br = null;
-//
-//        br = mock(BufferedReader.class);
-//        try {
-//            Mockito.when(br.readLine()).thenReturn(
-//                    board1[0], board1[1],
-//                    board1[2], board1[3],
-//                    board1[4], board1[5],
-//                    board1[6], board1[7]
-//            );
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
-//
-//
-//        int tmp = 1;
-//        for(int i=0; i<5; i++){
-//            for(int j=0; j<5; j++){
-//                boardBuilder.setTileCost(tmp++, new Coordinates(i,j));
-//            }
-//        }
-//        boardExpected = boardBuilder.build();
-//        Board boardResult = null;
-//        try {
-//            boardResult = BoardSerializer.load(br);
-//        } catch (BoardSerializer.MalformedFileException e) {
-//            e.printStackTrace();
-//        }
-//        assertEquals(boardExpected.equals(boardResult), true);
+        Board boardExpected = null;
+        BufferedReader br = null;
+
+        br = mock(BufferedReader.class);
+        try {
+            Mockito.when(br.readLine()).thenReturn(
+                    board1[0], board1[1],
+                    board1[2], board1[3],
+                    board1[4], board1[5],
+                    board1[6], board1[7]
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,5);
+        boardBuilder.markAsStronghold(new Coordinates(0,0));
+
+        int tmp = 1;
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                boardBuilder.setTileCost(tmp++, new Coordinates(i,j));
+            }
+        }
+        boardExpected = boardBuilder.build();
+        Board boardResult = null;
+        try {
+            boardResult = BoardSerializer.load(br).build();
+        } catch (BoardSerializer.MalformedFileException e) {
+            e.printStackTrace();
+        }
+        assertEquals(boardExpected,boardResult);
     }
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
  */
 public class GameDeserializer {
 
-    public DummyGame dummyGame;
+    private DummyGame dummyGame;
 
     public GameDeserializer(DummyGame dummyGame){
         this.dummyGame = dummyGame;

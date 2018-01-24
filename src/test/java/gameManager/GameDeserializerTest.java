@@ -2,6 +2,8 @@ package gameManager;
 
 import board.Board;
 import org.junit.Test;
+
+import java.io.StringReader;
 import java.util.LinkedList;
 import static org.junit.Assert.assertEquals;
 
@@ -12,14 +14,14 @@ import static org.junit.Assert.assertEquals;
 public class GameDeserializerTest {
     @Test
     public void gameDeserializeTest(){
-//        Game expected = new Game(
-//                new LinkedList<>(),
-//                new Board.BoardBuilder(2,2).build()
-//        );
-//
-//        DummyGame dummyGame = GameSerializer.loadFromString("{\"players\":[],\"board\":{\"tiles\":[[{\"cost\":0,\"stronghold\":false},{\"cost\":0,\"stronghold\":false}],[{\"cost\":0,\"stronghold\":false},{\"cost\":0,\"stronghold\":false}]],\"width\":2,\"height\":2}}");
-//        GameDeserializer gameDeserializer = new GameDeserializer(dummyGame);
-//        Game result = gameDeserializer.deserialize().get();
-//        assertEquals(result, expected);
+        Game expected = new Game(
+                new LinkedList<>(),
+                new Board.BoardBuilder(2,2).build()
+        );
+
+        DummyGame dummyGame = GameSerializer.load(new StringReader("{\"players\":[],\"board\":{\"tiles\":[[{\"cost\":1,\"stronghold\":false},{\"cost\":1,\"stronghold\":false}],[{\"cost\":1,\"stronghold\":false},{\"cost\":1,\"stronghold\":false}]],\"width\":2,\"height\":2}}")).get();
+        GameDeserializer gameDeserializer = new GameDeserializer(dummyGame);
+        Game result = gameDeserializer.deserialize().get();
+        assertEquals(expected,result);
     }
 }

@@ -28,12 +28,12 @@ final class DummyGame {
     class DummyBoard {
         class DummyTile {
             class DummyOrganism {
-                public DummyOrganism(int nation){
-                    this.nation = nation;
+                public DummyOrganism(int playerID){
+                    this.playerID = playerID;
                 }
-                private final int nation;
-                public int getNation(){
-                    return nation;
+                private final int playerID;
+                public int getPlayerID(){
+                    return playerID;
                 }
             }
 

@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
  * Created by michal on 06.01.18.
  */
 public class BoardSerializer {
-    public static Board load(BufferedReader br) throws MalformedFileException {
+    public static Board.BoardBuilder load(BufferedReader br) throws MalformedFileException {
         String currentLine;
         Board.BoardBuilder boardBuilder = null;
         try {
@@ -84,7 +84,7 @@ public class BoardSerializer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return boardBuilder.build();
+        return boardBuilder;
     }
     public static void save(Board board, Writer writer) throws IOException {
         writer.write(getSerializedString(board));

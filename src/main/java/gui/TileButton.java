@@ -2,11 +2,16 @@ package gui;
 
 import board.Coordinates;
 import bot.PlayerTile;
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
+import java.util.Observer;
 
-public class TileButton extends Button {
+
+public class TileButton extends Button implements Observer{
     Coordinates coordinates;
     private PlayerTile playerTile;
 
@@ -16,7 +21,10 @@ public class TileButton extends Button {
     }
 
     public void assignPlayerTile(PlayerTile playerTile){
+        if(this.playerTile!=null)
+            playerTile.deleteObserver(this);
         this.playerTile = playerTile;
+        playerTile.addObserver(this);
         updateButtonColor();
     }
 
@@ -31,5 +39,10 @@ public class TileButton extends Button {
             setStyle("-fx-background-color: #" + playerTile.getColor().orElse(Color.WHITE).toString().substring(2, 8));
         else
             setStyle("-fx-background-color: #000000");
+    }
+
+    @Override
+    public void update(java.util.Observable o, Object arg) {
+        Platform.runLater(this::updateButtonColor);
     }
 }

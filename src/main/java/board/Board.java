@@ -21,11 +21,14 @@ public class Board {
     private final Random random;
     private int lastAppeal;
 
+
+
     public static class BoardBuilder {
         private TileImplementation[][] tiles;
         private List<TileImplementation> strongholdList;
         private final int width;
         private final int height;
+        private int strongholdsAlreadyInhabited=0; //TODO: remove
 
         public BoardBuilder(int width, int height, BoardHelper<TileImplementation> boardHelper) {
             this.width = width;
@@ -93,6 +96,12 @@ public class Board {
         public Board build() {
             return new Board(this);
         }
+        public void setStrongholdInhabitant(Player player) throws TileAlreadyInhabitedException {
+            if(strongholdsAlreadyInhabited>=strongholdList.size())
+                throw new AllStrongholdsAlreadyInhabitedException();
+            setInhabitant(strongholdList.get(strongholdsAlreadyInhabited).getCoords(),player);
+            strongholdsAlreadyInhabited++;
+        }
     }
 
     private Board(BoardBuilder builder) {
@@ -156,7 +165,7 @@ public class Board {
         if (!Arrays.deepEquals(tiles, board.tiles)) return false;
         if (strongholdList != null ? !strongholdList.equals(board.strongholdList) : board.strongholdList != null)
             return false;
-        return random != null ? random.equals(board.random) : board.random == null;
+        return true;
     }
 
     @Override
@@ -169,4 +178,5 @@ public class Board {
         result = 31 * result + lastAppeal;
         return result;
     }
+
 }
