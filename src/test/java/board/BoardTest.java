@@ -2,6 +2,7 @@ package board;
 
 import bot.Player;
 import org.junit.Test;
+import util.BoardHelper;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +14,7 @@ public class BoardTest {
         Coordinates strongholdCoord = new Coordinates(0, 1);
         Coordinates organismToRemoveCoord = new Coordinates(4, 5);
         Coordinates[] wellPlacedTiles = {new Coordinates(1, 1), new Coordinates(2, 1), new Coordinates(2, 2), new Coordinates(2, 3)};
-        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,6 ).markAsStronghold(strongholdCoord).setInhabitant(strongholdCoord, new Player(null, "", 0)).setInhabitant(organismToRemoveCoord, new Player(null, "", 0));
+        Board.BoardBuilder boardBuilder = new Board.BoardBuilder(5,6 , new BoardHelper<>()).markAsStronghold(strongholdCoord).setInhabitant(strongholdCoord, new Player(null, "", 0)).setInhabitant(organismToRemoveCoord, new Player(null, "", 0));
 
         for (Coordinates wellPlacedTile : wellPlacedTiles) {
             boardBuilder.setInhabitant(wellPlacedTile, new Player(null, "", 0));
@@ -33,7 +34,7 @@ public class BoardTest {
 
     @Test
     public void getTile() {
-        Board board = new Board.BoardBuilder(5,6).build();
+        Board board = new Board.BoardBuilder(5,6, new BoardHelper<>()).build();
         try {
             Coordinates coords = new Coordinates(4, 3);
             TileImplementation tile = (TileImplementation) board.getTile(coords);
