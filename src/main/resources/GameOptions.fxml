@@ -8,7 +8,7 @@
 
     <VBox >
         <Button fx:id="loadBoard" text="Wczytaj planszę" onAction="#loadBoardButton"/>
-        <Button fx:id="play" text="Poddaję się" onAction="#play"/>
+        <Button fx:id="play" text="Graj !" onAction="#play"/>
     </VBox>
 
 </StackPane>
